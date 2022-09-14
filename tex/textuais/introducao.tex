@@ -2,12 +2,35 @@
 \label{chap:introducao}
 
 Sistemas robóticos, em geral, são empregados quando a intervenção humana
-revelas-e muito onerosa, perigosa ou inefixas. A capacidade de operar de forma
+revela-se muito onerosa, perigosa ou ineficaz. A capacidade de operar de forma
 autônoma, nestes casos, é uma caracterísitca valiosa, viabilizada através de
 sistemas para monitorar e controlar o movimento nos deslocamentos entre um
-ponto e outro. Para elevar o nível de precisão desse controle os sensores de
-medição inercial oferecem um mecanismo de retroalimentação dos sistemas de
-controle que pode ser muito útil na otimização desses sistemas de navegação e
-controle. O presente trabalho pretende avaliar a utilidade de um particular
-modelo de sensor inercial de baixo custo em sistemas robóticos dessa natureza
-mediante a criação de um driver para este sensor ligado a uma Raspberry Pi.
+ponto e outro.
+
+Esses sistemas de controle e monitoramento devem apresentar respostas
+satisfatórias para questões que abrangem, por exemplo, as coordenadas de
+posicionamento global, a orientação espacial em relação ao plano tangente à
+terra, a velocidade e aceleração do robô no espaço, distância de obstáculos
+próximos, dentre outras. Embora para um ser humano essas respostas possam
+parecer intuitivas, num primeiro momento, o sistema robótico depende
+exclusivamente dos seus sensores e algoritmos para respondê-las.
+
+Dentre os sensores mais comuns podemos encotrar os hodômetros implementados
+através de \italic{encoders}, que medem o deslocamento proporcionado pelas
+rodas ou esteiras do robô, os sensores de distância ultrasônicos, direcionados
+ao ambiente externo para obter eco em objetos próximos do robô, os sensore de
+medição de distância a laser, também conhecido por LIDAR, que permitem obter
+ecos de corpos relativamente mais distantes do robô, os sensores de posição
+baseados em GPS, os magnetômetros que funcionam como um bússola, os sensores de
+medição inercial como acelerômetros e giroscópios, e hoje até mesmo câmeras. E
+embora sejam objeto de um sofisticado tratamento matemático, nenhum desses
+sensores, isoladamente, satifaz a demanda por precisão das respostas que se
+espera num sistema de controle e monitoramento.
+
+Para elevar o nível de precisão, os sensores de medição inercial oferecem um
+mecanismo de retroalimentação que, aparentemente, pode ser muito útil na
+otimização dos sistemas de controlerobótibo. O presente trabalho pretende
+avaliar a utilidade de um particular modelo de sensor inercial de baixo custo
+em sistemas robóticos dessa natureza mediante a criação de um driver para este
+sensor ligado a uma Raspberry Pi.
+
