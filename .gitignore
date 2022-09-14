@@ -14,7 +14,7 @@ mpu_src/mpu6050
 *.log
 *.loq
 *.lot
-*.pdf
+#*.pdf
 *.synctex.gz
 *.toc
 
