@@ -248,38 +248,38 @@
         \begin{center}
         % Cabeçalho
         \begin{figure}[!htpb]
-    		\centering
-		% Logotipo da instituição
-		% \includegraphics[height=70px]{figuras/logo-instituicao.png} \\
-		% \noindent\rule{14cm}{0.4pt}
-            		\textbf{\MakeUppercase{\imprimirinstituicao}} \\
-	    		\abntex@ifnotempty{\MakeUppercase\imprimirdepartamento}
-            		{
-                		\textbf{\MakeUppercase{\imprimirdepartamento}} \\
-            		}
-           	\textbf{\large{\imprimirprograma}} \\
-    	\end{figure}
+            \centering
+        % Logotipo da instituição
+        % \includegraphics[height=70px]{figuras/logo-instituicao.png} \\
+        % \noindent\rule{14cm}{0.4pt}
+                    \textbf{\MakeUppercase{\imprimirinstituicao}} \\
+                \abntex@ifnotempty{\MakeUppercase\imprimirdepartamento}
+                    {
+                        \textbf{\MakeUppercase{\imprimirdepartamento}} \\
+                    }
+            \textbf{\large{\imprimirprograma}} \\
+        \end{figure}
 
 
         \end{center}
         \vspace*{60pt}
-	\begin{center}
-		\large{\imprimirautor}\\
-	\end{center}
-	\vspace*{120pt}
+    \begin{center}
+        \large{\imprimirautor}\\
+    \end{center}
+    \vspace*{120pt}
         \begin{center}
             \ABNTEXchapterfont\large\MakeUppercase{\imprimirtitulo}
             \abntex@ifnotempty{\imprimirsubtitulo}
-	    {
+        {
                 {\ABNTEXchapterfont: }{\large{\imprimirsubtitulo}}
             }
         \end{center}
 
-	    \vfill
+        \vfill
         \begin{center}
         \begin{SingleSpacing}
-            		\textbf{\large{\imprimirlocal}}\\
-            		\textbf{\large{\imprimirdata}}
+                    \textbf{\large{\imprimirlocal}}\\
+                    \textbf{\large{\imprimirdata}}
         \end{SingleSpacing}
         \end{center}
     \end{capa}
@@ -295,17 +295,17 @@
 
     % Cabeçalho
     \begin{figure}[!htpb]
-		\centering
-		% Logotipo da instituição
-		% \includegraphics[height=70px]{figuras/logo-instituicao.png} \\
-		% \noindent\rule{14cm}{0.4pt}
-%		% \textbf{\MakeUppercase{\imprimirinstituicao}} \\
-    		\abntex@ifnotempty{\MakeUppercase{\imprimirdepartamento}}
-        		{
-            		\textbf{\MakeUppercase{\imprimirdepartamento}} \\
-        		}
-       	\textbf{\large{\imprimirprograma}} \\
-	\end{figure}
+        \centering
+        % Logotipo da instituição
+        % \includegraphics[height=70px]{figuras/logo-instituicao.png} \\
+        % \noindent\rule{14cm}{0.4pt}
+        % \textbf{\MakeUppercase{\imprimirinstituicao}} \\
+            \abntex@ifnotempty{\MakeUppercase{\imprimirdepartamento}}
+                {
+                    \textbf{\MakeUppercase{\imprimirdepartamento}} \\
+                }
+        \textbf{\large{\imprimirprograma}} \\
+    \end{figure}
 
     \vspace*{2cm}
 
@@ -318,8 +318,8 @@
     \begin{center}
         \ABNTEXchapterfont\large\MakeUppercase{\imprimirtitulo}
         \abntex@ifnotempty{\imprimirsubtitulo}
-	{
-        	{\ABNTEXchapterfont: }{\large{\imprimirsubtitulo}}
+    {
+            {\ABNTEXchapterfont: }{\large{\imprimirsubtitulo}}
         }
     \end{center}
 
@@ -354,8 +354,8 @@
     \vfill
         \begin{center}
         \begin{SingleSpacing}
-            		\textbf{\large{\imprimirlocal}}\\
-            		\textbf{\large{\imprimirdata}}
+                    \textbf{\large{\imprimirlocal}}\\
+                    \textbf{\large{\imprimirdata}}
         \end{SingleSpacing}
         \end{center}
 }
@@ -398,7 +398,7 @@
             \end{SingleSpacing}
         \end{minipage}
     \end{flushright}
-    
+
     \vspace*{4cm}
 }
 
