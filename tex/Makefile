@@ -1,13 +1,42 @@
-TEXS	=$(wildcard *.tex)
-TEXC	=pdflatex -shell-escape -synctex=1 -interaction=nonstop -file-line-error-style
+TEXC	=pdflatex
+TEXCFLAG=-shell-escape \
+	-synctex=1 \
+	-interaction=nonstopmode \
+	-file-line-error
 
-pdf: main.tex
-	$(TEXC) $<
-	$(TEXC) $<
+BIBC	=bibtex
+BIBCFLAG=
+
+BIBSRCS	=base-referencias.bib
+TEXSRC	=. configuracoes figuras pos-textuais pre-textuais textuais
+TEXSRCS	=$(foreach var,$(TEXSRC),$(wildcard $(var)/*.tex))
+TEXMAIN	=main.tex
+TEXPDFS	=$(patsubst %.tex, %.pdf, $(findstring $(TEXMAIN), $(TEXSRCS)))
+
+# PDF files to be generated in the whole project
+PDFS	=$(TEXPDFS)
+# System PDF viewer
+PDFVIEW	=okular
+
+# Don't use file recipes, use rules and let pdflatex handle this
+pdf:
+	@-$(TEXC) $(TEXCFLAG) $(TEXMAIN) >>/dev/null 2>&1
+	@$(BIBC) $(BIBCFLAG) $(patsubst %.tex,%.aux,$(TEXMAIN))
+	@-$(TEXC) $(TEXCFLAG) $(TEXMAIN) >>/dev/null 2>&1
+	$(TEXC) $(TEXCFLAG) $(TEXMAIN)
+
+show:
+	-$(PDFVIEW) $(PDFS) & disown
 
 clean:
-	find . -name '*.aux' -or -name '*.log' -or -name '*.lot' -or -name '*.lof' -or -name '*.toc' \( -exec rm '{}' \; \)
+	-latexmk -c --quiet >/dev/null 2>&1
 
-all: pdf
+wipe:
+	-latexmk -C --quiet >/dev/null 2>&1
+	-rm -f *.blg *.bbl *.brf *.log
 
-.PHONY: pdf all
+tidy: clean | pdf
+
+all: pdf show
+
+.PHONY: pdf all clean wipe
