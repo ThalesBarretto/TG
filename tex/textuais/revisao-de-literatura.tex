@@ -14,9 +14,9 @@ Descrição e Mapa de Registradores~\cite{mpu6050rm}.
 \\
 \textbf{Controle e Robótica}:
 
-Sistemas de Controle Moderno\cite{Ogata2010},
+Sistemas de Controle Moderno~\cite{Ogata2010},
 
-Introdução à robótica\cite{Craig2014},
+Introdução à robótica~\cite{Craig2014},
 \\
 
 \\
@@ -28,14 +28,221 @@ Introdução à robótica\cite{Craig2014},
 \\
 \textbf{Sistemas de Navegação Inercial}:
 
-Navegação inercial básica~\cite{Stovall1997}.
+Navegação Inercial Básica~\cite{Stovall1997}.
 
-Navegação inercial fixada no corpo~\cite{Weston2004},
+Navegação Inercial Fixada no Corpo~\cite{Weston2004},
 
-Sistemas de controle de aeronaves\cite{Stevens2016},
+Sistemas de Controle de Aeronaves~\cite{Stevens2016},
 
-Controle automático de aeronaves e mísseis\cite{Blakelock1991},
+Controle Automático de Aeronaves e Mísseis~\cite{Blakelock1991},
 
-Navegação inercial pedestre~\cite{Wang2021},
+Navegação Inercial Pedestre~\cite{Wang2021},
 
-Sistemas de navegação embarcados~\cite{Haoran2019}
+Sistemas de Navegação Embarcados~\cite{Haoran2019}
+
+\section{Notação e convenções}
+
+Neste trabalho utilizamos um modelo de mundo tridimensional e mecânica
+clássica. Em outras palavras, nosso espaço é estruturado por três eixos
+ortogonais e descrevemos a posição com um vetor tridimensional. Desse modo,
+descrevemos a atitude e o movimento de um corpo rígido sobre a superfície
+oblata e girante da Terra. Não obstante, serão empregadas aproximações sobre
+uma pequena área para uma terra plana, estacionária e constante, que é acurado
+o bastante para os nossos propósitos.
+
+Utilizamos as mesmas convenções em Stevens~\cite{Stevens2016}:
+
+\begin{align*}
+    \mathbf{p}_{A/B} &\equiv
+    \text{ vetor posição do ponto A em relação ao ponto B} \\
+    \mathbf{v}_{A/i} &\equiv
+    \text{ vetor velocidade do ponto \(A\) no quadro \(F_{i}\)} \\
+    ^{b}\mathbf{\dot{v}}_{A/i} &\equiv
+    \text{ vetor derivada de \(\mathbf{v}_{A/i}\) tomada no quadro \( F_{b}\)} \\
+    \mathbf{v}^{c}_{A/i} &\equiv \left( \mathbf{v}_{A/i} \right)^{c} \equiv
+    \text{ conjunto dos componentes de \(\mathbf{v}_{A/i}\) no sistema de coordenadas \(c\)} \\
+\end{align*}
+
+Componentes de vetores terão subscritos para indicar o sistema de coordenadas ou serão denotados pelo símbolo de vetor com subscritos \(x\), \(y\), e \(z\) para indicar as coordenadas, exceto quando indicado pelo símbolo transposto, e todos vetores são do tipo vetor coluna. Por exemplo:
+
+\begin{align*}
+    &\mathbf{p}^{b}_{A/B} = \begin{bmatrix}x_{b} \\ y_{b} \\ z_{b}\end{bmatrix}&
+    \text{ or }&
+    &\mathbf{v}^{b}_{A/i} = \begin{bmatrix} v_{x} \\ v_{y} \\ v_{z} \end{bmatrix} = \begin{bmatrix} v_{x} & v_{y} & v_{z} \end{bmatrix}^{T}
+\end{align*}
+
+\section{Descrevendo a atitude de um corpo}
+
+\textbf{ADAPTAR de \citeonline{Stevens2016}.}
+
+Standard aircraft practice is to describe aircraft orientation by
+the \(z\), \(y\), \(x\) (also called 3, 2, 1) right-handed Euler
+rotation sequence that is required to get from a reference system
+on the surface of Earth into alignment with an aircraft body-fixed
+coordinate system. The usual choice for the reference system, on
+Earth, is a North-East-down (\(ned\)) system, with the \(x\)-axis
+pointing true North, the z-axis pointing down, and the \(y\)-axis
+completing the right-handed set. The exact meaning of ``down'' will
+be explained in Section 1.6 The aircraft axes are normally aligned
+(\(x\),\(y\),\(z\)), forward, right, and down (\(frd\)), with
+``forward'' aligned with the \textit{longitudinal reference line}
+of the aircraft, and the forward and down axes in the aircraft
+plane of symmetry. Therefore, starting from the reference system,
+the sequence of rotations is:
+
+\begin{enumerate}
+    \item Right-handed rotation about the \(z\)-axis, or positive \(\psi\) (compass heading)
+    \item Right-handed rotation about the new \(y\)-axis, or positive \(\theta\) (pitch)
+    \item Right-handed rotation about the new \(x\)-axis, or positive \(\phi\) (roll)
+\end{enumerate}
+
+The rotations are often described as yaw-pitch-roll sequence,
+starting from the reference system.
+
+The plane rotation matrices can be written down immediately with
+the help of the rules estabilished in the preceding subsection.
+Thus, abbreviating cosine and sine to \(c\) and \(s\), we have,
+
+\begin{align*}
+    C_{f\!r\!d\!/\!n\!e\!d} =
+    \begin{bmatrix}
+        1               &  0            &  0             \\
+        0               &  \cos{\phi}   &  \sin{\phi}    \\
+        0               & -\sin{\phi}   &  \cos{\phi}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \cos{ \theta}   &  0            & -\sin{\theta} \\
+        0               &  1            &  0            \\
+        \sin{ \theta}   &  0            &  \cos{\theta}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \cos{\psi}      &  \sin{\psi}   &  0             \\
+       -\sin{\psi}      &  \cos{\psi}   &  0             \\
+        0               &  0            &  1
+    \end{bmatrix}
+\end{align*}
+\begin{align} \tag{1.3-10}
+    C_{f\!r\!d\!/\!n\!e\!d} &=
+    \begin{bmatrix}
+        c\theta c\psi   & c\theta s\psi & -s\theta    \\
+        \left(-c\phi s\psi + s\phi s\theta c\psi \right) 
+        &  \left( c\phi c\psi + s\phi s\theta s\psi \right) 
+        &  s\phi c\theta                                 \\
+        \left( s\phi s\psi + c\phi s\theta c\psi \right) 
+        &  \left( -s\phi c\psi + c\phi s\theta s\psi \right) 
+        & c\phi c\theta
+    \end{bmatrix}
+\end{align}
+
+This matrix represents a standard transformation and will be used
+throughout the text.
+
+The defined ranges for the rotation angles are
+\begin{align*}
+    -\pi  < \phi \leq \pi \\
+    -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
+    -\pi < \psi \leq \pi
+\end{align*}
+
+If the pitch angle, \( \theta \), had beem allowed to have a \( \pm
+180^{\circ} \) range then the airplane could be inverted and
+heading South with the roll and heading angles reading zero, which
+is obviously undesirable from a human factor viewpoint! The
+restriction on theta can be enforced naturally, simply by
+interpretation of the DCM, as we see in the next subsection.
+
+\section{Cinemática e Ângulos de Euler}
+\\
+
+\textbf{ADAPTADO de \citeonline{Stevens2016}.}
+
+\\
+Para vincular as taxas de ângulos de Euler, que descrevem a mudança de atitude
+de um corpo, à sua velocidade angular, procedemos do seguinte modo. Definimos
+um quadro de referência \(F_{r}\) e um quadro do corpo \(F_{b}\) com vetor
+velocidade angular relativa \(\omega_{b/r}\) e uma sequencia de ângulos de Euler
+que define a atitude do corpo, ou seja, a orientação do sistema de coordenadas preso
+ao corpo em relação ao sistema de referência. Cada taxa de ângulos de Euler
+informa a direção e magnitude para um determinado vetor velocidade angular
+sobre um eixo de coordenadas em particular. Esses três vetores somados formam o
+vetor velocidade angular resultante do veículo cujas taxas de ângulos de Euler
+estamos tratando. Desse modo podemos encontrar os componentes do vetor
+velocidade angular resultante.
+
+Em outras palavras, estamos tratando de movimento sobre a Terra, com um sistema de
+coordenada \(frd\) (\emph{``front'', ``right'', ``down''} - frente, direita,
+abaixo) preso no corpo, com o sistema \(ned\) (\emph{``north'', ``east'', ``down''}
+- norte, leste abaixo) no quadro de referência, e uma sequencia
+``yaw-pitch-roll'' de ângulos de Euler do sistema \(ned\) para o sistema
+\(frd\). No caso das equações de Terra plana o sistema \(ned\) é fixado na
+Terra, e a velocidade angular relativa é aquela do corpo em relação à Terra. No
+caso mais geral das equações com seis graus de liberdade o sistema \(ned\) se
+move sobre a Terra, abaixo do corpo, e devemos estabelecer um quadro de
+referência abstrato que tem sua própria velocidade angular em relação ao
+sistema da Terra (determinada pela latitude e longitude).
+
+As transformações de coordenadas são:
+\begin{align*}
+    \mathbf{\omega}^{frd}_{b/r} = \begin{bmatrix} \dot\phi \\ 0 \\0 \end{bmatrix}
+    + C_{\phi} \begin{pmatrix}
+        \begin{bmatrix} 0 \\ \dot\theta \\ 0 \end{bmatrix}
+        + C_{\theta}\begin{bmatrix} 0 \\ 0 \\ \dot\psi \end{bmatrix}
+    \end{pmatrix}
+\end{align*}
+
+\ldots sendo \(C_{\phi}\) e \(C_{\theta}\)  as rotações (anti-horárias) dos
+planos por cada ângulo de Euler em particular, conforme equação (1.3-10). Após
+multiplicar as matrizes, teremos:
+
+\begin{align} \tag{1.4-3}
+    \mathbf{\omega}^{frd}_{b/r} \equiv \begin{bmatrix} P \\ Q \\ R \end{bmatrix}
+    = \begin{bmatrix}
+        1 & 0 & -\sin{\theta} \\
+        0 & \cos{\phi} & \sin{\phi}\cos{\theta} \\
+        0 & -\sin{\phi} & \cos{\phi}\cos{\theta}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \dot\phi \\
+        \dot\theta \\
+        \dot\psi
+    \end{bmatrix}
+\end{align}
+
+\ldots onde \(P\), \(Q\), \(R\), são os símbolos padrão para os componentes do
+vetor velocidade angular do corpo espresso no sistema \(frd\), respectivamente,
+rolagem (\emph{``roll''}), arfada (\emph{``pitch''}) e guinada
+(\emph{``yaw''}). A transformação inversa é dada por:
+
+\begin{align} \tag{1.4-4}
+    \begin{bmatrix}
+        \dot\phi \\
+        \dot\theta \\
+        \dot\psi
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        1 & \sin{\phi}\tan{\theta} & \cos{\phi}\tan{\theta} \\
+        0 & \cos{\phi} & -\sin{\phi} \\
+        0 & \frac{\sin{\phi}}{\cos{\theta}} & \frac{\cos{\phi}}{\cos{\theta}}
+    \end{bmatrix}
+    \begin{bmatrix}
+        P \\ Q \\ R
+    \end{bmatrix}
+\end{align}
+
+Para simplificar, definimos \(\Phi \equiv \left[\phi \theta \psi \right]^T \) e reescrevemos  (1.4-4) assim:
+
+\begin{equation} \tag{1.4-5}
+    \Phi = H \left( \Phi \right) \mathbf{\omega}^{frd}_{b/r}
+\end{equation}
+
+As equações (1.4-3) e (1.4-4) serão referidos como as equações cinemáticas de
+Euler. Note que as matrizes de coeficientes \emph{não são} matrizes ortogonais
+representando rotações ordinárias de coordenadas. Note ainda que as Equações
+(1.4-4) e (1.4-4) possuem uma singularidade quando  \(\theta = \pm
+\frac{\pi}{2}\). Ainda, se essas equações forem utilizadas em uma simulação, as
+taxas de ângulos de Euler podem integrar para ângulos fora do intervalos de
+ângulos de Euler, e portanto, seria necessário incluir uma lógica para lidar
+com essa situação no programa simulador. Não obstante, as equações cinemáticas
+de Euler são bastante empregadas em simulações.
+
