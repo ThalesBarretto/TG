@@ -3,29 +3,24 @@
 Fazer referências às fontes consultadas:
 \\
 
-\\
 \textbf{Manuais de Produto}:
 
 Especificação do Produto~\cite{mpu6050ps},
 
 Descrição e Mapa de Registradores~\cite{mpu6050rm}.
-\\
 
-\\
 \textbf{Controle e Robótica}:
 
 Sistemas de Controle Moderno~\cite{Ogata2010},
 
-Introdução à robótica~\cite{Craig2014},
-\\
+Introdução à Robótica~\cite{Craig2014},
 
-\\
 \textbf{Ângulos de Euler}:
 
 Ângulos de Euler~\cite{Henderson1997},
-\\
 
-\\
+Mecânica Clássica~\cite{Goldstein1980},
+
 \textbf{Sistemas de Navegação Inercial}:
 
 Navegação Inercial Básica~\cite{Stovall1997}.
@@ -42,66 +37,44 @@ Sistemas de Navegação Embarcados~\cite{Haoran2019}
 
 \section{Notação e convenções}
 
-Neste trabalho utilizamos um modelo de mundo tridimensional e mecânica
-clássica. Em outras palavras, nosso espaço é estruturado por três eixos
-ortogonais e descrevemos a posição com um vetor tridimensional. Desse modo,
-descrevemos a atitude e o movimento de um corpo rígido sobre a superfície
-oblata e girante da Terra. Não obstante, serão empregadas aproximações sobre
-uma pequena área para uma terra plana, estacionária e constante, que é acurado
-o bastante para os nossos propósitos.
+Neste trabalho utilizamos um modelo de mundo tridimensional e mecânica clássica.  Nosso espaço é estruturado por três eixos ortogonais \(x\), \(y\), \(z\) (\(1, 2, 3\)) onde uma posição é dada por um vetor tridimensional. Descreveremos a atitude e o movimento de um corpo rígido sobre a superfície oblata e girante da Terra. Não obstante, serão empregadas aproximações sobre uma pequena área para uma terra plana, estacionária e constante, que basta\footnotemark{} para os nossos propósitos.
 
-Utilizamos as mesmas convenções em Stevens~\cite{Stevens2016}:
-
+Empregaremos as convenções em~\cite{Stevens2016}:
 \begin{align*}
     \mathbf{p}_{A/B} &\equiv
     \text{ vetor posição do ponto A em relação ao ponto B} \\
     \mathbf{v}_{A/i} &\equiv
     \text{ vetor velocidade do ponto \(A\) no quadro \(F_{i}\)} \\
     ^{b}\mathbf{\dot{v}}_{A/i} &\equiv
-    \text{ vetor derivada de \(\mathbf{v}_{A/i}\) tomada no quadro \( F_{b}\)} \\
+    \text{ vetor derivada de \(\mathbf{v}_{A/i}\) tomada no sistema \( F_{b}\)} \\
     \mathbf{v}^{c}_{A/i} &\equiv \left( \mathbf{v}_{A/i} \right)^{c} \equiv
     \text{ conjunto dos componentes de \(\mathbf{v}_{A/i}\) no sistema de coordenadas \(c\)} \\
 \end{align*}
 
-Componentes de vetores terão subscritos para indicar o sistema de coordenadas ou serão denotados pelo símbolo de vetor com subscritos \(x\), \(y\), e \(z\) para indicar as coordenadas, exceto quando indicado pelo símbolo transposto, e todos vetores são do tipo vetor coluna. Por exemplo:
-
+Componentes de vetores terão índices para indicar o sistema de coordenadas ou serão denotados pelo símbolo de vetor com índices \(x\), \(y\), e \(z\) para indicar as coordenadas, exceto quando indicado pelo símbolo transposto, e todos vetores são do tipo vetor coluna. Por exemplo:
 \begin{align*}
     &\mathbf{p}^{b}_{A/B} = \begin{bmatrix}x_{b} \\ y_{b} \\ z_{b}\end{bmatrix}&
-    \text{ or }&
+    \text{ ou }&
     &\mathbf{v}^{b}_{A/i} = \begin{bmatrix} v_{x} \\ v_{y} \\ v_{z} \end{bmatrix} = \begin{bmatrix} v_{x} & v_{y} & v_{z} \end{bmatrix}^{T}
 \end{align*}
 
+\footnotetext{A título de advertência, o assunto não é simples, com diversos formalismos possíveis, um campo fértil para confusão. Por exemplo, a atitude de um corpo pode ser descrita em três dimensões com ângulos de Euler ao menos em doze sequências de rotações anti-horárias distintas, não intercambiáveis, ou ainda pode ser descrita em quatro dimensões com o uso do quaternion, conforme observamos em~\cite{Henderson1997}. Além disso, é importante separar a orientação relativa do nosso espaço tridimensional em abstrato, do eixo de referência em relação ao nosso espaço abstrato, e do sistema móvel que pretendemos descrever em relação ao sistema de referência. No presente trabalho adotaremos um único formalismo que atende aos nossos propósitos limitados, e remetemos o leitor às fontes para aprofundamento do assunto.}
+
 \section{Descrevendo a atitude de um corpo}
 
-\textbf{ADAPTAR de \citeonline{Stevens2016}.}
+\textbf{ADAPTADO de \citeonline{Stevens2016}.}
 
-Standard aircraft practice is to describe aircraft orientation by
-the \(z\), \(y\), \(x\) (also called 3, 2, 1) right-handed Euler
-rotation sequence that is required to get from a reference system
-on the surface of Earth into alignment with an aircraft body-fixed
-coordinate system. The usual choice for the reference system, on
-Earth, is a North-East-down (\(ned\)) system, with the \(x\)-axis
-pointing true North, the z-axis pointing down, and the \(y\)-axis
-completing the right-handed set. The exact meaning of ``down'' will
-be explained in Section 1.6 The aircraft axes are normally aligned
-(\(x\),\(y\),\(z\)), forward, right, and down (\(frd\)), with
-``forward'' aligned with the \textit{longitudinal reference line}
-of the aircraft, and the forward and down axes in the aircraft
-plane of symmetry. Therefore, starting from the reference system,
-the sequence of rotations is:
+Descrevemos a atitude de um veículo em ângulos de Euler na sequência \(z\), \(y\), \(x\) (3, 2, 1) que leva de do sistema de referência na Terra até um sistema alinhado com o corpo do veículo. É comum escolher o sistema (\(ned\)) - ``North-East-Down'' (Norte, Leste, Abaixo) com o eixo \(x\) apontando par o Norte, o eixo \(z\) Abaixo, o eixo \(y\) completando o sistema de coordenadas. Os eixos do sistema (\(frd\)) - ``Front-Right-Down'' (Avante, Direita, Abaixo) no veículo são, respectivamente, (\(x\),\(y\),\(z\)), sendo o Avante alinhado à \emph{linha de referência longitudinal} do veículo, com os eixos  ``Avante'' e ``Abaixo'' situados no plano de simetria do veículo. Desse a modo, a sequência de rotação que leva do sistema de referência \(ned\) para o sistema \(frd\) no corpo é dada por:
 
 \begin{enumerate}
-    \item Right-handed rotation about the \(z\)-axis, or positive \(\psi\) (compass heading)
-    \item Right-handed rotation about the new \(y\)-axis, or positive \(\theta\) (pitch)
-    \item Right-handed rotation about the new \(x\)-axis, or positive \(\phi\) (roll)
+    \item Rotação anti-horária sobre eixo \(z\), ou \(\psi\) positivo (\textit{``compass heading''})
+    \item Rotação anti-horária sobre novo eixo \(y'\), ou \(\theta\) positivo (\textit{pitch})
+    \item Rotação anti-horária sobre novo eixo \(x''\), ou \(\phi\) positivo (\textit{roll})
 \end{enumerate}
 
-The rotations are often described as yaw-pitch-roll sequence,
-starting from the reference system.
+Esta sequência de rotações é normalmente denominada \emph{``yaw, pitch, roll''}, partindo do sistema de referência.
 
-The plane rotation matrices can be written down immediately with
-the help of the rules estabilished in the preceding subsection.
-Thus, abbreviating cosine and sine to \(c\) and \(s\), we have,
+Podemos escrever as matriz de rotação (abreviando co-seno por \(c\) e seno por \(s\)):
 
 \begin{align*}
     C_{f\!r\!d\!/\!n\!e\!d} =
@@ -134,54 +107,80 @@ Thus, abbreviating cosine and sine to \(c\) and \(s\), we have,
     \end{bmatrix}
 \end{align}
 
-This matrix represents a standard transformation and will be used
-throughout the text.
+Esta matriz representa uma transformação padrão que será utilizada ao longo do texto.
 
-The defined ranges for the rotation angles are
+O intervalo de validade para o qual os ângulos de rotação são bem definidos é:
 \begin{align*}
     -\pi  < \phi \leq \pi \\
     -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
     -\pi < \psi \leq \pi
 \end{align*}
 
-If the pitch angle, \( \theta \), had beem allowed to have a \( \pm
-180^{\circ} \) range then the airplane could be inverted and
-heading South with the roll and heading angles reading zero, which
-is obviously undesirable from a human factor viewpoint! The
-restriction on theta can be enforced naturally, simply by
-interpretation of the DCM, as we see in the next subsection.
+Caso o ângulo \( \theta \) fosse definido no intervalo de \( \pm 180^{\circ} \) o veículo estaria apontando para o Sul com os ângulos \(\phi\) e \(\psi\) em \( 0^{\circ}\) o que é indesejável pois pode confundir a interpretação.
+
+
+\section{Cinemática Rotacional}
+
+Aqui definiremos a derivada de um vetor, mostraremos como ela depende do sistema de referência do observador, e relacionamos as derivadas de um vetor, tomadas em dois sistemas de referência distintos, através do vetor velocidade angular relativa entre esses dois sistemas.
+
+Genericamente a derivada de um vetor é similar à derivada de um escalar:
+\begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}t} \mathbf{p}_{A/B} =  \lim_{\delta t \rightarrow 0 } \begin{bmatrix}
+        \displaystyle\frac{\mathbf{p}_{A/B} (t + \delta t) - \mathbf{p}_{A/B} (t) }{\delta t}
+    \end{bmatrix}
+\end{equation*}
+
+Este é novo vetor criado pelas mudanças de comprimento e direção de \(\mathbf{p}_{A/B}\). Sendo \(\mathbf{p}\) um vetor livre, por exemplo, a velocidade, esperamos que sua derivada seja independente de translação, e que as mudanças de comprimento e direção decorram do movimento da ponta de \(\mathbf{p}\) em relação à cauda. Se \(\mathbf{p}\) seja um vetor vinculado a algum sistema, por exemplo o vetor posição, sua derivada naquele sistema é um vetor livre que corresponde à ponta de \(\mathbf{p}\).
+
+\subsection{Velocidade Angular como Vetor}
+
+Um vetor pode apontar em qualquer direção por meio de uma simples rotação ao longo de um eixo apropriado. A fórmula para essa rotação é descrita em~\cite{Goldstein1980}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth, keepaspectratio]{figuras/figure1.2-1.png}\label{fig1.2-1}
+    \caption{Rotação de um vetor}
+\end{figure}
+
+Na figura acima, o vetor \(\mathbf{u}\) foi rotacionado para formar o vetor \(\mathbf{v}\) ao definirmos um eixo de rotação ao longo do vetor \(\mathbf{n}\) e realizarmos uma rotação pelo ângulo \(\mu\) ao redor de \(\mathbf{n}\). Estes dois vetores se somam a \(\mathbf{u}\) para obtermos \(\mathbf{v}\), e onde temos que:
+    \begin{align*}
+     \mathbf{v} &= \mathbf{u} + \left(1 - {\cos{\mu}}\right) \left(\mathbf{n}\!\times\!\left(\mathbf{n}\!\times\!\mathbf{u}\right)\right) - \left(\mathbf{n}\!\times\!\mathbf{u}\right){\sin{\mu}} \tag{1.2-5a}
+    \end{align*}
+    \ldots ou
+    \begin{align*}
+     \mathbf{v} = \left(1 - {\cos{\mu}}\right) \mathbf{n}\!\left(\mathbf{n}\cdot\mathbf{u}\right) + \mathbf{u}{\cos{\mu}} - \left(\mathbf{n}\!\times\!\mathbf{u}\right){\sin{\mu}} \tag{1.2-5b}
+    \end{align*}
+
+    As equações acima (1.2-5), às vezes chamadas de \textit{formula de rotação}, mostram ao definirmos \(\mathbf{n}\) e \(\mu\) podemos operar sobre \(\mathbf{u}\) com produtos escalares e vetoriais para obter a rotação deseja, independente de sistemas de coordenadas ou magnitude do ângulo.
+
+    Partindo da figura acima, fazemos uma rotação infinitesimal \(\delta\mu \ll 1 \text{rad}\), definindo \(\mathbf{v} = \mathbf{u} + \delta \mathbf{u}\), e a partir da equação (1.2-5\(a\)) obtemos:
+\begin{equation*}
+    \delta \mathbf{u} \approx -\!\sin(-\delta\mu)\mathbf{n}\!\times\!\mathbf{u} \approx (\mathbf{n}\!\times\!\mathbf{u})\delta\mu
+\end{equation*}
+
+Dividindo por \(\delta t\), no limite em que \(\delta t \rightarrow 0\), definimos \(\mathbf{\omega} \equiv \dot{\mu}\mathbf{n}\), obtendo:
+
+\begin{equation*}
+    \dot{\mathbf{u}} = \mathbf{\omega}\!\times\!\mathbf{u}\tag{1.4-1}
+\end{equation*}
+
+Esta equação relaciona a velocidade translacional da ponta do vetor, vinculado e de comprimento constante, \(\mathbf{u}\) ao vetor \(\mathbf{\omega}\). O vetor \(\mathbf{\omega}\) constitui-se de um vetor unitário definindo o eixo de rotação, multiplicado pela taxa de rotação, e o denominamos \textit{vetor velocidade angular} dessa rotação. Este é um vetor livre que pode ser trasladado paralelo a si mesmo e um pseudovetor axial, que mudaria de direção caso houvéssemos escolhido uma convenção de sentido horário para a rotação.
+
+Sendo \(\mathbf{\omega}\) um vetor livre, podemos associar ao sistema fixado no corpo, atribuindo índices que indicam que ele representa a velocidade angular do corpo em relação a outro determinado sistema. A orientação de um corpo rígido pode ser descrita por uma matriz rotacional variante no tempo, e por consectário do teorema de Euler o corpo possui um único \emph{eixo instantâneo de rotação} ao qual o velocidade angular é paralelo e também único.
 
 \section{Cinemática e Ângulos de Euler}
-\\
 
 \textbf{ADAPTADO de \citeonline{Stevens2016}.}
-
 \\
-Para vincular as taxas de ângulos de Euler, que descrevem a mudança de atitude
-de um corpo, à sua velocidade angular, procedemos do seguinte modo. Definimos
-um quadro de referência \(F_{r}\) e um quadro do corpo \(F_{b}\) com vetor
-velocidade angular relativa \(\omega_{b/r}\) e uma sequencia de ângulos de Euler
-que define a atitude do corpo, ou seja, a orientação do sistema de coordenadas preso
-ao corpo em relação ao sistema de referência. Cada taxa de ângulos de Euler
-informa a direção e magnitude para um determinado vetor velocidade angular
-sobre um eixo de coordenadas em particular. Esses três vetores somados formam o
-vetor velocidade angular resultante do veículo cujas taxas de ângulos de Euler
-estamos tratando. Desse modo podemos encontrar os componentes do vetor
-velocidade angular resultante.
 
-Em outras palavras, estamos tratando de movimento sobre a Terra, com um sistema de
-coordenada \(frd\) (\emph{``front'', ``right'', ``down''} - frente, direita,
-abaixo) preso no corpo, com o sistema \(ned\) (\emph{``north'', ``east'', ``down''}
-- norte, leste abaixo) no quadro de referência, e uma sequencia
-``yaw-pitch-roll'' de ângulos de Euler do sistema \(ned\) para o sistema
-\(frd\). No caso das equações de Terra plana o sistema \(ned\) é fixado na
-Terra, e a velocidade angular relativa é aquela do corpo em relação à Terra. No
-caso mais geral das equações com seis graus de liberdade o sistema \(ned\) se
-move sobre a Terra, abaixo do corpo, e devemos estabelecer um quadro de
-referência abstrato que tem sua própria velocidade angular em relação ao
-sistema da Terra (determinada pela latitude e longitude).
+Um corpo em movimento pode mudar sua atitude ao longo do tempo, descrita em ângulos de Euler que vão mudando ao longo do tempo, e neste sentido podemos falar de uma taxa de mudança de cada um desses ângulos de Euler ao longo do tempo. Essas taxas são coisa distinta, é preciso dizer, do vetor velocidade angular do corpo.
+
+Para vincular as taxas de ângulos de Euler, que descrevem a mudança de atitude de um corpo, à sua velocidade angular, procedemos do seguinte modo. Definimos um quadro de referência \(F_{r}\) e um quadro do corpo \(F_{b}\) com vetor velocidade angular relativa \(\omega_{b/r}\) e uma sequencia de ângulos de Euler que define a atitude do corpo, ou seja, a orientação do sistema de coordenadas preso ao corpo em relação ao sistema de referência. Cada taxa de ângulos de Euler informa a direção e magnitude para um determinado vetor velocidade angular sobre um eixo de coordenadas em particular. Esses três vetores somados formam o vetor velocidade angular resultante do veículo cujas taxas de ângulos de Euler estamos tratando. Desse modo podemos encontrar os componentes do vetor velocidade angular resultante.
+
+Em outras palavras, estamos tratando de movimento sobre a Terra, com um sistema de coordenada \(frd\) (\emph{``front'', ``right'', ``down''} - frente, direita, abaixo) preso no corpo, com o sistema \(ned\) (\emph{``north'', ``east'', ``down''} - norte, leste abaixo) no quadro de referência, e uma sequencia ``yaw-pitch-roll'' de ângulos de Euler do sistema \(ned\) para o sistema \(frd\). No caso das equações de Terra plana o sistema \(ned\) é fixado na Terra, e a velocidade angular relativa é aquela do corpo em relação à Terra. No caso mais geral das equações com seis graus de liberdade o sistema \(ned\) se move sobre a Terra, abaixo do corpo, e devemos estabelecer um quadro de referência abstrato que tem sua própria velocidade angular em relação ao sistema da Terra (determinada pela latitude e longitude).
 
 As transformações de coordenadas são:
+
 \begin{align*}
     \mathbf{\omega}^{frd}_{b/r} = \begin{bmatrix} \dot\phi \\ 0 \\0 \end{bmatrix}
     + C_{\phi} \begin{pmatrix}
@@ -208,10 +207,7 @@ multiplicar as matrizes, teremos:
     \end{bmatrix}
 \end{align}
 
-\ldots onde \(P\), \(Q\), \(R\), são os símbolos padrão para os componentes do
-vetor velocidade angular do corpo espresso no sistema \(frd\), respectivamente,
-rolagem (\emph{``roll''}), arfada (\emph{``pitch''}) e guinada
-(\emph{``yaw''}). A transformação inversa é dada por:
+\ldots sendo \(P\), \(Q\), \(R\), os componentes do vetor velocidade angular do corpo espresso no sistema \(frd\), respectivamente, rolagem (\emph{``roll''}), arfada (\emph{``pitch''}) e guinada (\emph{``yaw''}). A transformação inversa é dada por:
 
 \begin{align} \tag{1.4-4}
     \begin{bmatrix}
@@ -236,13 +232,5 @@ Para simplificar, definimos \(\Phi \equiv \left[\phi \theta \psi \right]^T \) e 
     \Phi = H \left( \Phi \right) \mathbf{\omega}^{frd}_{b/r}
 \end{equation}
 
-As equações (1.4-3) e (1.4-4) serão referidos como as equações cinemáticas de
-Euler. Note que as matrizes de coeficientes \emph{não são} matrizes ortogonais
-representando rotações ordinárias de coordenadas. Note ainda que as Equações
-(1.4-4) e (1.4-4) possuem uma singularidade quando  \(\theta = \pm
-\frac{\pi}{2}\). Ainda, se essas equações forem utilizadas em uma simulação, as
-taxas de ângulos de Euler podem integrar para ângulos fora do intervalos de
-ângulos de Euler, e portanto, seria necessário incluir uma lógica para lidar
-com essa situação no programa simulador. Não obstante, as equações cinemáticas
-de Euler são bastante empregadas em simulações.
+As equações (1.4-3) e (1.4-4) serão referidos como as equações cinemáticas de Euler. Note que as matrizes de coeficientes \emph{não são} matrizes ortogonais representando rotações ordinárias de coordenadas. Note ainda que as Equações (1.4-4) e (1.4-4) possuem uma singularidade quando  \(\theta = \pm \frac{\pi}{2}\). Ainda, se essas equações forem utilizadas em uma simulação, as taxas de ângulos de Euler podem integrar para ângulos fora do intervalos de ângulos de Euler, e portanto, seria necessário incluir uma lógica para lidar com essa situação no programa simulador. Não obstante, as equações cinemáticas de Euler são bastante empregadas em simulações.
 
