@@ -196,122 +196,108 @@ Para simplificar, definimos \(\Phi \equiv \left[\phi \theta \psi \right]^T \) e 
 
 As equações (1.4-3) e (1.4-4) serão referidas como as equações cinemáticas de Euler, como faz~\cite{Stevens2016}. Note que as matrizes de coeficientes \emph{não são} matrizes ortogonais representando rotações ordinárias de coordenadas. Note ainda que as Equações (1.4-4) e (1.4-4) possuem uma singularidade quando  \(\theta = \pm \frac{\pi}{2}\). Ainda, se essas equações forem utilizadas em uma simulação, as taxas de ângulos de Euler podem integrar para ângulos fora do intervalos de ângulos de Euler, e portanto, seria necessário incluir uma lógica para lidar com essa situação no programa simulador. Não obstante, as equações cinemáticas de Euler são bastante empregadas em simulações.
 
-\section{Equações do movimento}
+\section{Derivada de um vetor em sistemas móveis}
 
-ADAPTAR DE \cite{Stevens2016}
-
-\subsection{Vector Derivatives and Rotation}
-
-To understand the derivative of a vector, observed from another frame, in relative motion, we can proceed as follows.
-
-Figure 1.4-1 shows a frame \(F_{b}\) in arbitrary motion with respect to another frame \(F_{a}\) and with angular velocity \(\mathbf{\omega}_{b/a}\). Fixed point \(Q\) has translational velocity \(\mathbf{v}_{Q/a}\) with respect to \(F_{a}\), and vector \(\mathbf{p}\) from \(Q\) is the vector of interest. An observer in \(F_{b}\) watching the tip of this vector would see the new vector \(\mathbf{p}_{1}\) corresponding to a nonzero derivative \({^b\dot{\mathbf{p}}}\). An observer in \(F_{a}\) would see, in addition, the effect of the angular velocity of \(F_{b}\) with respect to \(F_{a}\), giving the vector \(\mathbf{p}_{2}\). The \(F_{a}\) observer would also see \(\mathbf{p}_{2}\) translated parallel to itself because of the translational velocity \(\mathbf{v}_{Q/a}\). However, the derivative in \(F_{a}\) is a free vector and this translation does not entail a change in length or direction of \(\mathbf{p}_{2}\). The derivative \(^{a}\dot{\mathbf{p}}\) is obtained by comparing \(\mathbf{p}_{2}\) with \(\mathbf{p}\) as \(\delta t \rightarrow 0\).
-\begin{figure}[h!]
+Nesta seção deveremos obter as equações gerais para o movimento de um corpo no espaço tridimensional. Para generalizar a derivada de um vetor em relação em sistemas móveis obteremos \(^{a}\dot{\mathbf{p}}\) a partir da figura abaixo:
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth, keepaspectratio]{figuras/figure1.4-1.png}\label{fig1.4-1}
-    \caption{A vector derivative in a rotating frame.}
+    \caption{Derivada de um vetor em sistemas móveis.}
+    \fonte{\cite{Stevens2016}}
 \end{figure}
-In time \(\delta t\), \(\mathbf{p}_{2} \!-\! \mathbf{p}\) is given by
-\begin{equation*}
+
+Os sistemas \(F_{b}\) e \(F_{a}\) têm velocidade angular relativa \(\mathbf{\omega}_{b/a}\). O ponto \(Q\), fixo em \(F_{b}\), traslada em relação a \(F_{a}\) a uma velocidade \(\mathbf{v}_{Q/a}\). Partindo de  \(Q\) nasce o vetor \(\mathbf{p}\). Observando a partir de \(F_{b}\) estabelecemos \(\mathbf{p}_{1}\) ao acrescentar o efeito \({^b\dot{\mathbf{p}}}\). Olhando a partir de \(F_{a}\) estabelecemos o vetor  \(\mathbf{p}_{2}\) ao somar, ainda, o efeito de \(\mathbf{\omega}_{b/a}\).A partir de \(F_{a}\), estabelecemos \(\mathbf{p}_{3}\) somando o efeito de \(\mathbf{v}_{Q/a}\), que, entretanto, não muda o comprimento ou direção de \(\mathbf{p}_{2}\).Portanto, para obtermos \(^{a}\dot{\mathbf{p}}\) devemos  comparar \(\mathbf{p}_{2}\) a \(\mathbf{p}\) quando \(\delta t \rightarrow 0\). Desse modo, no instante \(\delta t\), \(\mathbf{p}_{2} \!-\! \mathbf{p}\) temos: 
+\begin{equation*}.
     \mathbf{p}_{2} - \mathbf{p} = {^{b}\dot{\mathbf{p}}} \delta t + \left( \mathbf{\omega}_{b/a} \! \times \!\mathbf{p} \right) \delta t
 \end{equation*}
-Dividing by \(\delta t\) and taking the limit as \(\delta t \rightarrow 0\) give
+
+Dividindo por \(\delta t\) no limite em que \(\delta t \rightarrow 0\) resulta na equação\footnotemark{}:
 \begin{equation*} \tag{1.4-2}
     {^{a}\dot{\mathbf{p}}} = {^{b}\dot{\mathbf{p}}} + {\mathbf{\omega}_{b/a} \! \times \!\mathbf{p}}
 \end{equation*}
 
-Equation (1.4-2) is sometimes called the \textit{equation of Coriollis} (Blakelock, 1965) and will be an essential tool in developing equations of motion from Newton's laws. It is much more general than is indicated above and applies to any physical quantity that has a vector representation. The derivatives need not even be taken with respect to time. Angular velocity can be defined as the vector that relates the derivatives of any arbitraty frames, according to (1.4-2). In the interests of having a vector diagram and intuitive feel, we have derived the equation in a rather restricted fashio. A mro rigorous derivation (with no diagram) has been given by McGill and King( 1992) and a longish derivation with a different kind of diagram by Pestel and Thompson (1968).
+\footnotetext{``Equação de Coriolis''~\cite{Stevens2016},~\cite{Blakelock1991}.}
 
-Some formal properties of the angular velocity vector are:
+Dentre as propriedades do vetor velocidade angular destacamos\footnotemark{}:
 \begin{enumerate}[label=\alph*)]
-\item It is a unique vector that relates the derivatives of a vector taken in two different frames.
-\item It satisfies the relative motion condition \(\mathbf{\omega}_{b/a} = - \mathbf{\omega}_{a/b}\).
-\item It is additive over multiple frames, e.g., \(\mathbf{\omega}_{c/a} = \!\mathbf{\omega}_{c/b} + \mathbf{\omega}_{b/a}\) (not true of angular acceleration).
-\item Its derivative is the same in either frame, \({^{a}\dot{\mathbf{\omega}}_{b/a}} = {^{b}\dot{\mathbf{\omega}}_{a/b}} \) [Use (1.4--2) to find the derivative.]
+\item É único e relaciona as derivadas de um vetor tomadas em dois sistemas.
+\item Satisfaz a condição de movimento relativo \(\mathbf{\omega}_{b/a} = - \mathbf{\omega}_{a/b}\).
+\item É aditivo entre sistemas, ou seja, \(\mathbf{\omega}_{c/a} = \!\mathbf{\omega}_{c/b} + \mathbf{\omega}_{b/a}\) (não vale para aceleração angular).
+\item Sua derivada é ambos os sistemas , \({^{a}\dot{\mathbf{\omega}}_{b/a}} = {^{b}\dot{\mathbf{\omega}}_{a/b}} \) .
 \end{enumerate}
+\footnotetext{Seguindo \cite{Stevens2016}}.
 
-A common problem is the determination of an angular velocity vector after the frames have been defined in a practical application. This can be achieved by finding one or more intermediate frames in which an axis of rotation and an angular rate are physically evident. Then the additive property can be invoked to combine the intermediate angular velocities. An example of this is given later, with the ``rotating-Earth'' equations of motion of an aerospace vehicle.
-
-The derivative of a vector in some frame can be found from the derivatives of its components in a coordinate system fixed in that frame, that is, if
+Ainda, derivada de um vetor em um quadro pode ser encontrada a partir das derivadas dos seus componentes expressas em um sistema fixo no mesmo quadro, por exemplo:
 \begin{equation*}
     \mathbf{v}^{a\!f} = \begin{bmatrix} v_{x} & v_{y} & v_{z} \end{bmatrix}^{T}
 \end{equation*}
 
-If the vector is from a fixed point in that frame, it is a velocity, acceleration, etc., with respect to that frame. If the vector is from a fixed point in a different frame, then it is a relative velocity, acceleration, etc., taken in the derivative frame.
+%\section{Cinemática translacional}
+%
+%In this section we introduce the equations for relative velocity and relative acceleration between rigid bodies in motion and, in particular, introduce \textit{centripetal} and \textit{Coriolis acceleration}. The equations are then applied to motion over Earth, and the results are used in the 6-DoF motion in Section 1.7.
 
-\paragraph{Example 1.4-1: Centripetal Acceleration on Earth's surface.} If \(\mathbf{p}\) is a position vector from Earth's cm to a fixed point \(P\) on the surface rotating with Earth's (constant) inertial angular velocity \(\mathbf{\omega}_{e\!/\!i}\), then the inertial acceleration vector \(\mathbf{a}\) of \(P\) can be found from
-\begin{align*}
-\mathbf{v}_{P/i} &= {^{i}\dot{\mathbf{p}}} = {^{e}\dot{\mathbf{p}}} + \mathbf{\omega}_{e/i}\!\times\!\mathbf{p} \\
-\mathbf{a} &= {^{i}\dot{\mathbf{v}}_{P/i}} = {^{i}\dot{\mathbf{\omega}}_{e/i}} \! \times \! \mathbf{p} + \mathbf{\omega}_{e/i} \! \times {^{i}\dot{\mathbf{p}}} = \mathbf{\omega}_{e/i} \! \times \! \left(\mathbf{\omega}_{e/i}\!\times\!\mathbf{p}\right) \tag{1}
-\end{align*}
+\section{Velocidade e Aceleração em quadros móveis}
 
-It is easy to confirm that this \textit{centripetal acceleration} is orthogonal to the angular velocity vector and to show that this equation leads to the well-known scalar formulae \( \left(v^{2}/r \text{ and } r \omega^{2} \right) \) for centripetal acceleration in a plane perpendicular to the angular velocity vector.
-
-\subsection{Translational Kinematics}
-
-In this section we introduce the equations for relative velocity and relative acceleration between rigid bodies in motion and, in particular, introduce \textit{centripetal} and \textit{Coriolis acceleration}. The equations are then applied to motion over Earth, and the results are used in the 6-DoF motion in Section 1.7.
-
-\subsection{Velocity and Acceleration in Moving Frames}
-
-Figure 1.5-1 shows a point \(P\) with position vector \(\mathbf{p}\) moving with respect to two frames \(F_{a}\) and \(F_{b}\), in relative motion, and with fixed points \(O\) and \(Q\), respectively. Suppose that we wish to relate the velocities in the two frames and also the accelerations. We must first relate the position vectors shown in the figure and then take derivatives in \(F_{a}\) to introduce velocity (we are arbitrarily choosing \(F_{a}\) to be the ``reference'' frame):
-\begin{align}
-    \mathbf{p}_{P/O} &= \mathbf{p}_{Q/O} + \mathbf{p}_{P/Q} \tag{1.5-1} \\
-    {^{a}\dot{\mathbf{p}}_{P/O}} &= {^{a}\dot{\mathbf{p}}_{Q/O}} + {^{a}\dot{\mathbf{p}}_{P/Q}} \tag{1.5-2}
-\end{align}
+Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\), que se move em relação a \(F_{a}\) e \(F_{b}\), onde fixamos \(O\) and \(Q\), respectivamente, os quais também se movem em relação um ao outro. Na figura abaixo, relacionamos os vetores posição, tomamos suas derivadas no quadro de referência\footnotemark{} \(F_{a}\),  determinando a velocidade. Usando \(\mathbf{v}\) para um vetor velocidade, aplicamos a equação de Coriolis obtendo~\cite{Stevens2016}:
+\footnotetext{A escolha do quadro \(F_{a}\) como referência é arbitrária}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.25\textwidth, keepaspectratio]{figuras/figure1.5-1.png}
     \label{fig1.5-1}
-    \caption{Velocity and acceleration in moving frames.}
+    \caption{Velocidade e aceleração em quadros móveis}
+    \fonte{\cite{Stevens2016}}
 \end{figure}
+\begin{align}
+    \mathbf{p}_{P/O}             &= \mathbf{p}_{Q/O} + \mathbf{p}_{P/Q} \tag{1.5-1} \\
+    {^{a}\dot{\mathbf{p}}_{P/O}} &= {^{a}\dot{\mathbf{p}}_{Q/O}} + {^{a}\dot{\mathbf{p}}_{P/Q}} \tag{1.5-2} \\
+    \mathbf{v}_{P/a}             &= \mathbf{v}_{Q/a} + \left( \mathbf{v}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right) \tag{1.5-3}
+\end{align}
 
-Starting from the left-hand side of Equation (1.5-2), the first two terms are velocities in \(F_{a}\) but the last term involves the position of \(P\) relative to a fixed point in \(F_{b}\), with the derivative taken in \(F_{a}\). Let \(\mathbf{v}\) with an appropriate subscript represent a velocity vector. Then, by applying the equation of Coriolis, Equation (1.5-2) gives
-\begin{equation}
-    \mathbf{v}_{P/a} = \mathbf{v}_{Q/a} + \left( \mathbf{v}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right) \tag{1.5-3}
-\end{equation}
-Note that (1.5-3) can be written as:
+%Starting from the left-hand side of Equation (1.5-2), the first two terms are velocities in \(F_{a}\) but the last term involves the position of \(P\) relative to a fixed point in \(F_{b}\), with the derivative taken in \(F_{a}\). Let \(\mathbf{v}\) with an appropriate subscript represent a velocity vector. Then, by applying the equation of Coriolis, Equation (1.5-2) gives
+Rearranjando para destacar os temos em parênteses\footnotemark{}:
 \begin{equation*}
     \mathbf{v}_{P/a} = \mathbf{v}_{P/b} + \left( \mathbf{v}_{Q/a} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right),
 \end{equation*}
-where the term in parentheses is the velocity in \(F_{a}\) of a fixed point in \(F_{b}\) that is instantaneously coincident with \(P\) and is called the \textit{transport velocity of \(P\) in \(F_{a}\)}.
+\footnotetext{O termo em parênteses corresponde à chamada \textit{velocidade de transporte de \(P\) no quadro \(F_{a}\)} (a velocidade em \(F_{a}\) de um ponto fixo em \(F_{b}\) coincidente com \(P\)).}
+%As an application of Equation (1.5-3), let \(F_{a}\) be an inertial reference frame and \(F_{b}\) a body moving with respect to the reference frame. assume that a navigator on the moving body determines, from an onboard inertial navigation system, his velocity in the inertial reference frame \(\mathbf{v}_{Q/a}\) and his inertial angular velocity \(\mathbf{\omega}_{b/a}\). Also, using a radar set, he measures the velocity \(\mathbf{v}_{P/b}\), of \(P\) in \(F_{b}\) and the position \(\mathbf{p}_{P/Q}\) of \(P\) with respect to \(Q\). He can then use the Equation (1.5-3), with appropriately chosen coordinate systems, to calculate the velocity of the object in the inertial reference frame and, knowing the equation of motion in the inertial frame, predict its trajectory.
 
-As an application of Equation (1.5-3), let \(F_{a}\) be an inertial reference frame and \(F_{b}\) a body moving with respect to the reference frame. assume that a navigator on the moving body determines, from an onboard inertial navigation system, his velocity in the inertial reference frame \(\mathbf{v}_{Q/a}\) and his inertial angular velocity \(\mathbf{\omega}_{b/a}\). Also, using a radar set, he measures the velocity \(\mathbf{v}_{P/b}\), of \(P\) in \(F_{b}\) and the position \(\mathbf{p}_{P/Q}\) of \(P\) with respect to \(Q\). He can then use the Equation (1.5-3), with appropriately chosen coordinate systems, to calculate the velocity of the object in the inertial reference frame and, knowing the equation of motion in the inertial frame, predict its trajectory.
-
-We next find the acceleration of \(P\) by taking derivatives of (1.5-3) in \(F_{a}\). Starting from left, the first two terms are velocities in \(F_{a}\) and these become accelerations in \(F_{a}\). The third term is a velocity in \(F_{b}\) and must be differentiated by the equation of Coriolis. The last term involving a cross-product can be differentiated by the ``product rule,'' and the derivative of angular velocity is an angular acceleration vector, denoted by \(\mathbf{\alpha}\). Therefore, denoting translational acceleration by \(\mathbf{a}\), (1.5-3) yields
+%We next find the acceleration of \(P\) by taking derivatives of (1.5-3) in \(F_{a}\). Starting from left, the first two terms are velocities in \(F_{a}\) and these become accelerations in \(F_{a}\). The third term is a velocity in \(F_{b}\) and must be differentiated by the equation of Coriolis. The last term involving a cross-product can be differentiated by the ``product rule,'' and the derivative of angular velocity is an angular acceleration vector, denoted by \(\mathbf{\alpha}\). Therefore, denoting translational acceleration by \(\mathbf{a}\), (1.5-3) yields
+Para a aceleração derivamos (1.5-3) em \(F_{a}\). Velocidades em \(F_{a}\) se tornam acelerações em \(F_{a}\); A velocidade em \(F_{b}\) é derivada pela Equação de Coriolis; A produto vetorial é derivado pela ``regra do produto vetorial''\footnotemark{}; A derivada da velocidade angular é um vetor aceleração angular designado \(\mathbf{\alpha}\). Seja \(\mathbf{a}\) a aceleração translacional em (1.5-3), obtemos:
 \begin{equation*}
     \mathbf{a}_{P/a} = \mathbf{a}_{Q/a} + \left(\mathbf{a}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}\right) + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + {\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{v}_{P/b}} + {{\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}}\right)}
 \end{equation*}
+\footnotetext{TODO incluir no s anexos a Regra do Produto Vetorial.}
 
-Regrouping terms, we get
+Reorganizando, destacamos aceleração ``\emph{de transporte}'', ``\emph{centrípeta}'' e ``\emph{de Coriolis}'':
 \begin{equation*}
-    \mathbf{a}_{P/a} = \mathbf{a}_{P/b} + \overbrace{\mathbf{a}_{Q/a} + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + \underbrace{{{\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)}}}_{\text{Centripetal Acceleration}}}^{\text{Transport  Acceleration of \(P\) in Frame \(a\)}} + \underbrace{{2\mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}}}_{\text{Coriolis Acceleration}} \tag{1.5-4}
+    \mathbf{a}_{P/a} = \mathbf{a}_{P/b} + \overbrace{\mathbf{a}_{Q/a} + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + \underbrace{{{\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)}}}_{\text{Aceleração Centrípeta}}}^{\text{Aceleração de transporte}} + \underbrace{{2\mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}}}_{\text{Aceleração de Coriolis}} \tag{1.5-4}
 \end{equation*}
 
-Here, the names \textit{total acceleration} and \textit{relative acceleration} apply to the reference and secondary frames, respectively. If \(P\) were fixed in \(F_{b}\) the first and last right-hand-side terms would vanish, leaving only  the \textit{transport acceleration}; this is defined as the acceleration in \(F_{a}\) of a fixed point in \(F_{b}\) that is instantaneously coincident with \(P\). As could be anticipated, the transport acceleration term contains the effects of the motion of \(F_{b}\) in terms of the acceleration of the reference point \(Q\) and the angular acceleration and angular velocity of the frame [see (1) for more detail of the centripetal term]. A comparison of the acceleration equation with the velocity equation shows that a new type of term has appeared, namely the \textit{Coriolis acceleration}. The significance of Coriolis acceleration is examined in the following subsection.
 
-\paragraph{Example 1.5-1. Sensor Fixed in A Moving Body.} A sensor (e.g., accelerometer, radar, etc.) fixed to a rigid vehicle has no velocity or acceleration in that frame, to according to Equation (1.5-3) or (1.5-4) only the transport term in these equations is nonzero. Sensor motion must often be related analytically to the motion of the vehicle cm (or perhaps some other fixed point). For example, with the same notation as Equation (1.5-4), an accelerometer at position \(P\), with position vector \(\mathbf{p}_{P/Q}\) relative to the point \(Q\), has an acceleration given by
+Os termos \(\mathbf{a}_{P/a}\) e \(\mathbf{a}_{P/b}\), denominados \emph{aceleração total} e \emph{aceleração relativa}, são expressos nos quadros de referência e secundário, respectivamente. Notamos o surgimento do termo \textit{aceleração de Coriolis}, a ser examinado mais adiante. Se fixamos \(P\) no quadro \(F_{b}\), nos resta apenas \textit{aceleração de  transporte}, definida como a aceleração expressa em \(F_{a}\) de um ponto fixo em \(F_{b}\) instantaneamente coincidente com \(P\). A aceleração de transporte expressa os efeitos do movimento de \(F_{b}\), em termos de aceleração do ponto \(Q\), da velocidade angular e da aceleração angular do quadro~\cite{Stevens2016}. 
+
+
+Por exemplo, um acelerômetro fixo num robô móvel, de corpo rígido, não se move em relação ao quadro do corpo do robô, restando apenas o termo relativos à velocidade e aceleração de transporte nas equações 1.5-3 e 1.5-4, respectivamente. A aceleração para o sensor no ponto \(P\), de posição \(\mathbf{p}_{P/Q}\) em relação a ponto \(Q\) fixo no quadro do robô, denotando \(a\) and \(b\) os quadros de referência e do robô, respectivamente, é dada por \cite{Stevens2016}:
 \begin{equation*}
-    {\mathbf{a}_{P/a}} = {\mathbf{a}_{Q/a}} + {\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}} + {\mathbf{\omega}_{b/a}}\!\times\!\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right),
+    {\mathbf{a}_{P/a}} = {\mathbf{a}_{Q/a}} + {\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}} + {\mathbf{\omega}_{b/a}}\!\times\!\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)
 \end{equation*}
-where \(a\) and \(b\) denote, respectively, the reference and vehicle frames.
 
-\subsection{Acceleration Relative to Earth}
-
-This book is concerned with the motion of aerospace vehicles over the Earth, and acceleration relative to Earth is the starting point for equations of motion. Using the results of the previous subsection, let \(F_{a}\) become an inertial frame \(F_{i}\) and \(F_{b}\) become the rigid Earth frame \(F_{e}\). Let the points \(Q\) and \(O\) coincide, at Earth's cm (Earth is assumed to have no translational acceleration) so that the acceleration \(\mathbf{a}_{Q/a}\) vanishes and \(\mathbf{p}_{P/Q}\) is a geocentric position vector. Earth's angular velocity is closely constant and so the derivative os \(\mathbf{\omega}_{b/a}\) vanishes. This leaves only the relative acceleration, centripetal acceleration, and Coriolis acceleration terms and gives the fundamental equation, relating true (inertial) acceleration to relative acceleration, that we will use in Section 1.7 to apply Newton's laws to motion of a point \(P\) over Earth:
+Aplicando para um corpo sobre a Terra, sejam \(F_{i}\)  e  \(F_{e}\) quadros de referencia inercial e fixo na Terra, respectivamente, e pontos \(Q\) e \(O\) coincidentes no centro de massa da Terra (sem aceleração translacional), o \(\mathbf{p}_{P/Q}\) é um vetor posição geocêntrico, e \(\mathbf{a}_{Q/a}=0\). Considerando que a Terra gira a uma velocidade angular constante, a derivada de \(\mathbf{\omega}_{b/a}\) também desaparece. Restam a aceleração relativa, a centrípeta e a de Coriolis na equação que relaciona a aceleração verdadeira (inercial) à aceleração relativa, para aplicar as leis de Newton no movimento de um ponto \(P\) sobre a Terra~\cite{Stevens2016}:
 \begin{equation*} \tag{1.5-5}
     {\mathbf{a}_{P/i}} = {\mathbf{a}_{P/e}} + {\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}_{P/O}}\right) + 2\mathbf{\omega}_{e/i}\!\times\!\mathbf{v}_{P/e}
 \end{equation*}
-For a particle of mass \(m\) at \(P\), the relative acceleration \(\mathbf{a}_{P/e}\) corresponds to an ``apparent force'' on the particle and produces the trajectory observed by a stationary observer on Earth. The true acceleration \(\mathbf{a}_{P/i}\), corresponds to ``true'' forces (e.g., mass attraction,  drag); therefore, writing (1.5-5) in terms of force,
-\begin{equation*}
-    \text{Apparent force} = \text{true force} - m \left[{\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}_{P/O}}\right)\right] - m \left( 2{\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{v}_{P/e}}\right)
-\end{equation*}
-The second term on the right is the \textit{centrifugal force}, directed normal to the angular velocity vector. The third term is usually referred to as the \textit{Coriolis force} and will cause a ballistic trajectory over Earth to curve to the left or right.
 
-The true force is the sum of the \textit{contact forces}, say \(F\), and the mass attraction of \textit{Earth's gravitational field}, \(m\mathbf{G}\) (see next section). The Earth gravity vector is \(\mathbf{g} = \mathbf{G} - \text{centripetal acceleration}\) (see next section), so Equation (1.5-5) is often written (for a body of mass \(m\)) as
+Neste sentido, para uma partícula de massa \(m\) situada em \(P\), à aceleração relativa \(\mathbf{a}_{P/e}\) corresponde uma ``força aparente'' sobre a partícula que produz a trajetória vista por um observador estacionário na Terra. À aceleração verdadeira \(\mathbf{a}_{P/i}\), corresponde às ``verdadeiras'' forças (como gravitação e arraste). A \textit{força de Coriolis}\footnotemark{} fará uma trajetória balística sobre a Terra curvar-se à esquerda ou à direita. Escrevendo (1.5-5) em termos de forças, onde destacamos a \textit{força centrífuga} normal ao vetor velocidade angular~\cite{Stevens2016}:
+\begin{equation*}
+    \text{Força aparente} = \text{força verdadeira} - \underbrace{m \left[{\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}_{P/O}}\right)\right]}_{\text{força centrípeta}} - \underbrace{m \left( 2{\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{v}_{P/e}}\right)}_{\text{força de Coriolis}}
+\end{equation*}
+
+Força verdadeira (\(F\)) é a soma das \textit{forças de contato},  a força do  \textit{campo gravitacional da Terra} corresponde a \(m\mathbf{G}\). O vetor gravidade da Terra (\(g\)) é dado por {\(\mathbf{g}~=~\mathbf{G}~-~\text{aceleração centrípeta}\)}. Desse modo, reescrevendo a equação (1.5-5) para um corpo rígido de massa \(m\), obtemos~\cite{Stevens2016}:
 \begin{equation*} \tag{1.5-6}
     \mathbf{a}_{P/e} = \frac{F}{m} + g - {2 \mathbf{\omega}_{e/i}}\!\times\!{\mathbf{v}_{P/e}}
 \end{equation*}
 
-An often-quoted example of the Coriolis force is the circulation of winds around a low-pressure area (a cyclone) on Earth. The true force is radially inward along the pressure gradient. In the Northern Hemisphere, for example, Earth's angular velocity vector points outward from Earth's surface and, whichever way the velocity vector \({\mathbf{v}_{P/e}}\) is directed, the Coriolis force is directed to the right of \({\mathbf{v}_{P/e}}\). Therefore, in the Northern Hemisphere the winds spiral inward in a counterclockwise direction around a cyclone.
+\footnotetext{An often-quoted example of the Coriolis force is the circulation of winds around a low-pressure area (a cyclone) on Earth. The true force is radially inward along the pressure gradient. In the Northern Hemisphere, for example, Earth's angular velocity vector points outward from Earth's surface and, whichever way the velocity vector \({\mathbf{v}_{P/e}}\) is directed, the Coriolis force is directed to the right of \({\mathbf{v}_{P/e}}\). Therefore, in the Northern Hemisphere the winds spiral inward in a counterclockwise direction around a cyclone.
 
 The Coriolis acceleration is also significant in high-speed flight; it is zero for an aircraft flying due North or South at the equator and reaches its maximum value at the poles or for flight due East or West at any latitude. Its significance can be estimated by equating its value to the centripetal acceleration, in low, constant-altitude flight, at \(45^{\circ}\) latitude, and solving for the speed over Earth:
 \begin{align*}
@@ -319,25 +305,25 @@ The Coriolis acceleration is also significant in high-speed flight; it is zero f
     &\begin{vmatrix}{\mathbf{v}_{cm/e}}\end{vmatrix} = {\sqrt{2}}{r_{E}} \begin{vmatrix} {\mathbf{\omega}_{e/i}}\end{vmatrix} \approx 657\text{m/s} \left(2156\text{ft/s}\right)
 \end{align*}
 
-At this speed the Coriolis acceleration is equal to the centripetal acceleration and is very small compared to \(\mathbf{g}\) bu causes a position error that grows quadratically with time.
+At this speed the Coriolis acceleration is equal to the centripetal acceleration and is very small compared to \(\mathbf{g}\) bu causes a position error that grows quadratically with time.}
 
-\subsection{Gravitation and Accelerometers}
+\section{Gravitação e acelerômetros}
 
-The basic principle usend in nearly all accelerometers is measurement, indirectly, of the force \(\mathbf{F}\), that must be applied (mechanically or by means of a magnetic or electrostatic field) to prevent a known ``proof'' mass from accelerating with respect to its instrument case when the case is being aceclerated. Thus, apart from a small transient and/or steady-state error determined by the dynamics of the proof mass ``rebalancing'' servo and the type of the acceleration signal, the acceleration of the proof mass is the same as the acceleration of the case. An accelerometer is usually a single-axis device, but here we will write vector equations for the acceleration experienced by the accelerometer. The gravitational field always acts on the proof mass, \(m\), and so the acceleration, \(\mathbf{a}\), of the proof mass id given by the vector sum:
+The basic principle used in nearly all accelerometers is measurement, indirectly, of the force \(\mathbf{F}\), that must be applied (mechanically or by means of a magnetic or electrostatic field) to prevent a known ``proof'' mass from accelerating with respect to its instrument case when the case is being accelerated. Thus, apart from a small transient and/or steady-state error determined by the dynamics of the proof mass ``rebalancing'' servo and the type of the acceleration signal, the acceleration of the proof mass is the same as the acceleration of the case. An accelerometer is usually a single-axis device, but here we will write vector equations for the acceleration experienced by the accelerometer. The gravitational field always acts on the proof mass, \(m\), and so the acceleration, \(\mathbf{a}\), of the proof mass is given by the vector sum:
 \begin{equation*}
     \mathbf{a} = \dfrac{\mathbf{F}}{m} + \mathbf{G} \equiv \mathbf{f} + \mathbf{G}.
 \end{equation*}
-where \(\mathbf{F}/m\) is the force per unit mass applied to the proof mass, called the specific force, \(\mathbf{f}\). The accelerometer calibration procedure determines the \textit{scale factor}, \(s\), realting the output quantity to the specific force, and so the accelerometer equation is
+where \(\mathbf{F}/m\) is the force per unit mass applied to the proof mass, called the specific force, \(\mathbf{f}\). The accelerometer calibration procedure determines the \textit{scale factor}, \(s\), relating the output quantity to the specific force, and so the accelerometer equation is
 \begin{equation*} \tag{1.6-28}
     \text{Accelerometer output} = s \mathbf{f} = s \left(\mathbf{a} - \mathbf{G} \right)
 \end{equation*}
 
 Equation (1.6-28) shows that an accelerometer is basically a specific force measuring device. When acceleration must be measured precisely (as in inertial navigation), an accurate model of \(\mathbf{G}\) (as a function of position) is essential. In other, lower precision applications the accelerometer ``bias'' of \(\mathbf{G}\) is not a limitation.
 
-When an accelerometers'a sensitive axis is horizontal, the bias is zero. When an accelerometer, with geocentric position vector \(\mathbf{p}\), is stationary with respect to Earth, its acceleration and specific force reading are given by
+When an accelerometers' sensitive axis is horizontal, the bias is zero. When an accelerometer, with geocentric position vector \(\mathbf{p}\), is stationary with respect to Earth, its acceleration and specific force reading are given by
 \begin{align*}
     \mathbf{a} &= {\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}}\right) \\
     \mathbf{f} &= \mathbf{a} - \mathbf{G} = -\!{\mathbf{g}} \tag{1.6-29}
 \end{align*}
 
-At a different position from the calibration location, the accelerometer could be corrected to the local gravity, but if acceleration is to be calculated accurately, a correction would have to be aplied for the different (in general) centripetal acceleration. For accelerometers in motion over Earth, we must evaluate a transport acceleration to relate accelerometer acceleration to vehicle acceleration, as shown in Chapter 4 for the normal-acceleration control augmentation system.
+At a different position from the calibration location, the accelerometer could be corrected to the local gravity, but if acceleration is to be calculated accurately, a correction would have to be applied for the different (in general) centripetal acceleration. For accelerometers in motion over Earth, we must evaluate a transport acceleration to relate accelerometer acceleration to vehicle acceleration, as shown in Chapter 4 for the normal-acceleration control augmentation system.
