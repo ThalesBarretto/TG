@@ -253,15 +253,12 @@ Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\
     \mathbf{v}_{P/a}             &= \mathbf{v}_{Q/a} + \left( \mathbf{v}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right) \tag{1.5-3}
 \end{align}
 
-%Starting from the left-hand side of Equation (1.5-2), the first two terms are velocities in \(F_{a}\) but the last term involves the position of \(P\) relative to a fixed point in \(F_{b}\), with the derivative taken in \(F_{a}\). Let \(\mathbf{v}\) with an appropriate subscript represent a velocity vector. Then, by applying the equation of Coriolis, Equation (1.5-2) gives
 Rearranjando para destacar os temos em parênteses\footnotemark{}:
 \begin{equation*}
     \mathbf{v}_{P/a} = \mathbf{v}_{P/b} + \left( \mathbf{v}_{Q/a} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right),
 \end{equation*}
 \footnotetext{O termo em parênteses corresponde à chamada \textit{velocidade de transporte de \(P\) no quadro \(F_{a}\)} (a velocidade em \(F_{a}\) de um ponto fixo em \(F_{b}\) coincidente com \(P\)).}
-%As an application of Equation (1.5-3), let \(F_{a}\) be an inertial reference frame and \(F_{b}\) a body moving with respect to the reference frame. assume that a navigator on the moving body determines, from an onboard inertial navigation system, his velocity in the inertial reference frame \(\mathbf{v}_{Q/a}\) and his inertial angular velocity \(\mathbf{\omega}_{b/a}\). Also, using a radar set, he measures the velocity \(\mathbf{v}_{P/b}\), of \(P\) in \(F_{b}\) and the position \(\mathbf{p}_{P/Q}\) of \(P\) with respect to \(Q\). He can then use the Equation (1.5-3), with appropriately chosen coordinate systems, to calculate the velocity of the object in the inertial reference frame and, knowing the equation of motion in the inertial frame, predict its trajectory.
 
-%We next find the acceleration of \(P\) by taking derivatives of (1.5-3) in \(F_{a}\). Starting from left, the first two terms are velocities in \(F_{a}\) and these become accelerations in \(F_{a}\). The third term is a velocity in \(F_{b}\) and must be differentiated by the equation of Coriolis. The last term involving a cross-product can be differentiated by the ``product rule,'' and the derivative of angular velocity is an angular acceleration vector, denoted by \(\mathbf{\alpha}\). Therefore, denoting translational acceleration by \(\mathbf{a}\), (1.5-3) yields
 Para a aceleração derivamos (1.5-3) em \(F_{a}\). Velocidades em \(F_{a}\) se tornam acelerações em \(F_{a}\); A velocidade em \(F_{b}\) é derivada pela Equação de Coriolis; A produto vetorial é derivado pela ``regra do produto vetorial''\footnotemark{}; A derivada da velocidade angular é um vetor aceleração angular designado \(\mathbf{\alpha}\). Seja \(\mathbf{a}\) a aceleração translacional em (1.5-3), obtemos:
 \begin{equation*}
     \mathbf{a}_{P/a} = \mathbf{a}_{Q/a} + \left(\mathbf{a}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}\right) + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + {\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{v}_{P/b}} + {{\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}}\right)}
@@ -270,7 +267,7 @@ Para a aceleração derivamos (1.5-3) em \(F_{a}\). Velocidades em \(F_{a}\) se 
 
 Reorganizando, destacamos aceleração ``\emph{de transporte}'', ``\emph{centrípeta}'' e ``\emph{de Coriolis}'':
 \begin{equation*}
-    \mathbf{a}_{P/a} = \mathbf{a}_{P/b} + \overbrace{\mathbf{a}_{Q/a} + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + \underbrace{{{\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)}}}_{\text{Aceleração Centrípeta}}}^{\text{Aceleração de transporte}} + \underbrace{{2\mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}}}_{\text{Aceleração de Coriolis}} \tag{1.5-4}
+    \mathbf{a}_{P/a} = \mathbf{a}_{P/b} + \overbrace{\mathbf{a}_{Q/a} + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + \underbrace{{{\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)}}}_{\text{aceleração centrípeta}}}^{\text{aceleração de transporte}} + \underbrace{{2\mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}}}_{\text{aceleração de Coriolis}} \tag{1.5-4}
 \end{equation*}
 
 
