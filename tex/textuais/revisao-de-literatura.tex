@@ -232,10 +232,6 @@ Ainda, derivada de um vetor em um quadro pode ser encontrada a partir das deriva
     \mathbf{v}^{a\!f} = \begin{bmatrix} v_{x} & v_{y} & v_{z} \end{bmatrix}^{T}
 \end{equation*}
 
-%\section{Cinemática translacional}
-%
-%In this section we introduce the equations for relative velocity and relative acceleration between rigid bodies in motion and, in particular, introduce \textit{centripetal} and \textit{Coriolis acceleration}. The equations are then applied to motion over Earth, and the results are used in the 6-DoF motion in Section 1.7.
-
 \section{Velocidade e Aceleração em quadros móveis}
 
 Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\), que se move em relação a \(F_{a}\) e \(F_{b}\), onde fixamos \(O\) and \(Q\), respectivamente, os quais também se movem em relação um ao outro. Na figura abaixo, relacionamos os vetores posição, tomamos suas derivadas no quadro de referência\footnotemark{} \(F_{a}\),  determinando a velocidade. Usando \(\mathbf{v}\) para um vetor velocidade, aplicamos a equação de Coriolis obtendo~\cite{Stevens2016}:
@@ -294,33 +290,32 @@ Força verdadeira (\(F\)) é a soma das \textit{forças de contato}. A força do
     \mathbf{a}_{P/e} = \frac{F}{m} + g - {2 \mathbf{\omega}_{e/i}}\!\times\!{\mathbf{v}_{P/e}}
 \end{equation*}
 
-\footnotetext{An often-quoted example of the Coriolis force is the circulation of winds around a low-pressure area (a cyclone) on Earth. The true force is radially inward along the pressure gradient. In the Northern Hemisphere, for example, Earth's angular velocity vector points outward from Earth's surface and, whichever way the velocity vector \({\mathbf{v}_{P/e}}\) is directed, the Coriolis force is directed to the right of \({\mathbf{v}_{P/e}}\). Therefore, in the Northern Hemisphere the winds spiral inward in a counterclockwise direction around a cyclone.
-
-The Coriolis acceleration is also significant in high-speed flight; it is zero for an aircraft flying due North or South at the equator and reaches its maximum value at the poles or for flight due East or West at any latitude. Its significance can be estimated by equating its value to the centripetal acceleration, in low, constant-altitude flight, at \(45^{\circ}\) latitude, and solving for the speed over Earth:
+\footnotetext{A aceleração de Coriolis será significativa para deslocamento em altas velocidades. Para ilustrar, para que a aceleração de Coriolis tenha a mesma magnitude da aceleração centrípeta, a \(45^{\circ}\) de latitude, um veículo deve deve mover-se a 2365.2 km/h. Nessa velocidade, embora a aceleração de Coriolis ainda seja pequena comparada a \(\mathbf{g}\), causa uma diferença de posição que cresce com o tempo~\cite{Stevens2016}.
 \begin{align*}
     &2 \! \begin{vmatrix}{\mathbf{\omega}_{e/i}}\end{vmatrix} \begin{vmatrix}{\mathbf{v}_{cm/e}}\end{vmatrix}\sin\!{\left({45^{\circ}}\right)} = {\begin{vmatrix}{\mathbf{v}_{cm/e}}\end{vmatrix}^{2}} / {r_{E}} \\
-    &\begin{vmatrix}{\mathbf{v}_{cm/e}}\end{vmatrix} = {\sqrt{2}}{r_{E}} \begin{vmatrix} {\mathbf{\omega}_{e/i}}\end{vmatrix} \approx 657\text{m/s} \left(2156\text{ft/s}\right)
+    &\begin{vmatrix}{\mathbf{v}_{cm/e}}\end{vmatrix} = {\sqrt{2}}{r_{E}} \begin{vmatrix} {\mathbf{\omega}_{e/i}}\end{vmatrix} \approx 657\text{m/s} \left(2365.2\text{km/h}\right)
 \end{align*}
+}
 
-At this speed the Coriolis acceleration is equal to the centripetal acceleration and is very small compared to \(\mathbf{g}\) bu causes a position error that grows quadratically with time.}
 
 \section{Gravitação e acelerômetros}
 
-The basic principle used in nearly all accelerometers is measurement, indirectly, of the force \(\mathbf{F}\), that must be applied (mechanically or by means of a magnetic or electrostatic field) to prevent a known ``proof'' mass from accelerating with respect to its instrument case when the case is being accelerated. Thus, apart from a small transient and/or steady-state error determined by the dynamics of the proof mass ``rebalancing'' servo and the type of the acceleration signal, the acceleration of the proof mass is the same as the acceleration of the case. An accelerometer is usually a single-axis device, but here we will write vector equations for the acceleration experienced by the accelerometer. The gravitational field always acts on the proof mass, \(m\), and so the acceleration, \(\mathbf{a}\), of the proof mass is given by the vector sum:
+Um acelerômetro mede, indiretamente\footnotemark{}, a força \(\mathbf{F}\) que equilibra uma \emph{massa de prova} com o encapsulamento. Com o campo gravitacional atuando na massa de prova \(m\), seja \(\mathbf{F}/m\) a força por unidade de massa aplicada à massa de prova, chamada de força específica, \(\mathbf{f}\) determinamos a aceleração \(\mathbf{a}\) da massa de prova~\cite{Stevens2016}:
 \begin{equation*}
     \mathbf{a} = \dfrac{\mathbf{F}}{m} + \mathbf{G} \equiv \mathbf{f} + \mathbf{G}.
 \end{equation*}
-where \(\mathbf{F}/m\) is the force per unit mass applied to the proof mass, called the specific force, \(\mathbf{f}\). The accelerometer calibration procedure determines the \textit{scale factor}, \(s\), relating the output quantity to the specific force, and so the accelerometer equation is
+\footnotetext{Para detalhes sobre acelerômetros,~\cite{Weston2004},~\cite{Wang2021} e~\cite{Haoran2019}.}
+
+Com a calibração determinamos o \textit{fator de escala}, entre a quantidade de saída do sinal à força específica\cite{Stevens2016}:
 \begin{equation*} \tag{1.6-28}
-    \text{Accelerometer output} = s \mathbf{f} = s \left(\mathbf{a} - \mathbf{G} \right)
+    \text{Sinal de saída do acelerômetro} = s \mathbf{f} = s \left(\mathbf{a} - \mathbf{G} \right)
 \end{equation*}
 
-Equation (1.6-28) shows that an accelerometer is basically a specific force measuring device. When acceleration must be measured precisely (as in inertial navigation), an accurate model of \(\mathbf{G}\) (as a function of position) is essential. In other, lower precision applications the accelerometer ``bias'' of \(\mathbf{G}\) is not a limitation.
-
-When an accelerometers' sensitive axis is horizontal, the bias is zero. When an accelerometer, with geocentric position vector \(\mathbf{p}\), is stationary with respect to Earth, its acceleration and specific force reading are given by
+Quando um acelerômetro, com vetor de posição geocêntrico\footnotemark{} \(\mathbf{p}\), está estacionário em relação à Terra, a leitura de aceleração corresponde a~\cite{Stevens2016}:
 \begin{align*}
     \mathbf{a} &= {\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}}\right) \\
     \mathbf{f} &= \mathbf{a} - \mathbf{G} = -\!{\mathbf{g}} \tag{1.6-29}
 \end{align*}
 
-At a different position from the calibration location, the accelerometer could be corrected to the local gravity, but if acceleration is to be calculated accurately, a correction would have to be applied for the different (in general) centripetal acceleration. For accelerometers in motion over Earth, we must evaluate a transport acceleration to relate accelerometer acceleration to vehicle acceleration, as shown in Chapter 4 for the normal-acceleration control augmentation system.
+\footnotetext{A navegação inercial exige um modelo para \(\mathbf{G}\) em função da posição. Numa posição diferente, o acelerômetro deve ser corrigido para a gravidade local e pela aceleração centrípeta. Para um acelerômetro fixado em um veículo que se move em relação à Terra, devemos ainda calcular a aceleração de transporte para relacionar a leitura do acelerômetro com a aceleração do veículo~\cite{Stevens2016}.}
+
