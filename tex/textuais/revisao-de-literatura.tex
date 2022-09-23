@@ -316,6 +316,51 @@ Quando um acelerômetro, com vetor de posição geocêntrico\footnotemark{} \(\m
     \mathbf{a} &= {\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}}\right) \\
     \mathbf{f} &= \mathbf{a} - \mathbf{G} = -\!{\mathbf{g}} \tag{1.6-29}
 \end{align*}
-
 \footnotetext{A navegação inercial exige um modelo para \(\mathbf{G}\) em função da posição. Numa posição diferente, o acelerômetro deve ser corrigido para a gravidade local e pela aceleração centrípeta. Para um acelerômetro fixado em um veículo que se move em relação à Terra, devemos ainda calcular a aceleração de transporte para relacionar a leitura do acelerômetro com a aceleração do veículo~\cite{Stevens2016}.}
+
+Para um acelerômetro com três eixos ortogonais \(x\), \(y\) e \(z\), situado num ponto \({P}\) fixado no quadro \({F}_{frd}\) do corpo de um robô, com vetor de posição geocêntrico \(\mathbf{p}\), designamos \(\mathbf{G}_{p}\) o vetor projeção da força nos elementos sensores, \(\mathbf{g}\) o vetor aceleração da gravidade expresso em múltiplos da \emph{gravidade padrão}, \(\mathbf{a}\) a aceleração do corpo tomada no quadro de referência da Terra, e \({C}_{frd/ned}\) a matrix de rotação do quado \(frd\) em relação ao \(ned\), obtendo a equação:
+\begin{equation*}
+    {\mathbf{G}}_p = \begin{bmatrix} {G}_{px} \\ {G}_{py} \\ {G}_{pz} \end{bmatrix} = {C}_{frd/ned}\left(\mathbf{g} - {\mathbf{a}}\right)
+\end{equation*}
+
+Assumindo que o robô não acelera (\(\mathbf{a}\approxeq0\)) e que na orientação inicial os eixos ``abaixo'' no sistemas \(frd\) e \(ned\) estão alinhados, com o vetor \(\mathbf{g}\) projetando apenas no eixo \(z\) do acelerômetro, então a equação acima se transforma em:
+\begin{align*}
+    {\mathbf{G}}_p &= \begin{bmatrix}
+        c\theta c\psi   & c\theta s\psi & -s\theta    \\
+        \left(-c\phi s\psi + s\phi s\theta c\psi \right) 
+        &  \left( c\phi c\psi + s\phi s\theta s\psi \right) 
+        &  s\phi c\theta                                 \\
+        \left( s\phi s\psi + c\phi s\theta c\psi \right) 
+        &  \left( -s\phi c\psi + c\phi s\theta s\psi \right) 
+        & c\phi c\theta
+    \end{bmatrix} \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} -\sin{\theta} \\ \cos{\theta}\sin{\phi} \\ \cos{\theta}\cos{\phi} \end{bmatrix}
+\end{align*}
+
+Desse modo a equação acima depende apenas dos ângulos de arfada \(\theta\) e rolagem \(\phi\), ou seja, durante a primeira rotação de guinada por \(\psi\) sobre o eixo \emph{abaixo} o vetor \(\mathbf{g}\) permanece alinhado ao eixo \(z\) do sensor. Um acelerômetro, portanto, é insensível a essa rotação por \(\psi\), e não serve para determinar o ângulo de guinada.
+
+Entretanto, a partir do acelerômetro estacionário, normalizando as leituras, é possível isolar os ângulos de arfada e rolagem aplicando identidades trigonométricas sobre a projeção da gravidade (\(\mathbf{g}\)) nos eixos do sensor~\cite{FreescaleAN3461}:
+\begin{equation*}
+    \frac{{\mathbf{G}}_{p}}{\lVert{{\mathbf{G}}_{p}}\rVert} = 
+    \frac{1}{\sqrt{{{{G}_{px}}^{2}} + {{{G}_{py}}^{2}} + {{G}_{pz}}^{2}}} \begin{bmatrix} {G}_{px} \\ {G}_{py} \\ {G}_{pz} \end{bmatrix}
+    = \begin{bmatrix} -\sin{\theta} \\ \cos{\theta}\sin{\phi} \\ \cos{\theta}\cos{\phi} \end{bmatrix} \\
+\end{equation*}
+\begin{align*}
+    \tan{\phi}_{xyz} &= \frac{G_{py}}{G_{pz}} \\
+    \tan{\theta}_{xyz} &= \frac{-G_{px}}{{G_{py}\sin{\phi}}+{{{G}_{pz}}\cos{\phi}}} = \frac{-G_{px}}{\sqrt{{{G_{py}}^{2}}+{{{G}_{pz}}^2}}}
+\end{align*}
+
+Empregando funções trigonométricas inversas, obtemos \(\theta\) e \(\phi\):
+\begin{align*}
+{\phi}_{xyz} &= \tan^{-1}\left(\frac{G_{py}}{G_{pz}}\right) \\
+{\theta}_{xyz} &= \tan^{-1}\left(\frac{-G_{px}}{\sqrt{{{G_{py}}^{2}}+{{{G}_{pz}}^2}}}\right) \\
+\end{align*}
+
+\ldots e definimos o intervalo de validade\footnotemark{} como fizemos para a matriz rotacional:
+\begin{align*}
+    -\pi  < \phi \leq \pi \\
+    -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
+\end{align*}
+
+\footnotetext{Nas equações acima, há uma região de instabilidade onde \(\mathbf{G}_{py}\) e \(\mathbf{G}_{pz}\) tendem a zero, quando o eixo \(x\) do acelerômetro encontra-se alinhado verticalmente para cima ou para baixo. Nas proximidades desse alinhamento o cálculo da tangente inversa é dominado pelo ruído do sensor, produzindo uma estimativa de ângulo praticamente aleatória. Fisicamente, quando o eixo \(x\) do acelerômetro está na vertical, o ângulo de rolagem \(\phi\) corresponde a uma rotação sobre o vetor do campo gravitacional, para a qual o acelerômetro é insensível.}
+
 
