@@ -415,7 +415,7 @@ O conjunto das equações para seis graus de liberdade será completado adiciona
 Usando o valor das variáveis de estado, calculamos o valor das derivadas do estado a seguir. A matriz de rotação é calculada antes da equações de estado da posição e velocidade como referido acima. Derivadas de ângulos aerodinâmicos podem ser calculadas a partir das derivadas de velocidade translacional, portanto a equação de velocidade translacional é situada antes da equação de velocidade angular, onde aquelas derivadas são mais significativas (detalhamos no Capítulo 3) então temos o seguinte conjunto de equações:
 
 \begin{align*}\tag{1.7-18}
-    C^{frd/tp} &= fn \left( \Phi \right) \\
+    C_{frd/tp} &= fn \left( \Phi \right) \\
     \dot{\Phi} &=  H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}} \\
     {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}} &= {C_{tp/frd}}{\mathbf{v}^{frd}_{cm/e}} \\
     {^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}} &= \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}} + {C_{frd/tp}}{\mathbf{g}^{tp}} - {\tilde{\mathbf{\omega}}^{frd}_{b/e}} {\mathbf{v}^{frd}_{cm/e}} \\
