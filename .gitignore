@@ -9,7 +9,11 @@ mpu_src/mpu6050
 *.blg
 *.bbl
 *.brf
+*.fdb_latexmk
+*.fls
 *.idx
+*.ilg
+*.ind
 *.loa
 *.lof
 *.log
