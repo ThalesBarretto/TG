@@ -323,7 +323,7 @@ Para um acelerômetro com três eixos ortogonais \(x\), \(y\) e \(z\), situado n
     {\mathbf{G}}_p = \begin{bmatrix} {G}_{px} \\ {G}_{py} \\ {G}_{pz} \end{bmatrix} = {C}_{frd/ned}\left(\mathbf{g} - {\mathbf{a}}\right)
 \end{equation*}
 
-Assumindo que o robô não acelera (\(\mathbf{a}\approxeq0\)) e que na orientação inicial os eixos ``abaixo'' no sistemas \(frd\) e \(ned\) estão alinhados, com o vetor \(\mathbf{g}\) projetando apenas no eixo \(z\) do acelerômetro, então a equação acima se transforma em:
+Assumindo que o robô não acelera (\(\mathbf{a}\approxeq0\)) e que na orientação inicial os eixos ``abaixo'' no sistemas \(frd\) e \(ned\) estão alinhados, com o vetor \(\mathbf{g}\) projetando apenas no eixo \(z\) do acelerômetro, então a equação acima se transforma em~\cite{freescaleAN3461}:
 \begin{align*}
     {\mathbf{G}}_p &= \begin{bmatrix}
         c\theta c\psi   & c\theta s\psi & -s\theta    \\
@@ -373,11 +373,11 @@ Empregando funções trigonométricas inversas, obtemos \(\theta\) e \(\phi\):
 
 \section{Equações de Estado Vetoriais}
 
-Consideramos um corpo rígido (sistema \(F_{b}\)), tomando seu centro de masssa como ponto de referência para separar a dinâmica rotacional da translacional, e um sistema de coordenadas, \(bf\), que orresponde ao sistema \(frd\), fixo no corpo e com origem no centro de massa. A aceleração do centro de massa do corpo resulta da soma vetorial das forças, cujas linhas de ação não precisam passar pelo centro de massa (separamos o efeito de qualquer torsão para as equações do momento, das quais que não trataremos). As equações são expressas em termos de movimento relativo à Terra.
+Considere um corpo rígido (sistema \(F_{b}\)), seu centro de masssa como ponto de referência para separar a dinâmica rotacional da translacional, e um sistema de coordenadas, \(bf\), que corresponde ao sistema \(frd\), fixo no corpo e com origem no centro de massa. A aceleração do centro de massa do corpo resulta da soma vetorial das forças, cujas linhas de ação não precisam passar pelo centro de massa (separamos o efeito de qualquer torsão para as equações do momento, das quais que não trataremos). As equações são expressas em termos de movimento relativo à Terra~\cite{Stevens2016}.
 
- O vetor posição pode partir de um ponto fixo arbitrário no quadro da Terra, \(F_{e}\). Se a variação da gravidade for significativa ao longo da trajetória, o vetor posição deve ser tomado a partir do centro de massa da Terra, mas para navegação de curto alcance pode ser mais conveniente tomá-lo a partir de um ponto na superfície da Terra.
+O vetor posição pode partir de um ponto fixo na Tera, \(F_{e}\). Se a variação da gravidade for significativa ao longo da trajetória, o vetor posição deve ser tomado a partir do centro de massa da Terra, mas para um curto alcance podemos partir de ponto na superfície da Terra~\cite{Stevens2016}.
 
-O vetor velocidade será obtido em equações convenientes para navegação usando a velocidade do centro de massa do veículo em \(F_{e}\) e o vetor posição a partir do centro de massa da Terra. O centro de massa da Terra é um ponto fixo comum nos quadros inercial, \(F_{i}\),  e da Terra, \(F_{e}\), então a derivada de um vetor posição a partir do centro de massa fornece a velocidade inercial ou a velocidade terrestre, conforme o quadro em que derivamos. Derivadas em \(F_{i}\) e \(F_{e}\) são relacionadas ao vetor velocidade angular da Terra, \(\mathbf{\omega}_{e/i}\), de acordo com a equação de Coriolis. Além dos quadros acima, o quadro do corpo rígido, \(F_{b}\), também será necessário.
+O vetor velocidade será obtido usando a velocidade do centro de massa do veículo em \(F_{e}\) e o vetor posição a partir do centro de massa da Terra. Como o centro de massa da Terra é um ponto fixo comum nos quadros inercial, \(F_{i}\),  e da Terra, \(F_{e}\), então a derivada de um vetor posição a partir do centro de massa fornece a velocidade inercial ou a velocidade terrestre, conforme o quadro em que derivamos. Derivadas em \(F_{i}\) e \(F_{e}\) são relacionadas ao vetor velocidade angular da Terra, \(\mathbf{\omega}_{e/i}\), de acordo com a equação de Coriolis. Também precisamos do quadro do corpo rígido, \(F_{b}\)~\cite{Stevens2016}.
 
 Definimos os seguintes escalares e vetores:
 \begin{align*}
@@ -392,40 +392,29 @@ Definimos os seguintes escalares e vetores:
    \mathbf{g} &\equiv \text{ vetor gravidade da Terra, }\mathbf{g} = \mathbf{G} = \mathbf{\omega}_{e/i} \times \left( \mathbf{\omega}_{e/i} \times  \mathbf{p}_{cm/O} \right) \\
 \end{align*}
 
-Desse modo, as equações de estado para posição e velocidade, em forma vetorial, são:
+Então as equações de estado são~\cite{Stevens2016}:
 \begin{align*}\tag{1.7-12}
    {^{e}{\dot{\mathbf{p}}}_{cm/O}} = \mathbf{v}_{cm/e} \\
    {^{e}{\dot{\mathbf{v}}}_{cm/e}} = \mathbf{a}_{cm/e} \\
 \end{align*}
 
-Aplicando a segunda lei de Newton a um corpo rígido de massa constante próximo à superfície da Terra, para calcular a derivada inercial da velocidade sob influência de forças, partimos da Equação (1.5-5), substituímos \(\left( \textstyle{\frac{1}{m}}\mathbf{F} + \mathbf{G}\right)\) pela aceleração inercial, e isolamos a aceleração relativa (ou seja, a derivada do estado velocidade em \(F_{e}\)):
+Aplicando a segunda lei de Newton, partimos da Equação (1.5-5), substituímos \(\left( \textstyle{\frac{1}{m}}\mathbf{F} + \mathbf{G}\right)\) pela aceleração inercial, e isolamos a aceleração relativa (ou seja, a derivada do estado velocidade em \(F_{e}\))~\cite{Stevens2016}:
 
 \begin{equation*}\tag{1.7-13}
    {^{e}{\dot{\mathbf{v}}_{cm/e}}} = \textstyle{\frac{1}{m}} \mathbf{F} + \mathbf{G} - \mathbf{\omega}_{e/i} \times \left( \mathbf{\omega}_{e/i} \times \mathbf{p}_{cm/O} \right) - 2 \mathbf{\omega}_{e/i} \times \mathbf{v}_{cm/e}
 \end{equation*}
 
-Esta equação de estado da velocidade combinada à equação de estado da posição são adequadas para a Terra oblata e girante. Latitude, longitude e \(\mathbf{G}\) podem ser calculadas a partir do vetor de posição geocêntrico. Já a força de Coriolis normalmente é desprezada para velocidades inferiores a 609m/s (2000 pés/s).
+Esta equação de estado da velocidade combinada à equação de estado da posição são adequadas para a Terra oblata e girante. Latitude, longitude e \(\mathbf{G}\) podem ser calculadas a partir do vetor de posição geocêntrico. Já a força de Coriolis normalmente é desprezada para velocidades inferiores a 609m/s (2000 pés/s)~\cite{Stevens2016}.
 
 \section{Equações de Estado para Terra plana}
-As equações de terra plana pressupõem que:
-\begin{enumerate}
-    \item A Terra é um referencial inercial
-    \item Posição é medida no sistema de coordenadas do plano tangente \(tp\).
-    \item O vetor gravidade é normal ao plano tangente e constante em magnitude.
-    \item A altura acima do plano tangente é uma boa aproximação para a altura verdadeira acima da superfície da Terra, e a projeção horizontal do vetor posição oferece uma boa aproximação à distância percorrida sobre a superfície da Terra (o que é razoável até algumas centenas de milhas a partir da origem do plano tangente).
-    \item A atitude do veículo no sistema do plano tangente é uma boa aproximação à verdadeira atitude geográfica na posição do veículo.
-\end{enumerate}
 
-Equações de Terra plana, embora não são sirvam para determinar com precisão a posição sobre a Terra, são amplamente utilizadas em simulações para estudar o desempenho e o comportamento dinâmico de veículos, e são empregadas para derivar modelos lineares de espaço de estados para estudos analíticos e projeto de sistemas de controle. 
-
-
-Podemos simplificar as equações vetoriais (1.7-12) e (1.7-13) para obter as \emph{equações de Terra plana}. Considerando o vetor \(\mathbf{g}\) constante sobre a superfície da Terra, e o vetor posição a partir de um ponto de interesse \(Q\) na superfície, então a equação de estado para posição é
+Equações de Terra plana não determinam com precisão a posição sobre a Terra, mas são amplamente utilizadas. Nelas pressupomos que a Terra é um referencial inercial, a posição é obtida no sistema do plano tangente \(tp\), o vetor gravidade, \(\mathbf{g}\), é normal ao plano tangente e constante em magnitude, e a atitude do veículo no plano tangente é uma boa aproximação à verdadeira atitude geográfica na posição do veículo. Simplificando (1.7-12) e (1.7-13), com o vetor \(\mathbf{g}\) constante, e o vetor posição a partir de \(Q\) na superfície, na origem de um plano tangente, obtemos~\cite{Stevens2016}:
 
 \begin{equation*}\tag{1.7-15}
    {^{e}{\dot{\mathbf{p}}_{cm/Q}}} = \mathbf{v}_{cm/e}
 \end{equation*}
 
-A equação da velocidade também pode ser formulada em relação ao veículo, com os componentes expressos num sistema de coordenadas fixo no corpo. Mudando as derivadas na equação (1.7--13), com \(\mathbf{G} \equiv \mathbf{g}\), temos
+A velocidade também pode ser obtida de um sistema fixo no corpo. Mudando as derivadas na equação (1.7--13), com \(\mathbf{G} \equiv \mathbf{g}\), temos~\cite{Stevens2016}:
 
 \begin{align*}\tag{1.7-16a}
    {^{b}{\dot{\mathbf{v}}}_{cm/e}} + \mathbf{\omega}_{b/e} \times \mathbf{v}_{cm/e} &= {^{e}{\dot{\mathbf{v}}_{cm/e}}} = \textstyle{\frac{1}{m}}\mathbf{F} + \mathbf{g} - 2 \mathbf{\omega}_{e/i} \times \mathbf{v}_{cm/e} \\
@@ -444,16 +433,21 @@ e, tomando a Terra por referencial inercial (\(\mathbf{\omega}_{e/i} \equiv 0 , 
    {^{b}{\dot{\mathbf{v}}_{cm/e}}} &= \textstyle{\frac{1}{m}} \mathbf{F} + \mathbf{g} - \mathbf{\omega}_{b/e} \times \mathbf{v}_{cm/e}
 \end{align*}
 
-A equação (1.7-16) já impõe a primeira assunção, e a variável de estado posição já refere-se à origem do plano tangente. Agora devemos escolher sistemas de coordenadas para as variáveis nas equações de estado e nos preparar para calcular a matriz de rotação para converter de um sistema para outro quando necessário.
+Para completar, o vetor \(\mathbf{g}\) em coordenadas do plano tangente será\footnotemark{}
 
-O sistema \(frd\), fixo em \(F_{b}\), convém para o vetor velocidade em \(F_{b}\) e para o vetor velocidade angular do veículo (que utiliza os eixos do componentes em eixos do corpo nas equações de movimento angular), mas o vetor \(\mathbf{g}\)  deve ser rotacionado para o sistema do corpo, usando uma matriz rotacional que é obtida a partir das equações de estado. Nas equações de Terra plana a mudança de atitude do veículo empregará as equações cinemáticas de Euler (1.4-4), relacionando o sistema \(frd\) fixo no corpo ao sistema \(ned\) (o qual  corresponde ao plano tangente \(tp\) fixo na Terra). Com os ângulos de Euler podemos obter a matriz de rotação \(C_{frd/ned}\), para então calcular as equações de posição e velocidade.
+\begin{equation*}
+\mathbf{g}^{tp} = {\begin{bmatrix} 0 & 0& g_{D} \end{bmatrix}}^{T}
+\end{equation*}
+\footnotetext{O componente  \(\mathbf{g}_{D}\) corresponde à gravidade padrão (\(9.80665 \textrm{m/s}^{2}\)) ou seu valor local.}
 
-Para os nossos propósitos, o vetor de estado fica assimm:
+Agora devemos escolher sistemas de coordenadas para as variáveis, usando a matriz de rotação para converter de um sistema para outro. O sistema \(frd\), fixo em \(F_{b}\), convém para o vetor velocidade em \(F_{b}\) e para o vetor velocidade angular do veículo (que utiliza os eixos do componentes em eixos do corpo nas equações de movimento angular), mas o vetor \(\mathbf{g}\)  deve ser rotacionado para o sistema do corpo, usando uma matriz rotacional que é obtida a partir das equações de estado. Para a mudança de atitude do veículo empregamos as equações cinemáticas de Euler (1.4-4), relacionando o sistema \(frd\) fixo no corpo ao sistema \(ned\) (o qual  corresponde ao plano tangente \(tp\)). Com os ângulos de Euler obtemos \(C_{frd/ned}\), para então calcular as equações de posição e velocidade~\cite{Stevens2016}.
+
+Para os nossos propósitos, o nosso vetor de estado fica assimm:
 \begin{align*}\tag{1.7-17}
     {X}^{T} = \begin{bmatrix} {\left( \mathbf{p}^{tp}_{cm/O} \right)}^{T} & \mathbf{\Phi}^{T} {\left(\mathbf{v}^{frd}_{cm/e}\right)}^{T} \end{bmatrix}
 \end{align*}
 
-Derivando as variáveis de estado, as relacionamos pelas equações\footnotemark{}:
+Derivando as variáveis de estado\footnotemark{}, temos~\cite{Stevens2016}:
 \footnotetext{A matriz de rotação é calculada antes da equações de estado da posição e velocidade como referido acima.}
 \begin{align*}\tag{1.7-18}
     C_{frd/tp} &= fn \left( \Phi \right) \\
@@ -462,10 +456,4 @@ Derivando as variáveis de estado, as relacionamos pelas equações\footnotemark
     {^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}} &= \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}} + {C_{frd/tp}}{\mathbf{g}^{tp}} - {\tilde{\mathbf{\omega}}^{frd}_{b/e}} {\mathbf{v}^{frd}_{cm/e}}
 \end{align*}
 
-Para completar, o vetor \(\mathbf{g}\) em coordenadas do plano tangente será\footnotemark{}
 
-\begin{equation*}
-\mathbf{g}^{tp} = {\begin{bmatrix} 0 & 0& g_{D} \end{bmatrix}}^{T}
-\end{equation*}
-
-\footnotetext{com o componente abaixo, \(\mathbf{g}_{D}\) igual à gravidade padrão (\(9.80665 \textrm{m/s}^{2}\)) ou seu valor local.}
