@@ -30,7 +30,7 @@ Componentes de vetores terão índices para indicar o sistema de coordenadas ou 
 
 \section{Descrevendo a atitude de um corpo}
 
-Descrevemos a atitude de um robô em ângulos de Euler na sequência \(z\), \(y\), \(x\) (3, 2, 1) que leva de um sistema de referência fixo na Terra até um sistema fixo no corpo do robô. Escolhemos o sistema (\(ned\)) - ``North-East-Down'' (Norte, Leste, Abaixo) com o eixo \(x\) apontando par o Norte, o eixo \(z\) Abaixo, o eixo \(y\) completando o sistema de coordenadas, e o sistema (\(frd\)) - ``Front-Right-Down'' (Avante, Direita, Abaixo), fixo no robô, com eixos, respectivamente, (\(x\),\(y\),\(z\)), sendo o Avante alinhado à \emph{linha de referência longitudinal} do robô, com ``Avante'' e ``Abaixo'' situados no plano de simetria, e o eixo Direito completando o sistema. Adotamos, ainda a convenção de rotações anti-horárias (regra da mão direita).
+Descrevemos a atitude de um robô em ângulos de Euler na sequência \(z\), \(y\), \(x\) (3, 2, 1) que leva de um sistema de referência fixo na Terra até um sistema fixo no corpo do robô. Escolhemos o sistema (\(ned\)) - ``North-East-Down'' (Norte, Leste, Abaixo) com o eixo \(x\) apontando para o Norte, o eixo \(z\) Abaixo, o eixo \(y\) completando o sistema de coordenadas, e o sistema (\(frd\)) - ``Front-Right-Down'' (Avante, Direita, Abaixo), fixo no robô, com eixos, respectivamente, (\(x\),\(y\),\(z\)), sendo o Avante alinhado à \emph{linha de referência longitudinal} do robô, com ``Avante'' e ``Abaixo'' situados no plano de simetria, e o eixo Direito completando o sistema. Adotamos, ainda a convenção de rotações anti-horárias (regra da mão direita).
 
 Desse a modo, a sequência de rotações que leva do sistema de referência \(ned\) para o sistema \(frd\) no corpo é dada por:
 \begin{enumerate}
@@ -127,7 +127,7 @@ Dividindo por \(\delta t\), no limite onde \(\delta t \rightarrow 0\), definindo
     \dot{\mathbf{u}} = \mathbf{\omega}\!\times\!\mathbf{u}\tag{1.4-1}
 \end{equation*}
 
-Esta equação relaciona a velocidade translacional da ponta do vetor \(\mathbf{u}\) ao vetor \(\mathbf{\omega}\). Este vetor \(\mathbf{\omega}\), que denominados \textit{vetor velocidade angular}, constitui-se de um vetor unitário  que define o eixo de rotação, multiplicado pela taxa de rotação. Este é um vetor livre, pode ser trasladado paralelo a si mesmo, e axial, que mudaria de direção caso houvéssemos escolhido uma convenção de sentido horário para a rotação.
+Esta equação relaciona a velocidade translacional da ponta do vetor \(\mathbf{u}\) ao vetor \(\mathbf{\omega}\). Este vetor \(\mathbf{\omega}\), que denominados \textit{vetor velocidade angular}, constitui-se de um vetor unitário  que define o eixo de rotação, multiplicado pela taxa de rotação. Este é um vetor livre, pode ser transladado paralelo a si mesmo, e axial, que mudaria de direção caso houvéssemos escolhido uma convenção de sentido horário para a rotação.
 
 Dessa forma podemos associar \(\mathbf{\omega}\) ao sistema de coordenadas fixado no corpo, atribuindo índices que indicam que ele representa a velocidade angular do corpo em relação a outro determinado sistema.
 
@@ -194,7 +194,7 @@ Para simplificar, definimos \(\mathbf{\Phi} \equiv \left[\phi \theta \psi \right
     \dot{\mathbf{\Phi}} = H \left( \mathbf{\Phi} \right) \mathbf{\omega}^{frd}_{b/r}
 \end{equation}
 
-As equações (1.4-3) e (1.4-4) serão referidas como as equações cinemáticas de Euler, como faz~\cite{Stevens2016}. Note que as matrizes de coeficientes \emph{não são} matrizes ortogonais representando rotações ordinárias de coordenadas. Note ainda que as Equações (1.4-4) e (1.4-4) possuem uma singularidade quando  \(\theta = \pm \frac{\pi}{2}\). Ainda, se essas equações forem utilizadas em uma simulação, as taxas de ângulos de Euler podem integrar para ângulos fora do intervalos de ângulos de Euler, e portanto, seria necessário incluir uma lógica para lidar com essa situação no programa simulador. Não obstante, as equações cinemáticas de Euler são bastante empregadas em simulações.
+As equações (1.4-3) e (1.4-4) serão referidas como as equações cinemáticas de Euler, como faz~\cite{Stevens2016}. Note que as matrizes de coeficientes \emph{não são} matrizes ortogonais representando rotações ordinárias de coordenadas. Note ainda que as Equações (1.4-4) e (1.4-5) possuem uma singularidade quando  \(\theta = \pm \frac{\pi}{2}\). Ainda, se essas equações forem utilizadas em uma simulação, as taxas de ângulos de Euler podem integrar para ângulos fora do intervalos de ângulos de Euler, e portanto, seria necessário incluir uma lógica para lidar com essa situação no programa simulador. Não obstante, as equações cinemáticas de Euler são bastante empregadas em simulações.
 
 \section{Derivada de um vetor em sistemas móveis}
 
@@ -206,8 +206,8 @@ Nesta seção deveremos obter as equações gerais para o movimento de um corpo 
     \fonte{\cite{Stevens2016}}
 \end{figure}
 
-Os sistemas \(F_{b}\) e \(F_{a}\) têm velocidade angular relativa \(\mathbf{\omega}_{b/a}\). O ponto \(Q\), fixo em \(F_{b}\), traslada em relação a \(F_{a}\) a uma velocidade \(\mathbf{v}_{Q/a}\). Partindo de  \(Q\) nasce o vetor \(\mathbf{p}\). Observando a partir de \(F_{b}\) estabelecemos \(\mathbf{p}_{1}\) ao acrescentar o efeito \({^b\dot{\mathbf{p}}}\). Olhando a partir de \(F_{a}\) estabelecemos o vetor  \(\mathbf{p}_{2}\) ao somar, ainda, o efeito de \(\mathbf{\omega}_{b/a}\).A partir de \(F_{a}\), estabelecemos \(\mathbf{p}_{3}\) somando o efeito de \(\mathbf{v}_{Q/a}\), que, entretanto, não muda o comprimento ou direção de \(\mathbf{p}_{2}\).Portanto, para obtermos \(^{a}\dot{\mathbf{p}}\) devemos  comparar \(\mathbf{p}_{2}\) a \(\mathbf{p}\) quando \(\delta t \rightarrow 0\). Desse modo, no instante \(\delta t\), \(\mathbf{p}_{2} \!-\! \mathbf{p}\) temos:
-\begin{equation*}.
+Os sistemas \(F_{b}\) e \(F_{a}\) têm velocidade angular relativa \(\mathbf{\omega}_{b/a}\). O ponto \(Q\), fixo em \(F_{b}\), traslada em relação a \(F_{a}\) a uma velocidade \(\mathbf{v}_{Q/a}\). Partindo de  \(Q\) nasce o vetor \(\mathbf{p}\). Observando a partir de \(F_{b}\) estabelecemos \(\mathbf{p}_{1}\) ao acrescentar o efeito \({^b\dot{\mathbf{p}}}\). Olhando a partir de \(F_{a}\) estabelecemos o vetor  \(\mathbf{p}_{2}\) ao somar, ainda, o efeito de \(\mathbf{\omega}_{b/a}\). A partir de \(F_{a}\), estabelecemos \(\mathbf{p}_{3}\) somando o efeito de \(\mathbf{v}_{Q/a}\), que, entretanto, não muda o comprimento ou direção de \(\mathbf{p}_{2}\).Portanto, para obtermos \(^{a}\dot{\mathbf{p}}\) devemos  comparar \(\mathbf{p}_{2}\) a \(\mathbf{p}\) quando \(\delta t \rightarrow 0\). Desse modo, no instante \(\delta t\), \(\mathbf{p}_{2} \!-\! \mathbf{p}\) temos:
+\begin{equation*}
     \mathbf{p}_{2} - \mathbf{p} = {^{b}\dot{\mathbf{p}}} \delta t + \left( \mathbf{\omega}_{b/a} \! \times \!\mathbf{p} \right) \delta t
 \end{equation*}
 
@@ -235,7 +235,7 @@ Ainda, derivada de um vetor em um quadro pode ser encontrada a partir das deriva
 \section{Velocidade e Aceleração em quadros móveis}
 
 Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\), que se move em relação a \(F_{a}\) e \(F_{b}\), onde fixamos \(O\) and \(Q\), respectivamente, os quais também se movem em relação um ao outro. Na figura abaixo, relacionamos os vetores posição, tomamos suas derivadas no quadro de referência\footnotemark{} \(F_{a}\),  determinando a velocidade. Usando \(\mathbf{v}\) para um vetor velocidade, aplicamos a equação de Coriolis obtendo~\cite{Stevens2016}:
-\footnotetext{A escolha do quadro \(F_{a}\) como referência é arbitrária}
+\footnotetext{A escolha do quadro \(F_{a}\) como referência é arbitrária.}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.25\textwidth, keepaspectratio]{figuras/figure1.5-1.png}
@@ -270,7 +270,7 @@ Reorganizando, destacamos aceleração ``\emph{de transporte}'', ``\emph{centrí
 Os termos \(\mathbf{a}_{P/a}\) e \(\mathbf{a}_{P/b}\), denominados \emph{aceleração total} e \emph{aceleração relativa}, são expressos nos quadros de referência e secundário, respectivamente. Notamos o surgimento do termo \textit{aceleração de Coriolis}, a ser examinado mais adiante. Se fixamos \(P\) no quadro \(F_{b}\), nos resta apenas \textit{aceleração de  transporte}, definida como a aceleração expressa em \(F_{a}\) de um ponto fixo em \(F_{b}\) instantaneamente coincidente com \(P\). A aceleração de transporte expressa os efeitos do movimento de \(F_{b}\), em termos de aceleração do ponto \(Q\), da velocidade angular e da aceleração angular do quadro~\cite{Stevens2016}.
 
 
-Por exemplo, um acelerômetro fixo num robô móvel, de corpo rígido, não se move em relação ao quadro do corpo do robô, restando apenas o termo relativos à velocidade e aceleração de transporte nas equações 1.5-3 e 1.5-4, respectivamente. A aceleração para o sensor no ponto \(P\), de posição \(\mathbf{p}_{P/Q}\) em relação a ponto \(Q\) fixo no quadro do robô, denotando \(a\) and \(b\) os quadros de referência e do robô, respectivamente, é dada por \cite{Stevens2016}:
+Por exemplo, um acelerômetro fixo num robô móvel, de corpo rígido, não se move em relação ao quadro do corpo do robô, restando apenas os termos relativos à velocidade e aceleração de transporte nas equações 1.5-3 e 1.5-4, respectivamente. A aceleração para o sensor no ponto \(P\), de posição \(\mathbf{p}_{P/Q}\) em relação a ponto \(Q\) fixo no quadro do robô, denotando \(a\) and \(b\) os quadros de referência e do robô, respectivamente, é dada por \cite{Stevens2016}:
 \begin{equation*}
     {\mathbf{a}_{P/a}} = {\mathbf{a}_{Q/a}} + {\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}} + {\mathbf{\omega}_{b/a}}\!\times\!\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)
 \end{equation*}
@@ -280,7 +280,7 @@ Aplicando para um corpo sobre a Terra, sejam \(F_{i}\)  e  \(F_{e}\) quadros de 
     {\mathbf{a}_{P/i}} = {\mathbf{a}_{P/e}} + {\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}_{P/O}}\right) + 2\mathbf{\omega}_{e/i}\!\times\!\mathbf{v}_{P/e}
 \end{equation*}
 
-Neste sentido, para uma partícula de massa \(m\) situada em \(P\), à aceleração relativa \(\mathbf{a}_{P/e}\) corresponde uma ``força aparente'' sobre a partícula que produz a trajetória vista por um observador estacionário na Terra. À aceleração verdadeira \(\mathbf{a}_{P/i}\) correspondem às `` forças verdadeiras'' (como gravitação e arraste).  Escrevendo (1.5-5) em termos de forças, onde destacamos a \textit{força centrífuga} normal ao vetor velocidade angular, e a \textit{força de Coriolis}\footnotemark{} que fará uma trajetória balística sobre a Terra curvar-se à esquerda ou à direita~\cite{Stevens2016}:
+Neste sentido, para uma partícula de massa \(m\) situada em \(P\), a aceleração relativa \(\mathbf{a}_{P/e}\) corresponde a uma ``força aparente'' sobre a partícula que produz a trajetória vista por um observador estacionário na Terra. A aceleração verdadeira \(\mathbf{a}_{P/i}\) corresponde às `` forças verdadeiras'' (como gravitação e arraste).  Escrevendo (1.5-5) em termos de forças, onde destacamos a \textit{força centrífuga} normal ao vetor velocidade angular, e a \textit{força de Coriolis}\footnotemark{} que fará uma trajetória balística sobre a Terra curvar-se à esquerda ou à direita~\cite{Stevens2016}:
 \begin{equation*}
     \text{Força aparente} = \text{força verdadeira} - \underbrace{m \left[{\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}_{P/O}}\right)\right]}_{\text{força centrífuga}} - \underbrace{m \left( 2{\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{v}_{P/e}}\right)}_{\text{força de Coriolis}}
 \end{equation*}
@@ -359,7 +359,7 @@ Empregando funções trigonométricas inversas, obtemos \(\theta\) e \(\phi\):
     -\pi  < \phi \leq \pi \\
     -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
 \end{align*}
-\footnotetext{Nas equações há uma região de instabilidade onde \(\mathbf{G}_{py}\) e \(\mathbf{G}_{pz}\) tendem a zero, quando o eixo \(x\) do acelerômetro encontra-se alinhado verticalmente para cima ou para baixo. Nas proximidades dessa região o cálculo da tangente inversa é dominado pelo ruído do sensor, produzindo uma estimativa de ângulo praticamente aleatória. Fisicamente, quando o eixo \(x\) do acelerômetro está na vertical, o ângulo de rolagem \(\phi\) corresponde a uma rotação sobre o vetor do campo gravitacional, para a qual o acelerômetro é insensível. Alguns artifícios podem minimizar a instabilidade~\cite{freescaleAN3461}}
+\footnotetext{Nas equações há uma região de instabilidade onde \(\mathbf{G}_{py}\) e \(\mathbf{G}_{pz}\) tendem a zero, quando o eixo \(x\) do acelerômetro encontra-se alinhado verticalmente para cima ou para baixo. Nas proximidades dessa região o cálculo da tangente inversa é dominado pelo ruído do sensor, produzindo uma estimativa de ângulo praticamente aleatória. Fisicamente, quando o eixo \(x\) do acelerômetro está na vertical, o ângulo de rolagem \(\phi\) corresponde a uma rotação sobre o vetor do campo gravitacional, para a qual o acelerômetro é insensível. Alguns artifícios podem minimizar a instabilidade~\cite{freescaleAN3461}.}
 %
 %Ainda sobre o mesmo robô, que não acelera (\(\mathbf{a}\approxeq0\)), mas muda a sua atitude do instante \({t}_{a}\) para \({t}_{b}\), com projeções \(\mathbf{G}_{{p}_{\left[{t}_{a}\right]}\) e \(\mathbf{G}_{{p}_{\left[{t}_{b}\right]}}\), respectivamente, do vetor contante \(\mathbf{g}\) sobre os eixos \(x\), \(y\) e \(z\) do mesmo acelerômetro, estimamos as atitudes \({\Phi}_{\left[{t}_{a}\right]}\) e \({\Phi}_{\left[{t}_{b}\right]}\). Pelo teorema de Euler, aplicamos os produtos escalar e vetorial para estimar o ângulo e o eixo da rotação que leva o vetor \(g\) da projeção \(\mathbf{G}_{{p}_{\left[{t}_{a}\right]}\) à \(\mathbf{G}_{{p}_{\left[{t}_{b}\right]}}\):
 %
