@@ -360,7 +360,7 @@ Empregando funções trigonométricas inversas, obtemos \(\theta\) e \(\phi\):
     -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
 \end{align*}
 \footnotetext{Nas equações há uma região de instabilidade onde \(\mathbf{G}_{py}\) e \(\mathbf{G}_{pz}\) tendem a zero, quando o eixo \(x\) do acelerômetro encontra-se alinhado verticalmente para cima ou para baixo. Nas proximidades dessa região o cálculo da tangente inversa é dominado pelo ruído do sensor, produzindo uma estimativa de ângulo praticamente aleatória. Fisicamente, quando o eixo \(x\) do acelerômetro está na vertical, o ângulo de rolagem \(\phi\) corresponde a uma rotação sobre o vetor do campo gravitacional, para a qual o acelerômetro é insensível. Alguns artifícios podem minimizar a instabilidade~\cite{freescaleAN3461}}
-
+%
 %Ainda sobre o mesmo robô, que não acelera (\(\mathbf{a}\approxeq0\)), mas muda a sua atitude do instante \({t}_{a}\) para \({t}_{b}\), com projeções \(\mathbf{G}_{{p}_{\left[{t}_{a}\right]}\) e \(\mathbf{G}_{{p}_{\left[{t}_{b}\right]}}\), respectivamente, do vetor contante \(\mathbf{g}\) sobre os eixos \(x\), \(y\) e \(z\) do mesmo acelerômetro, estimamos as atitudes \({\Phi}_{\left[{t}_{a}\right]}\) e \({\Phi}_{\left[{t}_{b}\right]}\). Pelo teorema de Euler, aplicamos os produtos escalar e vetorial para estimar o ângulo e o eixo da rotação que leva o vetor \(g\) da projeção \(\mathbf{G}_{{p}_{\left[{t}_{a}\right]}\) à \(\mathbf{G}_{{p}_{\left[{t}_{b}\right]}}\):
 %
 %\begin{equation*}
@@ -435,7 +435,7 @@ A equação da velocidade também pode ser formulada em relação ao veículo, c
 que, pela a propriedade aditiva dos vetores velocidade angular, resulta em
 
 \begin{align*}\tag{1.7-16b}
-   {^{b}{\dot{\mathbf{v}}_{cm/e}}} &= \textstyle{\frac{1}{m}} \mathbf{F} + \mathbf{g} - \left( \mathbf{\omega}_{b/i} + \mathbf{\omega}_{e/i} \right) \times \mathbf{v}_{cm/e}
+    {^{b}{\dot{\mathbf{v}}_{cm/e}}} &= \textstyle{\frac{1}{m}} \mathbf{F} + \mathbf{g} - {\left( \mathbf{\omega}_{b/i} + \mathbf{\omega}_{e/i} \right)} \times \mathbf{v}_{cm/e}
 \end{align*}
 
 e, tomando a Terra por referencial inercial (\(\mathbf{\omega}_{e/i} \equiv 0 , \mathbf{\omega}_{b/i} \equiv \mathbf{\omega}_{b/e}\)):
@@ -449,14 +449,11 @@ A equação (1.7-16) já impõe a primeira assunção, e a variável de estado p
 Um sistema \(frd\), fixo em \(F_{b}\), convém para o vetor velocidade em \(F_{b}\) e para o vetor velocidade angular do veículo (que utiliza os eixos do componentes em eixos do corpo nas equações de movimento angular), mas o vetor \(\mathbf{g}\) e  o vetor velocidade angular da Terra, conhecidos em sistemas fixos à Terra, devem ser rotacionados para o sistema do corpo, usando uma matriz rotacional que é obtida a partir das equações de estado. Nas equações de Terra plana a mudança de atitude do veículo será modelada com as equações cinemáticas de Euler (1.4-4),  relacionando o sistema \(frd\) fixo no corpo ao sistema \(ned\) (o qual  corresponde ao plano tangente \(tp\) fixo na Terra). Com os ângulos de Euler podemos obter a matriz de rotação \(C_{frd/ned}\), para então calcular as equações de posição e velocidade.
 
 Para os nossos propósitos, o vetor de estado fica assimm:
-% \(\mathbf{\omega}_{b/i} \equiv \mathbf{\omega}_{b/e}\)%:
-
 \begin{align*}\tag{1.7-17}
     X^{T} =
     \begin{bmatrix}
     \left( \mathbf{p}^{tp}_{cm/O} \right) &
-    \mathbf{\Phi}^{T} {\left(\mathbf{v}^{frd}_{cm/e}\right)}^{T} % `&
-    %{\left(\mathbf{\omega}^{frd}_{b/e} \right)}^{T}
+    \mathbf{\Phi}^{T} {\left(\mathbf{v}^{frd}_{cm/e}\right)}^{T}
     \end{bmatrix}
 \end{align*}
 
@@ -466,9 +463,7 @@ Derivando as variáveis de estado, as relacionamos pelas equações\footnotemark
     C_{frd/tp} &= fn \left( \Phi \right) \\
     \dot{\Phi} &=  H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}} \\
     {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}} &= {C_{tp/frd}}{\mathbf{v}^{frd}_{cm/e}} \\
-    {^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}} &= \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}} + {C_{frd/tp}}{\mathbf{g}^{tp}} - {\tilde{\mathbf{\omega}}^{frd}_{b/e}} {\mathbf{v}^{frd}_{cm/e}} \\
-    %{ ^{b}{\dot{\mathbf{\omega}}^{frd}_{b/e}}} &= {\left( J^{frd} \right)}^{-1} \begin{bmatrix} \mathbf{M}^{frd} & -{\tilde{\mathbf{\omega}}^{frd}_{b/e}} {J^{frd}} & {\mathbf{\omega}^{frd}_{b/e}}
-    \end{bmatrix}
+    {^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}} &= \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}} + {C_{frd/tp}}{\mathbf{g}^{tp}} - {\tilde{\mathbf{\omega}}^{frd}_{b/e}} {\mathbf{v}^{frd}_{cm/e}}
 \end{align*}
 
 Para completar, o vetor \(\mathbf{g}\) em coordenadas do plano tangente será\footnotemark{}
@@ -478,12 +473,3 @@ Para completar, o vetor \(\mathbf{g}\) em coordenadas do plano tangente será\fo
 \end{equation*}
 
 \footnotetext{com o componente abaixo, \(\mathbf{g}_{D}\) igual à gravidade padrão (\(9.80665 \textrm{m/s}^{2}\)) ou seu valor local.}
-
-%Cálculos aerodinâmicos requerem a equação para o vetor velocidade relativo à atmosfera envolvente [da equação (1.7-14)]:
-%
-%\begin{equation*}\tag{1.7-19}
-%    \mathbf{v}^{frd}_{rel} =  \mathbf{v}^{frd}_{cm/e} - \mathbf{C}_{frd/tp} \mathbf{v}^{tp}_{W/e}
-%\end{equation*}
-%
-%Para calcular os efeitos aerodinâmicos necessitamos de algumas outras equações adicionais que serão introduzidas no Capítulo 2.
-%
