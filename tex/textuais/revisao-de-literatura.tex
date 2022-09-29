@@ -485,7 +485,7 @@ Por falta de um nome melhor, definimos o vetor \(\mathbf{u}\)
 
 Partindo de (1.7--18), obtemos as equações~\cite{Stevens2016}:
 
-\begin{align*}
+\begin{align*}\tag{Table 2.5-1}
     &\dot{U}      =  RV - QW -g_{D} \sin{\theta} \\
     &\dot{V}      = -RU + PW +g_{D} \sin{\phi}\cos{\theta} \\
     &\dot{W}      =  QU - PV +g_{D} \cos{\phi}\cos{\theta} \\
@@ -501,11 +501,79 @@ Desse modo chegamos e equações não lineares, dependentes, e com parâmetros q
 
 \section{Solução Numérica}
 
-A solução numérica da trajetória do estado exige que, dada uma condição inicial \(X\left(t\right)_{1}\) e o termo de entrada \(\mathbf{u}(t)\), calculamos o estado em intervalos de tempo constante \(T\) pequenos o bastante para considerar o termo \(\mathbf{u}\) constante entre \(kT\) e \(\left(k+1\right)T\) sem modificar significativamente os resultados, na forma a seguir~\cite{Stevens2016}:
+A solução numérica da trajetória do estado exige que, dada uma condição inicial \(X\left(t_{0}\right)\) e o termo de entrada \(\mathbf{u}(t)\), calculamos o estado em intervalos de tempo constante \(T\) pequenos o bastante para considerar o termo \(\mathbf{u}\) constante entre \(kT\) e \(\left(k+1\right)T\) sem modificar significativamente os resultados, na forma a seguir~\cite{Stevens2016}:
 \begin{align*}
     &X \left( t_{0} + kT \right), \quad k = 1,2 \ldots\tag{3.4-1a} \\
     &\dot{X} \left( t \right) = f \big(X\left(t\right), \mathbf{u}\left(t\right)\big)\tag{3.4-1b}
 \end{align*}
 
-No sensor com acelerômetros e giroscópios de três eixos \(xyz\) em \(frd\), o acelerômetro nos apresenta uma leitura de \( \dot{U}, \dot{V}, \dot{W}\), e o giroscópio uma leitura de \( P, Q, R\).
+%\begin{align*}
+%    &\mathbf{p}^{tp}_{cm/Q} \equiv \begin{bmatrix} p_{N} & p_{E} & p_{D} \end{bmatrix}^{T},&
+%    &\mathbf{\Phi} \equiv \begin{bmatrix} \phi & \theta & \psi \end{bmatrix}^{T} \\
+%    &\mathbf{v}^{frd}_{cm/e} \equiv \begin{bmatrix} U & V & W \end{bmatrix}^{T},&
+%    &{\dot{\mathbf{\Phi}}} \equiv \begin{bmatrix} \dot{\phi} & \dot{\theta} & \dot{\psi} \end{bmatrix}^{T} \\
+%\end{align*}
+
+A questão acima, conhecida como \emph{problema do valor inicial}, será enfrentada aqui pelos métodos \emph{Runge-Kutta} (RK). Considere o problema do valor inicial na sua forma mais simples: uma equação diferencial autônoma de primeira ordem com uma condição de limite específica~\cite{Stevens2016}
+\begin{equation*}\tag{3.4-2}
+    {\frac{\textrm{d}x}{\textrm{d}t}} = f \left( x, t \right), \quad
+    x \left( t_{0} \right) = x_{0}
+\end{equation*}
+
+Podemos estabelecer uma relação entre o problema de encontrar valores determinados para (3.4-4) e a série de Taylor~\cite{Stevens2016}:
+
+\begin{equation*}\tag{3.4-3}
+    x \left(t_{0} + T \right) = x \left(t_{0}\right) + T \dot{x}\left(t_{0}\right) + \frac{T^{2}}{2!} \ddot{x}\left(t_{0}\right) + \ldots
+\end{equation*}
+
+O método mais simples, pouco preciso e que exige um período \(T\) muito pequeno, consiste em truncar a série após a primeira derivada, conhecido por método de Euler ou de \emph{primeira ordem},  pode ser expresso na forma~\cite{Stevens2016}:
+
+\begin{equation*}\tag{3.4-4}
+    x_{E}\left(t_{0} + T \right) \approx x \left( t_{0} \right) + T f\left(x\left(t_{0}\right), t_{0}\right)
+\end{equation*}
+
+O \emph{método trapezoidal}, por exemplo, ou de \emph{segunda ordem}, é um pouco mais preciso, e consiste em primeiro estimar a integral pelo método de Euler, então usar a média das derivadas no início e no fim do período para uma estivativa mais precisa. Podem ser expresso, empregando índices \(E\) e \(T\) para os passos obtidos pelos métodos de \emph{Euler} e \emph{trapezoidal}, repsectivamente,  com~\cite{Stevens2016}
+
+\begin{align*}\tag{3.4-5}
+    x_{E}\left(t + T\right) &= x\left(t\right) + T f\left(x\left(t\right),t\right) \\
+    \dot{x}_{E}\left(t + T\right) &= {f{\left( x_{E} {\left( t + T \right)}, t+T \right)}} \\
+    x_{E}\left(t + T\right) &= x\left(t\right) + \frac{T}{2} \left[ \dot{x}\left(t\right) + \dot{x}_{E}\left(t + T\right) \right],
+\end{align*}
+
+Os métodos Runge-Kutta\footnotemark{} resolvem o problema do valor inicial diretamente, o que atende à formulação em espaço de estados onde um vetor de estado contém descreve completamente um sistema num determinado instante. Essa característica é ainda mais importante quando passamos de sistemas em tempo contínuo para sistemas em tempo discreto, o que é muito comum na prática~\cite{Stevens2016}.
+
+Geralmente processamos eventos em tempo discreto a partir de sinais definidos a cada amostra, supondo que esses sinais permanecem constantes entre uma amostra e outra. Desse modo as integrações numéricas impõem essa suposição que chamamos de ``zero-order-data-hold'' (ZOH) em relação aos sinais amostrados~\cite{Stevens2016}, conforme ilustrado na figura:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth, keepaspectratio]{figuras/figure7.2-2.png}\label{fig7.2-2}
+    \caption{Reconstrução de um sinal usando ZOH}\label{fig:ZOH}
+    \fonte{\citeonline{Stevens2016}}
+\end{figure}
+
+No sensor com acelerômetros e giroscópios de três eixos \(xyz\) em \(frd\), o acelerômetro nos apresenta uma leitura de \( \dot{U}, \dot{V}, \dot{W}\), e o giroscópio uma leitura de \( P, Q, R\). As leituras são simultâneas e obtidas em intervalos de tempo regulares \(Ts\), que podemos escolher entre algumas opções. De um modo geral:
+
+\begin{align*}
+    &{^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}_\left[k\right]}
+        \equiv \begin{bmatrix} {\dot{U}}_{\left[k\right]} & {\dot{V}_{\left[k\right]}} & {\dot{W}_{\left[k\right]}} \end{bmatrix}^{T}
+        \text{ (leitura do acelerômetro no instante \(t=kT\))}, \\
+     &\mathbf{\omega}^{frd}_{b/e}_{\left[k\right]}
+        \equiv \begin{bmatrix} P_{\left[k\right]} & Q_{\left[k\right]} & R_{\left[k\right]} \end{bmatrix}^{T}
+        \text{ (leitura do giroscópio no instante \(t=kT\))} \\
+\end{align*}
+%\begin{align*}
+%    {\mathbf{\omega}^{frd}_{b/e}} &= \begin{bmatrix} P & Q & R \end{bmatrix}^{T} \text{ (leitura do giroscópio)} \\
+%    {^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}}
+%           &= \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}} + {C_{frd/tp}}{\mathbf{g}^{tp}} - {\tilde{\mathbf{\omega}}^{frd}_{b/e}} {\mathbf{v}^{frd}_{cm/e}} \\
+%    {\Phi} &= \begin{bmatrix} \phi & \theta & \psi \end{bmatrix}^{T} \text{ (calculado)} \\
+%    \dot{\Phi}\left(\Phi,\omega \right) &=  H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}} \\
+%    C_{frd/tp}\left(\Phi\right) &= fn \left( \Phi \right) \\
+%    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left(t\right)} 
+%        &= \int_{t_0}^{t}{^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left(t\right)} \\
+%    {\mathbf{v}^{frd}_{cm/e}\left(t\right)}
+%        &= \int_{t_0}^{t}{^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}}{\left(t\right)}\textrm{dt}
+%        = \int_{t_0}^{t}\begin{bmatrix} {\dot{U}} & {\dot{V}} & {\dot{W}} \end{bmatrix}^{T} \textrm{dt}\\
+%    \int_{t_0}^{t}{^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left(t\right)}
+%        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}{\mathbf{v}^{frd}_{cm/e}\left(t\right)}\textrm{dt}
+%        ={C_{tp/frd}\left({\Phi}\right)}\int_{t_0}^{t}\begin{bmatrix} {\dot{U}} & {\dot{V}} & {\dot{W}} \end{bmatrix}^{T} \textrm{dt} \\
+%\end{align*}
 
