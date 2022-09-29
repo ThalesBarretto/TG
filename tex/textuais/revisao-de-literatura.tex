@@ -486,9 +486,6 @@ Por falta de um nome melhor, definimos o vetor \(\mathbf{u}\)
 Partindo de (1.7--18), obtemos as equações~\cite{Stevens2016}:
 
 \begin{align*}\tag{Table 2.5-1}
-    &\dot{U}      =  RV - QW -g_{D} \sin{\theta} \\
-    &\dot{V}      = -RU + PW +g_{D} \sin{\phi}\cos{\theta} \\
-    &\dot{W}      =  QU - PV +g_{D} \cos{\phi}\cos{\theta} \\
     &\dot{\phi}   =  P + \tan{\theta} \left( Q \sin{\phi} + R \cos{\phi} \right) \\
     &\dot{\theta} =  Q \cos{\phi} - R \sin{\phi} \\
     &\dot{\psi}   =  \left( Q \sin{\phi} + R \cos{\phi} \right) / \cos{\theta} \\
@@ -496,6 +493,8 @@ Partindo de (1.7--18), obtemos as equações~\cite{Stevens2016}:
     &\dot{p_{E}}  =  U c \theta s \psi  + V (  c \phi s \psi + s \phi s \theta s \psi ) + W (-s \phi c \psi + c \phi s \theta c \psi) \\
     &\dot{h}      =  U s \theta - V s \phi c \theta - W c \phi c \theta \\
 \end{align*}
+
+No nosso caso, um sensor com acelerômetros e giroscópios de três eixos \(xyz\) em \(frd\), fixo no centro de massa do robô, temos que o acelerômetro nos apresenta uma leitura de \( \dot{U}, \dot{V}, \dot{W}\), e o giroscópio apresenta uma leitura de \( P, Q, R\). Esses valores compõem o vetor \(\mathbf{u}\).
 
 Desse modo chegamos e equações não lineares, dependentes, e com parâmetros que são determinados externamente, pela leitura dos sensores. Uma solução analítica, portanto está fora do alcance. Para obtermos uma solução no domínio do tempo e obter a trajetória do veículo só nos resta a solução numérica dessas equações~\cite{Stevens2016}.
 
@@ -550,7 +549,7 @@ Geralmente processamos eventos em tempo discreto a partir de sinais definidos a 
     \fonte{\citeonline{Stevens2016}}
 \end{figure}
 
-No sensor com acelerômetros e giroscópios de três eixos \(xyz\) em \(frd\), o acelerômetro nos apresenta uma leitura de \( \dot{U}, \dot{V}, \dot{W}\), e o giroscópio uma leitura de \( P, Q, R\). As leituras são simultâneas e obtidas em intervalos de tempo regulares \(Ts\), que podemos escolher entre algumas opções. De um modo geral:
+Para nosso sensor com acelerômetros e giroscópios de três eixos, as leituras são simultâneas e obtidas em intervalos de tempo regulares \(Ts\), que podemos escolher entre algumas opções, obtendo:
 
 \begin{align*}
     &{^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}_\left[k\right]}
@@ -560,20 +559,45 @@ No sensor com acelerômetros e giroscópios de três eixos \(xyz\) em \(frd\), o
         \equiv \begin{bmatrix} P_{\left[k\right]} & Q_{\left[k\right]} & R_{\left[k\right]} \end{bmatrix}^{T}
         \text{ (leitura do giroscópio no instante \(t=kT\))} \\
 \end{align*}
-%\begin{align*}
-%    {\mathbf{\omega}^{frd}_{b/e}} &= \begin{bmatrix} P & Q & R \end{bmatrix}^{T} \text{ (leitura do giroscópio)} \\
-%    {^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}}
-%           &= \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}} + {C_{frd/tp}}{\mathbf{g}^{tp}} - {\tilde{\mathbf{\omega}}^{frd}_{b/e}} {\mathbf{v}^{frd}_{cm/e}} \\
-%    {\Phi} &= \begin{bmatrix} \phi & \theta & \psi \end{bmatrix}^{T} \text{ (calculado)} \\
-%    \dot{\Phi}\left(\Phi,\omega \right) &=  H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}} \\
-%    C_{frd/tp}\left(\Phi\right) &= fn \left( \Phi \right) \\
-%    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left(t\right)} 
-%        &= \int_{t_0}^{t}{^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left(t\right)} \\
-%    {\mathbf{v}^{frd}_{cm/e}\left(t\right)}
-%        &= \int_{t_0}^{t}{^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}}{\left(t\right)}\textrm{dt}
-%        = \int_{t_0}^{t}\begin{bmatrix} {\dot{U}} & {\dot{V}} & {\dot{W}} \end{bmatrix}^{T} \textrm{dt}\\
-%    \int_{t_0}^{t}{^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left(t\right)}
-%        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}{\mathbf{v}^{frd}_{cm/e}\left(t\right)}\textrm{dt}
-%        ={C_{tp/frd}\left({\Phi}\right)}\int_{t_0}^{t}\begin{bmatrix} {\dot{U}} & {\dot{V}} & {\dot{W}} \end{bmatrix}^{T} \textrm{dt} \\
-%\end{align*}
 
+Pelo método de Euler, podemos obter a atitude se consideramos:
+\begin{align*}
+{\Phi}{\left[ k \right]} 
+    &\approx {\Phi} {\left[ k-1 \right]} + T {\dot{\Phi}{\left[ k -1 \right]}} \\
+    &\approx {\Phi} {\left[ k-1 \right]} + T {\left( H {\left( \Phi{\left[ k-1 \right]} \right)}{\mathbf{\omega}^{frd}_{b/e}}{\left[ k-1 \right]}\right)} \\
+\end{align*}
+
+A pretensão é chegar em algo assim:
+\begin{align*}
+    {^{b}{{\mathbf{v}}}^{frd}_{cm/e}{\left[k\right]}}
+        &\approx {^{b}{{\mathbf{v}}}^{frd}_{cm/e}}{\left[ k-1 \right]}
+        + T \Big({^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}{\left[k -1\right]}}\Big) \\
+    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k\right]}
+    &\approx     {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k-1\right]}
+    + T \Big({C_{tp/frd}\left({\Phi}{\left[ k-1 \right]} \right)} {\mathbf{v}^{frd}_{cm/e}{\left[ k-1 \right]}}\Big) \\
+\end{align*}
+
+Para expressar isso;
+\begin{align*}
+    {\Phi} \left(t\right) &=
+        \int_{t_{0}}^{t} H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}}\left(t\right) \textrm{d}t \\
+    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left(t\right)} 
+        &= \int_{t_0}^{t} {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left(t\right)} \\
+        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}{\mathbf{v}^{frd}_{cm/e}\left(t\right)}\textrm{d}t \\
+        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}
+        {\left(
+        \int_{t_0}^{t} \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}}\left(t\right)
+        + {C_{frd/tp}\left(\Phi\right)}{\mathbf{g}^{tp}}
+        - {\tilde{\mathbf{\omega}}^{frd}_{b/e}\left(t\right)} {\mathbf{v}^{frd}_{cm/e}\left(t\right)} \textrm{d}t
+\right)} \textrm{d}t
+\end{align*}
+
+com condições iniciais, para o instante \(t_{0} = 0\):
+\begin{align*}
+    {\Phi} \left[0\right] 
+        &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (veículo nivelado)} \\
+    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[0\right]}
+    &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (situado na origem do plano tangente)} \\
+    {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left[0\right]}
+    &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (em repouso)} \\
+\end{align*}
