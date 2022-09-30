@@ -255,11 +255,10 @@ Rearranjando para destacar os temos em parênteses\footnotemark{}:
 \end{equation*}
 \footnotetext{O termo em parênteses corresponde à chamada \textit{velocidade de transporte de \(P\) no quadro \(F_{a}\)} (a velocidade em \(F_{a}\) de um ponto fixo em \(F_{b}\) coincidente com \(P\)).}
 
-Para a aceleração derivamos (1.5-3) em \(F_{a}\). Velocidades em \(F_{a}\) se tornam acelerações em \(F_{a}\); A velocidade em \(F_{b}\) é derivada pela Equação de Coriolis; A produto vetorial é derivado pela ``regra do produto vetorial''\footnotemark{}; A derivada da velocidade angular é um vetor aceleração angular designado \(\mathbf{\alpha}\). Seja \(\mathbf{a}\) a aceleração translacional em (1.5-3), obtemos:
+Para a aceleração derivamos (1.5-3) em \(F_{a}\). Velocidades em \(F_{a}\) se tornam acelerações em \(F_{a}\); A velocidade em \(F_{b}\) é derivada pela Equação de Coriolis; A produto vetorial é derivado pela ``regra do produto vetorial''; A derivada da velocidade angular é um vetor aceleração angular designado \(\mathbf{\alpha}\). Seja \(\mathbf{a}\) a aceleração translacional em (1.5-3), obtemos:
 \begin{equation*}
     \mathbf{a}_{P/a} = \mathbf{a}_{Q/a} + \left(\mathbf{a}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}\right) + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + {\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{v}_{P/b}} + {{\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}}\right)}
 \end{equation*}
-\footnotetext{TODO incluir no s anexos a Regra do Produto Vetorial.}
 
 Reorganizando, destacamos aceleração ``\emph{de transporte}'', ``\emph{centrípeta}'' e ``\emph{de Coriolis}'':
 \begin{equation*}
@@ -494,7 +493,7 @@ Partindo de (1.7--18), obtemos as equações~\cite{Stevens2016}:
     &\dot{h}      =  U s \theta - V s \phi c \theta - W c \phi c \theta \\
 \end{align*}
 
-No nosso caso, um sensor com acelerômetros e giroscópios de três eixos \(xyz\) em \(frd\), fixo no centro de massa do robô, temos que o acelerômetro nos apresenta uma leitura de \( \dot{U}, \dot{V}, \dot{W}\), e o giroscópio apresenta uma leitura de \( P, Q, R\). Esses valores compõem o vetor \(\mathbf{u}\).
+No nosso caso, um sensor com acelerômetros e giroscópios de três eixos \(xyz\) em \(frd\), fixo no centro de massa do robô, o giroscópio apresenta diretamente uma leitura de \( P, Q, R\), o acelerômetro permite uma leitura indireta de \( \dot{U}, \dot{V}, \dot{W}\). Esses valores compõem o vetor \(\mathbf{u}\).
 
 Desse modo chegamos e equações não lineares, dependentes, e com parâmetros que são determinados externamente, pela leitura dos sensores. Uma solução analítica, portanto está fora do alcance. Para obtermos uma solução no domínio do tempo e obter a trajetória do veículo só nos resta a solução numérica dessas equações~\cite{Stevens2016}.
 
@@ -549,50 +548,9 @@ Geralmente processamos eventos em tempo discreto a partir de sinais definidos a 
     \fonte{\citeonline{Stevens2016}}
 \end{figure}
 
-Para nosso sensor com acelerômetros e giroscópios de três eixos, as leituras são simultâneas e obtidas em intervalos de tempo regulares \(Ts\), que podemos escolher entre algumas opções, obtendo:
+Evidentemente, as técnicas numéricas introduzem problemas de tratamento bastante complexos, como a questão da estabilidade do método numérico empregado, a estimativa dos erros, bem como os erros introduzidos pela amostragem, quantificação dos sinais, imperfeições dos sensores, ruídos, entre outras. Não obstante, para nosso propósito utilizamos o modelo mais simples possível, ignorando esses problemas até a discussão sobre os resultados, ao final.
 
-\begin{align*}
-    &{^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}_\left[k\right]}
-        \equiv \begin{bmatrix} {\dot{U}}_{\left[k\right]} & {\dot{V}_{\left[k\right]}} & {\dot{W}_{\left[k\right]}} \end{bmatrix}^{T}
-        \text{ (leitura do acelerômetro no instante \(t=kT\))}, \\
-     &\mathbf{\omega}^{frd}_{b/e}_{\left[k\right]}
-        \equiv \begin{bmatrix} P_{\left[k\right]} & Q_{\left[k\right]} & R_{\left[k\right]} \end{bmatrix}^{T}
-        \text{ (leitura do giroscópio no instante \(t=kT\))} \\
-\end{align*}
-
-Pelo método de Euler, podemos obter a atitude se consideramos:
-\begin{align*}
-{\Phi}{\left[ k \right]} 
-    &\approx {\Phi} {\left[ k-1 \right]} + T {\dot{\Phi}{\left[ k -1 \right]}} \\
-    &\approx {\Phi} {\left[ k-1 \right]} + T {\left( H {\left( \Phi{\left[ k-1 \right]} \right)}{\mathbf{\omega}^{frd}_{b/e}}{\left[ k-1 \right]}\right)} \\
-\end{align*}
-
-A pretensão é chegar em algo assim:
-\begin{align*}
-    {^{b}{{\mathbf{v}}}^{frd}_{cm/e}{\left[k\right]}}
-        &\approx {^{b}{{\mathbf{v}}}^{frd}_{cm/e}}{\left[ k-1 \right]}
-        + T \Big({^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}{\left[k -1\right]}}\Big) \\
-    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k\right]}
-    &\approx     {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k-1\right]}
-    + T \Big({C_{tp/frd}\left({\Phi}{\left[ k-1 \right]} \right)} {\mathbf{v}^{frd}_{cm/e}{\left[ k-1 \right]}}\Big) \\
-\end{align*}
-
-Para expressar isso;
-\begin{align*}
-    {\Phi} \left(t\right) &=
-        \int_{t_{0}}^{t} H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}}\left(t\right) \textrm{d}t \\
-    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left(t\right)} 
-        &= \int_{t_0}^{t} {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left(t\right)} \\
-        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}{\mathbf{v}^{frd}_{cm/e}\left(t\right)}\textrm{d}t \\
-        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}
-        {\left(
-        \int_{t_0}^{t} \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}}\left(t\right)
-        + {C_{frd/tp}\left(\Phi\right)}{\mathbf{g}^{tp}}
-        - {\tilde{\mathbf{\omega}}^{frd}_{b/e}\left(t\right)} {\mathbf{v}^{frd}_{cm/e}\left(t\right)} \textrm{d}t
-\right)} \textrm{d}t
-\end{align*}
-
-com condições iniciais, para o instante \(t_{0} = 0\):
+Estabelecemos como condições iniciais, para o instante \(t_{0} = 0\):
 \begin{align*}
     {\Phi} \left[0\right] 
         &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (veículo nivelado)} \\
@@ -601,3 +559,50 @@ com condições iniciais, para o instante \(t_{0} = 0\):
     {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left[0\right]}
     &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (em repouso)} \\
 \end{align*}
+
+Então utilizamos a leitura dos giroscópios para obter:
+\begin{align*}
+     &\mathbf{\omega}^{frd}_{b/e}_{\left[k\right]}
+        \equiv \begin{bmatrix} P_{\left[k\right]} & Q_{\left[k\right]} & R_{\left[k\right]} \end{bmatrix}^{T}
+        \text{} \\
+\end{align*}
+
+Podemos obter a atitude Pelo método de Euler\footnotemark{}:
+\begin{align*}
+{\Phi}{\left[ k \right]} 
+    &\approx {\Phi} {\left[ k-1 \right]} + T {\dot{\Phi}{\left[ k -1 \right]}} \\
+    &\approx {\Phi} {\left[ k-1 \right]} + T {\left( H {\left( \Phi{\left[ k-1 \right]} \right)}{\mathbf{\omega}^{frd}_{b/e}}{\left[ k-1 \right]}\right)} \\
+\end{align*}
+\footnotetext{Ou, se o veículo estiver estacionário, podemos utilizar os acelerômetros.}
+
+Então utilizamos as leituras dos acelerômetros para calcular
+\begin{align*}
+    &{^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}_\left[k\right]}
+        \equiv \begin{bmatrix} {\dot{U}}_{\left[k\right]} & {\dot{V}_{\left[k\right]}} & {\dot{W}_{\left[k\right]}} \end{bmatrix}^{T}
+        \text{} \\
+\end{align*}
+
+Por último, utilizamos os resultados para calcular:
+\begin{align*}
+    {^{b}{{\mathbf{v}}}^{frd}_{cm/e}{\left[k\right]}}
+        &\approx {^{b}{{\mathbf{v}}}^{frd}_{cm/e}}{\left[ k-1 \right]}
+        + T \Big({^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}{\left[k -1\right]}}\Big) \\
+    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k\right]}
+    &\approx     {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k-1\right]}
+    + T \Big({C_{tp/frd}\left({\Phi}{\left[ k-1 \right]} \right)} {\mathbf{v}^{frd}_{cm/e}{\left[ k-1 \right]}}\Big) \\
+\end{align*}
+%Para expressar isso;
+%\begin{align*}
+%    {\Phi} \left(t\right) &=
+%        \int_{t_{0}}^{t} H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}}\left(t\right) \textrm{d}t \\
+%    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left(t\right)} 
+%        &= \int_{t_0}^{t} {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left(t\right)} \\
+%        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}{\mathbf{v}^{frd}_{cm/e}\left(t\right)}\textrm{d}t \\
+%        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}
+%        {\left(
+%        \int_{t_0}^{t} \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}}\left(t\right)
+%        + {C_{frd/tp}\left(\Phi\right)}{\mathbf{g}^{tp}}
+%        - {\tilde{\mathbf{\omega}}^{frd}_{b/e}\left(t\right)} {\mathbf{v}^{frd}_{cm/e}\left(t\right)} \textrm{d}t
+%\right)} \textrm{d}t
+%\end{align*}
+%
