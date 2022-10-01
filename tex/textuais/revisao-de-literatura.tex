@@ -6,7 +6,7 @@ No particular, empregaremos em grande parte as convenções e equações utiliza
 
 \section{Notação e convenções}
 
-Neste trabalho utilizamos um modelo de mundo tridimensional e mecânica clássica.  Nosso espaço é estruturado por três eixos ortogonais \(x\), \(y\), \(z\) (\(1, 2, 3\)) onde uma posição é dada por um vetor tridimensional. Descreveremos a atitude e o movimento de um corpo rígido sobre a superfície oblata e girante da Terra. Não obstante, serão empregadas aproximações sobre uma pequena área para uma Terra plana, estacionária e constante, que basta\footnotemark{} para os nossos propósitos. Para simbologia, acompanhamos \cite{Stevens2016}:
+Neste trabalho utilizamos um modelo de mundo tridimensional e mecânica clássica.  Nosso espaço é estruturado por três eixos ortogonais \(x\), \(y\), \(z\) (\(1, 2, 3\)) onde uma posição é dada por um vetor tridimensional. Descreveremos a atitude e o movimento de um corpo rígido sobre a superfície oblata e girante da Terra. Não obstante, serão empregadas aproximações sobre uma pequena área para um plano tangente à Terra estacionária e constante, que basta\footnotemark{} para os nossos propósitos. Para simbologia, acompanhamos \cite{Stevens2016}:
 
 \begin{align*}
     \mathbf{p}_{A/B} &\equiv
@@ -141,7 +141,7 @@ Um corpo em movimento pode mudar sua atitude, descrita em ângulos de Euler, ao 
 
 Para vincular as taxas de ângulos de Euler, que descrevem a mudança de atitude de um corpo, à sua velocidade angular, procedemos do seguinte modo. Definimos um quadro de referência \(F_{r}\) e um quadro do corpo \(F_{b}\) com vetor velocidade angular relativa \(\omega_{b/r}\) e uma sequencia de ângulos de Euler que define a atitude do corpo, ou seja, a orientação do sistema de coordenadas preso ao corpo em relação ao sistema de referência. Cada taxa de ângulos de Euler informa a direção e magnitude para um determinado vetor velocidade angular sobre um eixo de coordenadas em particular. Esses três vetores somados formam o vetor velocidade angular resultante do veículo cujas taxas de ângulos de Euler estamos tratando. Desse modo podemos encontrar os componentes do vetor velocidade angular resultante \cite{Stevens2016}.
 
-Em outras palavras, movemos sobre a Terra um sistema de coordenada \(frd\) (\emph{``front'', ``right'', ``down''} - frente, direita, abaixo) preso no corpo, com o sistema \(ned\) (\emph{``north'', ``east'', ``down''} - norte, leste abaixo) fixo no quadro de referência, usando uma sequencia ``yaw-pitch-roll'' de ângulos de Euler do sistema \(ned\) para o sistema \(frd\). No caso das equações de Terra plana o sistema \(ned\) é fixado na Terra, e a velocidade angular relativa é aquela do corpo em relação à Terra. Não trataremos aqui do caso mais geral das equações com seis graus de liberdade onde sistema \(ned\) se move sobre a Terra.
+Em outras palavras, movemos sobre a Terra um sistema de coordenada \(frd\) (\emph{``front'', ``right'', ``down''} - frente, direita, abaixo) preso no corpo, com o sistema \(ned\) (\emph{``north'', ``east'', ``down''} - norte, leste abaixo) fixo no quadro de referência, usando uma sequencia ``yaw-pitch-roll'' de ângulos de Euler do sistema \(ned\) para o sistema \(frd\). No caso das equações de plano tangente o sistema \(ned\) é fixado na Terra, e a velocidade angular relativa é aquela do corpo em relação à Terra. Não trataremos aqui do caso mais geral das equações com seis graus de liberdade onde sistema \(ned\) se move sobre a Terra.
 
 As transformações de coordenadas são~\cite{Stevens2016}:
 
@@ -405,9 +405,9 @@ Aplicando a segunda lei de Newton, partimos da Equação (1.5-5), substituímos 
 
 Esta equação de estado da velocidade combinada à equação de estado da posição são adequadas para a Terra oblata e girante. Latitude, longitude e \(\mathbf{G}\) podem ser calculadas a partir do vetor de posição geocêntrico. Já a força de Coriolis normalmente é desprezada para velocidades inferiores a 609m/s (2000 pés/s)~\cite{Stevens2016}.
 
-\section{Equações de Estado para Terra plana}
+\section{Equações de Estado para o Plano Tangente}
 
-Equações de Terra plana não determinam com precisão a posição sobre a Terra, mas são amplamente utilizadas. Nelas pressupomos que a Terra é um referencial inercial, a posição é obtida no sistema do plano tangente \(tp\), o vetor gravidade, \(\mathbf{g}\), é normal ao plano tangente e constante em magnitude, e a atitude do veículo no plano tangente é uma boa aproximação à verdadeira atitude geográfica na posição do veículo. Simplificando (1.7-12) e (1.7-13), com o vetor \(\mathbf{g}\) constante, e o vetor posição a partir de \(Q\) na superfície, na origem de um plano tangente, obtemos~\cite{Stevens2016}:
+Equações de plano tangente não determinam com precisão a posição sobre a Terra, mas são amplamente utilizadas. Nelas pressupomos que a Terra é um referencial inercial, a posição é obtida no sistema do plano tangente \(tp\), o vetor gravidade, \(\mathbf{g}\), é normal ao plano tangente e constante em magnitude, e a atitude do veículo no plano tangente é uma boa aproximação à verdadeira atitude geográfica na posição do veículo. Simplificando (1.7-12) e (1.7-13), com o vetor \(\mathbf{g}\) constante, e o vetor posição a partir de \(Q\) na superfície, na origem de um plano tangente, obtemos~\cite{Stevens2016}:
 
 \begin{equation*}\tag{1.7-15}
    {^{e}{\dot{\mathbf{p}}_{cm/Q}}} = \mathbf{v}_{cm/e}
@@ -549,60 +549,3 @@ Geralmente processamos eventos em tempo discreto a partir de sinais definidos a 
 \end{figure}
 
 Evidentemente, as técnicas numéricas introduzem problemas de tratamento bastante complexos, como a questão da estabilidade do método numérico empregado, a estimativa dos erros, bem como os erros introduzidos pela amostragem, quantificação dos sinais, imperfeições dos sensores, ruídos, entre outras. Não obstante, para nosso propósito utilizamos o modelo mais simples possível, ignorando esses problemas até a discussão sobre os resultados, ao final.
-
-Estabelecemos como condições iniciais, para o instante \(t_{0} = 0\):
-\begin{align*}
-    {\Phi} \left[0\right] 
-        &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (veículo nivelado)} \\
-    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[0\right]}
-    &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (situado na origem do plano tangente)} \\
-    {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left[0\right]}
-    &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (em repouso)} \\
-\end{align*}
-
-Então utilizamos a leitura dos giroscópios para obter:
-\begin{align*}
-     &\mathbf{\omega}^{frd}_{b/e}_{\left[k\right]}
-        \equiv \begin{bmatrix} P_{\left[k\right]} & Q_{\left[k\right]} & R_{\left[k\right]} \end{bmatrix}^{T}
-        \text{} \\
-\end{align*}
-
-Podemos obter a atitude Pelo método de Euler\footnotemark{}:
-\begin{align*}
-{\Phi}{\left[ k \right]} 
-    &\approx {\Phi} {\left[ k-1 \right]} + T {\dot{\Phi}{\left[ k -1 \right]}} \\
-    &\approx {\Phi} {\left[ k-1 \right]} + T {\left( H {\left( \Phi{\left[ k-1 \right]} \right)}{\mathbf{\omega}^{frd}_{b/e}}{\left[ k-1 \right]}\right)} \\
-\end{align*}
-\footnotetext{Ou, se o veículo estiver estacionário, podemos utilizar os acelerômetros.}
-
-Então utilizamos as leituras dos acelerômetros para calcular
-\begin{align*}
-    &{^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}_\left[k\right]}
-        \equiv \begin{bmatrix} {\dot{U}}_{\left[k\right]} & {\dot{V}_{\left[k\right]}} & {\dot{W}_{\left[k\right]}} \end{bmatrix}^{T}
-        \text{} \\
-\end{align*}
-
-Por último, utilizamos os resultados para calcular:
-\begin{align*}
-    {^{b}{{\mathbf{v}}}^{frd}_{cm/e}{\left[k\right]}}
-        &\approx {^{b}{{\mathbf{v}}}^{frd}_{cm/e}}{\left[ k-1 \right]}
-        + T \Big({^{b}{\dot{\mathbf{v}}}^{frd}_{cm/e}{\left[k -1\right]}}\Big) \\
-    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k\right]}
-    &\approx     {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k-1\right]}
-    + T \Big({C_{tp/frd}\left({\Phi}{\left[ k-1 \right]} \right)} {\mathbf{v}^{frd}_{cm/e}{\left[ k-1 \right]}}\Big) \\
-\end{align*}
-%Para expressar isso;
-%\begin{align*}
-%    {\Phi} \left(t\right) &=
-%        \int_{t_{0}}^{t} H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}}\left(t\right) \textrm{d}t \\
-%    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left(t\right)} 
-%        &= \int_{t_0}^{t} {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left(t\right)} \\
-%        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}{\mathbf{v}^{frd}_{cm/e}\left(t\right)}\textrm{d}t \\
-%        &= \int_{t_0}^{t}{C_{tp/frd}\left({\Phi}\right)}
-%        {\left(
-%        \int_{t_0}^{t} \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}}\left(t\right)
-%        + {C_{frd/tp}\left(\Phi\right)}{\mathbf{g}^{tp}}
-%        - {\tilde{\mathbf{\omega}}^{frd}_{b/e}\left(t\right)} {\mathbf{v}^{frd}_{cm/e}\left(t\right)} \textrm{d}t
-%\right)} \textrm{d}t
-%\end{align*}
-%
