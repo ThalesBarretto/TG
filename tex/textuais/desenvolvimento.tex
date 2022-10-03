@@ -98,9 +98,9 @@ Podemos obter a atitude integrando numericamente:
 
 Ou, quando \(\mathbf{a} \approx 0, \equiv \lvert\mathbf{f}\lvert \approx \lvert\mathbf{g}\lvert\), podemos obter \(\theta\) e \(\phi\) dos acelerômetros:
 \begin{align*}
-    {\phi}\left[k\right] &= \left(-1\right)  \textrm{atan2}\left(\frac{\mathbf{-f}_{y}}{\mathbf{-f}_{z}}\right),\quad
+    {\phi}\left[k\right] &=  \textrm{atan2}\left(\frac{\mathbf{-f}_{y}}{\mathbf{-f}_{z}}\right),\quad
     -\pi  < \phi \leq \pi \\
-    {{\theta}{\left[k\right]}} &= {\left(-1\right)}  \textrm{atan2} \left( {\frac{-\mathbf{f}_{x}\left[k\right] }{ \sqrt{ {\left({{-\mathbf{f}_{y}^{2}}\left[k\right]}\right)} + {\left({{-\mathbf{f}}_{z}^{2}}{\left[k\right]}\right)}}}} \right), \quad -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
+    {{\theta}{\left[k\right]}} &= \textrm{atan2} \left( {\frac{-\mathbf{f}_{x}\left[k\right] }{ \sqrt{ {\left({{-\mathbf{f}_{y}^{2}}\left[k\right]}\right)} + {\left({{-\mathbf{f}}_{z}^{2}}{\left[k\right]}\right)}}}} \right), \quad -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
 \end{align*}
 
 E os acelerômetros para obter diretamente \(\mathbf{f}^{bf}\), e, indiretamente, \(\mathbf{a}\):
