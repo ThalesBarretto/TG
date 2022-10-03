@@ -62,7 +62,14 @@ Os resultados foram registrados no formato \ldots
 
 \section{Obtendo dados}
 
-Na prática, os giroscópios  oferecem leituras de \(\mathbf{\omega}^{bf}_{b/e}\), e os acelerômetros oferecem \(\mathbf{f}^{bf}\).
+Na prática, os giroscópios  oferecem leituras de \(\mathbf{\omega}^{xyz}_{b/e}\), e os acelerômetros oferecem \(\mathbf{f}^{xyz}\), com eixos dos sensores, \(xyz\), alinhados aos sistemas \(frd\) e \(bf\), todos no quadro \(F^{b}\) do robô e situados no centro de massa. Fixamos um plano tangente à Terra no ponto \(Q\) de interesse, em que colocamos um sistema \(ned\) alinhado com o eixo ``abaixo'' alinhado ao vetor constante \(\mathbf{g}\), e um sistema \(tp\), e consideramos a Terra um referencial inercial (\(F^{i} \equiv F^{e}\equiv F^{tp}\)). Empregamos \(\mathbf{\Phi} \equiv \left[\phi \theta \psi \right]^T \) para descrever a atitude do corpo do robô utilizados ângulos de Euler na sequência anti-horária ``yaw'', ``pitch'', ``roll'' que levam do sistema \(ned\) ao sistema \(frd\).
+
+A orientação do eixo dos sensores em relação ao corpo é fixa de tal modo que:
+
+\begin{align*}
+    {{C}_{frd/xyz}} &= {{C}_{xyz/frd}}  = \begin{bmatrix} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1 \end{bmatrix}
+\end{align*}
+
 
 Estabelecemos como condições iniciais, para o instante \(t_{0} = 0\):
 \begin{align*}
@@ -76,7 +83,8 @@ Estabelecemos como condições iniciais, para o instante \(t_{0} = 0\):
 
 Utilizamos os giroscópios para obter:
 \begin{align*}
-     &\mathbf{\omega}^{bf}_{b/e}{\left[k\right]}
+     &\mathbf{\omega}^{frd}_{b/e}{\left[k\right]}
+     = C_{frd/xyz} \mathbf{\omega}^{xyz}_{b/e}{\left[k\right]}
         \equiv \begin{bmatrix} P{\left[k\right]} & Q{\left[k\right]} & R{\left[k\right]} \end{bmatrix}^{T}
         \text{} \\
 \end{align*}
@@ -90,15 +98,15 @@ Podemos obter a atitude integrando numericamente:
 
 Ou, quando \(\mathbf{a} \approx 0, \equiv \lvert\mathbf{f}\lvert \approx \lvert\mathbf{g}\lvert\), podemos obter \(\theta\) e \(\phi\) dos acelerômetros:
 \begin{align*}
-    {\phi}_{xyz} &= \tan^{-1}\left(\frac{G_{py}}{G_{pz}}\right),\quad
+    {\phi}\left[k\right] &= \left(-1\right)  \textrm{atan2}\left(\frac{\mathbf{-f}_{y}}{\mathbf{-f}_{z}}\right),\quad
     -\pi  < \phi \leq \pi \\
-    {\theta}_{xyz} &= \tan^{-1}\left(\frac{-G_{px}}{\sqrt{{{G_{py}}^{2}}+{{{G}_{pz}}^2}}}\right), \quad -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
+    {{\theta}{\left[k\right]}} &= {\left(-1\right)}  \textrm{atan2} \left( {\frac{-\mathbf{f}_{x}\left[k\right] }{ \sqrt{ {\left({{-\mathbf{f}_{y}^{2}}\left[k\right]}\right)} + {\left({{-\mathbf{f}}_{z}^{2}}{\left[k\right]}\right)}}}} \right), \quad -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
 \end{align*}
 
 E os acelerômetros para obter diretamente \(\mathbf{f}^{bf}\), e, indiretamente, \(\mathbf{a}\):
 \begin{align*}
     \mathbf{a} &= \dfrac{\mathbf{F}}{m} + \mathbf{G} \equiv \mathbf{f} + \mathbf{G} \\
-    {^{i}\mathbf{a}^{tp}_{cm/Q}} &= C_{tp/frd}{^{i}\mathbf{f}^{frd}_{cm/Q}} - \mathbf{g}^{tp}.
+{^{i}\mathbf{a}^{tp}_{cm/Q}\left[k\right]} &= C_{tp/frd}\left[k\right]{^{i}\mathbf{f}^{frd}_{cm/Q}\left[k\right]} - \mathbf{g}^{tp}.
 \end{align*}
 
 Por último, utilizamos os resultados para calcular:
