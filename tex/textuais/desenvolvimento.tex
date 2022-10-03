@@ -1,5 +1,42 @@
 \chapter{DESENVOLVIMENTO}\label{chap:desenvolvimento}
 
+\section{Seleção de Literatura}
+
+A revisão de literatura foi feita na primeira seção\ldots
+
+\section{Estudo do sensor, prototipagem, testes preliminares}
+
+Utilizamos, inicialmente, um sensor inercial modelo MPU-6050 (Figura~\ref{fig:mpu6050-sensor-top}) anexado a uma Raspberry Pi 3B (Figuras~\ref{fig:mpu6050-board-top}~e~\ref{fig:mpu6050-proto-top}):
+\begin{figure}[H]
+    \centering
+    \caption{Sensor MPU-6050 encapsulado}\label{fig:mpu6050-sensor-top}
+    \includegraphics[width=0.5\textwidth]{figuras/mpu6050-sensor-top-straight.jpg}
+    \fonte{o autor}
+\end{figure}
+A orientação dos sensores em relação ao encapsulamento obedece a regra da mão direita, conforme descrito na Figura~\ref{fig:mpu6050-diagram-axis}:
+\begin{figure}[H]
+    \centering
+    \caption{Sensor MPU-6050 eixos em relação ao encapsulamento}\label{fig:mpu6050-diagram-axis}
+    \includegraphics[width=0.5\textwidth]{figuras/mpu6050-diagram-axis.jpg}
+    \fonte{\citeonline{mpu6050ps}}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \caption{Sensor MPU-6050 montado em placa módulo}\label{fig:mpu6050-board-top}
+    \includegraphics[width=0.5\textwidth]{figuras/mpu6050-board-top.jpg}
+    \fonte{o autor}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \caption{Sensor MPU-6050 anexado à Raspberry Pi}\label{fig:mpu6050-proto-top}
+    \includegraphics[width=0.5\textwidth]{figuras/mpu6050-proto-top.jpg}
+    \fonte{o autor}
+\end{figure}
+
+Para a programação Utilizamos programação linguagem C para sistema Linux, com metologia ágil e desenvolvimento em código aberto.
+
+\section{Desenvolvimento de Software}
+
 Para operar os sensores inerciais, consultamos extensamente a documentação do fabricante: Especificação do Produto~\cite{mpu6050ps} e Descrição e Mapa de Registradores~\cite{mpu6050rm}.
 A partir deles, estabelecemos como requisitos do sistema:
 \begin{enumerate}
@@ -23,14 +60,65 @@ Foram realizados testes de bancada estáticos \ldots
 
 Os resultados foram registrados no formato \ldots
 
-\section{Ângulos a partir do acelerômetro}
+\section{Obtendo dados}
 
-Nesta seção apresentaremos como estimar orientação a partir da leitura dos acelerômetros.
+Na prática, os giroscópios  oferecem leituras de \(\mathbf{\omega}^{bf}_{b/e}\), e os acelerômetros oferecem \(\mathbf{f}^{bf}\).
 
-\section{Ângulos a partir dos giroscópios}
+Estabelecemos como condições iniciais, para o instante \(t_{0} = 0\):
+\begin{align*}
+    {\Phi} \left[0\right] 
+        &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (veículo nivelado)} \\
+    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[0\right]}
+    &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (situado na origem do plano tangente)} \\
+    {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}\left[0\right]}
+    &= \begin{bmatrix} 0 & 0 & 0 \end{bmatrix}^{T} \text{ (em repouso)} \\
+\end{align*}
 
-Nesta seção apresentaremos como estimar orientação a partir da leitura dos giroscópios.
+Utilizamos os giroscópios para obter:
+\begin{align*}
+     &\mathbf{\omega}^{bf}_{b/e}{\left[k\right]}
+        \equiv \begin{bmatrix} P{\left[k\right]} & Q{\left[k\right]} & R{\left[k\right]} \end{bmatrix}^{T}
+        \text{} \\
+\end{align*}
+
+Podemos obter a atitude integrando numericamente:
+\begin{align*}
+{\Phi}{\left[ k \right]} 
+    &\approx {\Phi} {\left[ k-1 \right]} + T {\dot{\Phi}{\left[ k -1 \right]}} \\
+    &\approx {\Phi} {\left[ k-1 \right]} + T {\left( H {\left( \Phi{\left[ k-1 \right]} \right)}{\mathbf{\omega}^{frd}_{b/e}}{\left[ k-1 \right]}\right)} \\
+\end{align*}
+
+Ou, quando \(\mathbf{a} \approx 0, \equiv \lvert\mathbf{f}\lvert \approx \lvert\mathbf{g}\lvert\), podemos obter \(\theta\) e \(\phi\) dos acelerômetros:
+\begin{align*}
+    {\phi}_{xyz} &= \tan^{-1}\left(\frac{G_{py}}{G_{pz}}\right),\quad
+    -\pi  < \phi \leq \pi \\
+    {\theta}_{xyz} &= \tan^{-1}\left(\frac{-G_{px}}{\sqrt{{{G_{py}}^{2}}+{{{G}_{pz}}^2}}}\right), \quad -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
+\end{align*}
+
+E os acelerômetros para obter diretamente \(\mathbf{f}^{bf}\), e, indiretamente, \(\mathbf{a}\):
+\begin{align*}
+    \mathbf{a} &= \dfrac{\mathbf{F}}{m} + \mathbf{G} \equiv \mathbf{f} + \mathbf{G} \\
+    {^{i}\mathbf{a}^{tp}_{cm/Q}} &= C_{tp/frd}{^{i}\mathbf{f}^{frd}_{cm/Q}} - \mathbf{g}^{tp}.
+\end{align*}
+
+Por último, utilizamos os resultados para calcular:
+\begin{align*}
+    {^{a}{\dot{\mathbf{v}}}^{tp}_{cm/e}{\left[k\right]}}
+        &\approx {^{a}{\dot{\mathbf{v}}}^{tp}_{cm/e}}{\left[ k-1 \right]}
+        + T \Big( {C_{tp/frd}\left({\Phi}{\left[ k-1 \right]} \right)} {{\mathbf{f}}^{frd}\left[k-1\right]} {-{\mathbf{g}}^{tp}} \Big) \\
+    {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k\right]}
+    &\approx     {^{e}{\mathbf{p}^{tp}_{cm/Q}}\left[k-1\right]}
+    + T {^{a}\mathbf{v}^{frd}_{cm/Q}{\left[ k-1 \right]}} \\
+\end{align*}
 
 \section{Fusão de sensores}
 
-Nesta seção apresentaremos como combinar as estimativas de acelerômetro e giroscópio.
+No nosso caso, podemos utilizar um filtro complementar, bastante simples, para calcular a atitude. O filtro consiste em utilizar simultaneamente dois métodos para obter a estimativa de atitude: a integração das taxas angulares e o calculo da atitude a partir dos acelerômetros. Ao resultado de cada método é atribuído um peso que representa sua confiabilidade naquele instante, ambos são somados e o resultado final é normalizado. 
+
+Desse modo podemos evitar os resultados divergentes da simples integração de giroscópios e ao mesmo tempo reduzir as oscilações da estimativa pelo ruído dos acelerômetros, o que acaba funcionando como um mecanismo de estabilização das estimativas de atitude.
+
+\section{Testes de bancada para coleta de dados}
+
+Nesta seção apresentamos a realização dos testes.
+
+
