@@ -33,7 +33,7 @@ A orientação dos sensores em relação ao encapsulamento obedece a regra da m�
     \fonte{o autor}
 \end{figure}
 
-Para a programação Utilizamos programação linguagem C para sistema Linux, com metologia ágil e desenvolvimento em código aberto.
+Para a programação, utilizamos programação linguagem C para sistema Linux, com metologia ágil e desenvolvimento em código aberto.
 
 \section{Desenvolvimento de Software}
 
@@ -43,13 +43,13 @@ A partir deles, estabelecemos como requisitos do sistema:
         \item obter dados simultâneos de todos os sensores em cada amostra,
         \item obter dados em intervalos regulares de tempo,
         \item obter dados em grandezas com significado físico,
-        \item permitir o controle da sensibilidade dos sensores
-        \item permitir o controle da taxa de amostragem
-        \item permitir o controle das funções de filtro
-        \item seja utilizável com sistemas operacionais livres e amplamente disponíveis
-        \item possa ser instalado como um programa sem modificar o sistema operacional
-        \item possa ser livremente distribuído com licença de código aberto
-        \item possa ser operado pela linha de comando
+        \item permitir o controle da sensibilidade dos sensores,
+        \item permitir o controle da taxa de amostragem,
+        \item permitir o controle das funções de filtro,
+        \item seja utilizável com sistemas operacionais livres e amplamente disponíveis,
+        \item possa ser instalado como um programa sem modificar o sistema operacional,
+        \item possa ser livremente distribuído com licença de código aberto,
+        \item possa ser operado pela linha de comando.
 \end{enumerate}
 
 Entretanto, não encontramos nenhuma solução pronta capaz de atender aos nossos requisitos. Nos restou, então, a partir dos manuais, desenvolver programas para controlar o sensor e obter os dados.
@@ -121,7 +121,7 @@ Por último, utilizamos os resultados para calcular:
 
 \section{Fusão de sensores}
 
-No nosso caso, podemos utilizar um filtro complementar, bastante simples, para calcular a atitude. O filtro consiste em utilizar simultaneamente dois métodos para obter a estimativa de atitude: a integração das taxas angulares e o calculo da atitude a partir dos acelerômetros. Ao resultado de cada método é atribuído um peso que representa sua confiabilidade naquele instante, ambos são somados e o resultado final é normalizado. 
+No nosso caso, podemos utilizar um filtro complementar, bastante simples, para calcular a atitude. O filtro consiste em utilizar simultaneamente dois métodos para obter a estimativa de atitude: a integração das taxas angulares e o cálculo da atitude a partir dos acelerômetros. Ao resultado de cada método é atribuído um peso que representa sua confiabilidade naquele instante, ambos são somados e o resultado final é normalizado. 
 
 Desse modo podemos evitar os resultados divergentes da simples integração de giroscópios e ao mesmo tempo reduzir as oscilações da estimativa pelo ruído dos acelerômetros, o que acaba funcionando como um mecanismo de estabilização das estimativas de atitude.
 
