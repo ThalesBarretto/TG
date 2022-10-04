@@ -535,7 +535,7 @@ O \emph{método trapezoidal}, por exemplo, ou de \emph{segunda ordem}, é um pou
 \begin{align*}\tag{3.4-5}
     x_{E}\left(t + T\right) &= x\left(t\right) + T f\left(x\left(t\right),t\right) \\
     \dot{x}_{E}\left(t + T\right) &= {f{\left( x_{E} {\left( t + T \right)}, t+T \right)}} \\
-    x_{E}\left(t + T\right) &= x\left(t\right) + \frac{T}{2} \left[ \dot{x}\left(t\right) + \dot{x}_{E}\left(t + T\right) \right],
+    x_{T}\left(t + T\right) &= x\left(t\right) + \frac{T}{2} \left[ \dot{x}\left(t\right) + \dot{x}_{E}\left(t + T\right) \right],
 \end{align*}
 
 Os métodos Runge-Kutta\footnotemark{} resolvem o problema do valor inicial diretamente, o que atende à formulação em espaço de estados onde um vetor de estado contém descreve completamente um sistema num determinado instante. Essa característica é ainda mais importante quando passamos de sistemas em tempo contínuo para sistemas em tempo discreto, o que é muito comum na prática~\cite{Stevens2016}.
