@@ -3,6 +3,7 @@
 # Latex
 *.aux
 *.bb
+*.bcf
 *.blg
 *.bbl
 *.brf
@@ -19,6 +20,7 @@
 main.pdf
 *.synctex.gz
 *.toc
+*.xdv
 
 # Prerequisites
 *.d
