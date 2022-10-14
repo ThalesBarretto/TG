@@ -1,12 +1,3 @@
-TEXC	=pdflatex
-TEXCFLAG=-shell-escape \
-	-synctex=1 \
-	-interaction=nonstopmode \
-	-file-line-error
-
-BIBC	=bibtex
-BIBCFLAG=
-
 BIBSRCS	=base-referencias.bib
 TEXSRC	=. configuracoes figuras pos-textuais pre-textuais textuais
 TEXSRCS	=$(foreach var,$(TEXSRC),$(wildcard $(var)/*.tex))
@@ -19,24 +10,20 @@ PDFS	=$(TEXPDFS)
 PDFVIEW	=okular
 
 # Don't use file recipes, use rules and let pdflatex handle this
-pdf:
-	@-$(TEXC) $(TEXCFLAG) $(TEXMAIN) >>/dev/null 2>&1
-	@$(BIBC) $(BIBCFLAG) $(patsubst %.tex,%.aux,$(TEXMAIN))
-	@-$(TEXC) $(TEXCFLAG) $(TEXMAIN) >>/dev/null 2>&1
-	$(TEXC) $(TEXCFLAG) $(TEXMAIN)
+pdf: $(TEXMAIN)
+	-@latexmk --quiet $< >/dev/null 2>&1
 
 show:
-	-$(PDFVIEW) $(PDFS) & disown
+	-@$(shell nohup $(PDFVIEW) $(PDFS) > /dev/null 2>&1 > /dev/null &!)
 
 clean:
-	-latexmk -c --quiet >/dev/null 2>&1
+	-@latexmk -c --quiet >/dev/null 2>&1
 
 wipe:
-	-latexmk -C --quiet >/dev/null 2>&1
-	-rm -f *.blg *.bbl *.brf *.log
+	-@latexmk -C --quiet >/dev/null 2>&1
 
-tidy: clean | pdf
+tidy: pdf clean
 
-all: pdf show
+all: pdf
 
-.PHONY: pdf all clean wipe
+.PHONY: show pdf all clean wipe
