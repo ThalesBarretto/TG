@@ -1,5 +1,17 @@
 \chapter*{CONCLUSÃO}\label{chap:conclusao}
 \addcontentsline{toc}{chapter}{CONCLUSÃO}
 
-O presente trabalho deu um trabalho danado\ldots
-No encerramento ponderamos as causas e eventuais tratamentos posteriores dos resultados.
+Nossas métodos resultados foram incapazes de obter uma estimativa adequada para a posição, com uma divergência bastante grande entre os resultados esperados e os obtidos.
+
+Os resultados obtidos demonstram a instabilidade numérica do método de integração dos giroscópios para obtenção de atitude e, por consequência uma divergência na estimativa de posição.
+
+Nossa análise empregou o método trapezoidal de integração, que nos pareceu mais acessível. Não obstante, esse método não foi suficientemente preciso para mitigar a instabilidade da integração.
+
+A literatura mais especializada~\cite{SAVAGE_2008} indica que a nossa frequência de amostragem pode ser muito baixa para o emprego do método trapezoidal de integração na estimativa de posição.
+Nesse particular é sugerido o emprego de métodos Runge-Kutta de quarta ou quinta ordem, bem como taxas de amostragem superiores a 6 kHz.
+
+Por outro lado, dentre os instrumentos do sensor MPU6050, observamos que os giroscópios apresentam um ruído que não possui média zero, e cuja média oscila no tempo. Este fenômeno é conhecido na literatura como ``\emph{bias instability}'' e sua quantificação oferece uma métrica de performance dos giroscópios.
+
+Dessa forma, compreendemos que nossos métodos não foram suficientemente satisfatórios para empregar o sensor MPU6050 em navegação inercial.
+
+Evidente que é possível a exploração de outros métodos matemáticos e estatísticos mais sofisticados~\cite{SAVAGE_2008_2}, por exemplo, o emprego de física na formulação de Hamilton, integração por métodos de Runge-Kutta de quarta e quinta ordem, fusão de sensores com filtro de Kalman, uso de inteligência artificial e aprendizado de máquina para correção dos dados, entre outros. Entretanto tal exploração seria melhor explorada em trabalhos mais profundos sobre o tema em razão da complexidade envolvida.
