@@ -1,12 +1,12 @@
 \chapter{DESENVOLVIMENTO}\label{chap:desenvolvimento}
 
-\section{Seleção de Literatura}
 
-A revisão de literatura foi feita na primeira seção\ldots
 
 \section{Estudo do sensor, prototipagem, testes preliminares}
 
-Utilizamos, inicialmente, um sensor inercial modelo MPU-6050 (Figura~\ref{fig:mpu6050-sensor-top}) anexado a uma Raspberry Pi 3B (Figuras~\ref{fig:mpu6050-board-top}~e~\ref{fig:mpu6050-proto-top}):
+A revisão de literatura nos levou à escolha do modelo matemático mais simples que utiliza ângulos de Euler, embora possuindo diversas restrições no intervalo de validade, que também é o mais intuitivo~\cite{Stevens2016}. Para integração dos sinais na série temporal escolhemos o método trapezoidal pela relativa simplicidade de implementação.
+
+Em relação ao equipamento, utilizamos, inicialmente, um sensor inercial modelo MPU-6050 (Figura~\ref{fig:mpu6050-sensor-top}) anexado a uma Raspberry Pi 3B (Figuras~\ref{fig:mpu6050-board-top}~e~\ref{fig:mpu6050-proto-top}):
 \begin{figure}[H]
     \centering
     \caption{Sensor MPU-6050 encapsulado}\label{fig:mpu6050-sensor-top}
@@ -33,11 +33,14 @@ A orientação dos sensores em relação ao encapsulamento obedece a regra da m�
     \fonte{o autor}
 \end{figure}
 
-Para a programação, utilizamos programação linguagem C para sistema Linux, com metologia ágil e desenvolvimento em código aberto.
+Para a programação, utilizamos programação linguagem C para sistema Linux, com metologia ágil e desenvolvimento em código aberto. Nosso código consiste em duas peças distintas, um driver e uma aplicação de console para demonstração.
 
 \section{Desenvolvimento de Software}
 
 Para operar os sensores inerciais, consultamos extensamente a documentação do fabricante: Especificação do Produto~\cite{mpu6050ps} e Descrição e Mapa de Registradores~\cite{mpu6050rm}.
+
+Destacamos que módulo MPU6050 possui três acelerômetros e três giroscópios, além de um sensor de temperatura, permite a coleta de dados de forma individual ou simultânea de todos os sensores, bem como oferece controle sobre a sensibilidade e o alcance das leituras dos acelerômetros e giroscópios, da taxa de amostragem, além de um filtro digital opcional.
+
 A partir deles, estabelecemos como requisitos do sistema:
 \begin{enumerate}
         \item obter dados simultâneos de todos os sensores em cada amostra,
@@ -54,11 +57,11 @@ A partir deles, estabelecemos como requisitos do sistema:
 
 Entretanto, não encontramos nenhuma solução pronta capaz de atender aos nossos requisitos. Nos restou, então, a partir dos manuais, desenvolver programas para controlar o sensor e obter os dados.
 
-Os programas de nossa autoria foram escritos em linguagem C para sistemas Linux, rodam em uma \emph{Raspberry Pi 3B}, estão disponíveis\footnote{O driver em \href{https://www.github.com/ThalesBarretto/libmpu6050}{https://www.github.com/ThalesBarretto/libmpu6050}}\footnote{A biblioteca auxiliar em \href{https://www.github.com/ThalesBarretto/libmtx}{https://www.github.com/ThalesBarretto/libmtx}}\footnote{A aplicação em \href{https://www.github.com/ThalesBarretto/mpu6050}{https://www.github.com/ThalesBarretto/mpu6050}}sob licença permissiva de código aberto\footnote{Sob a ``MIT License'' disponível em \href{https://mit-license.org/}{https://mit-license.org/} e \href{https://opensource.org/licenses/MIT}{https://opensource.org/licenses/MIT}}, e acreditamos atender aos requisitos.
+Os programas de nossa autoria foram escritos em linguagem C para sistemas Linux, rodam em uma \emph{Raspberry Pi 3B}, estão disponíveis\footnote{O driver em \href{https://www.github.com/ThalesBarretto/libmpu6050}{https://www.github.com/ThalesBarretto/libmpu6050}}\footnote{A aplicação em \href{https://www.github.com/ThalesBarretto/mpu6050}{https://www.github.com/ThalesBarretto/mpu6050}}sob licença permissiva de código aberto\footnote{Sob a ``MIT License'' disponível em \href{https://mit-license.org/}{https://mit-license.org/} e \href{https://opensource.org/licenses/MIT}{https://opensource.org/licenses/MIT}}, e acreditamos atender aos requisitos.
 
-Foram realizados testes de bancada estáticos \ldots
+O driver em forma de biblioteca proporciona o controle das funções básicas dos sensores. Apenas as funções principais estão implementadas, como a coleta de dados simultânea em todos os eixos, o controle da taxa de amostragem, controle do filtro digital, inicialização, calibração e parada. O driver não inclui algumas funcionalidades específicas descritas pelo fabricante, como o controle de sensores secundários anexos, captura por disparo de interrupção, detecção de movimento e economia de energia. Entendemos que as funcionalidades ausentes não atendem diretamente aos propósitos do presente trabalho.
 
-Os resultados foram registrados no formato \ldots
+Por outro lado, o programa que demonstra a utilização das funções do driver e do controle dos sensores. A aplicação permite obter os dados na tela com escolha da taxa de amostragem e da sensibilidade dos sensores, bem como realizar calibração e inicialização, ou seja, as principais funções do nosso driver. A interface é do tipo linha de comando.
 
 \section{Obtendo dados}
 
@@ -168,6 +171,6 @@ Desse modo podemos evitar os resultados divergentes da simples integração de g
 
 \section{Testes de bancada para coleta de dados}
 
-Nesta seção apresentamos a realização dos testes.
+Para analisar a viabilidade e a resposta do sistemas e métodos, propomos a realização de testes de bancada em condições controladas para comparar os resultados obtidos com resultados esperados. Pretendemos realizar teste estáticos e testes cinemáticos, com os sensores em posição estacionária ou em movimento, respectivamente.
 
 
