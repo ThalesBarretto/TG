@@ -165,12 +165,10 @@ Por último, utilizamos os resultados para integrar a posição:
 
 \section{Fusão de sensores}
 
-No nosso caso, podemos utilizar um filtro complementar, bastante simples, para calcular a atitude. O filtro consiste em utilizar simultaneamente dois métodos para obter a estimativa de atitude: a integração das taxas angulares e o cálculo da atitude a partir dos acelerômetros. Ao resultado de cada método é atribuído um peso que representa sua confiabilidade naquele instante, ambos são somados e o resultado final é normalizado.
+No nosso caso, podemos utilizar um filtro complementar, bastante simples, para calcular a atitude. O filtro consiste em utilizar simultaneamente dois métodos para obter a estimativa de atitude: a integração das taxas angulares e o cálculo da atitude a partir dos acelerômetros. Ao resultado de cada método é atribuído um peso que representa sua confiabilidade naquele instante, ambos são somados e o resultado final é normalizado. Em sendo detectado um movimento de aceleração, utilizamos apenas os giroscópios para determinar a atitude.
 
 Desse modo podemos evitar os resultados divergentes da simples integração de giroscópios e ao mesmo tempo reduzir as oscilações da estimativa pelo ruído dos acelerômetros, o que acaba funcionando como um mecanismo de estabilização das estimativas de atitude.
 
 \section{Testes de bancada para coleta de dados}
 
 Para analisar a viabilidade e a resposta do sistemas e métodos, propomos a realização de testes de bancada em condições controladas para comparar os resultados obtidos com resultados esperados. Pretendemos realizar teste estáticos e testes cinemáticos, com os sensores em posição estacionária ou em movimento, respectivamente.
-
-
