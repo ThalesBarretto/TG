@@ -61,7 +61,7 @@ Podemos escrever as matrizes de rotação abreviando co-seno por \(c\) e seno po
         0               &  0            &  1
     \end{bmatrix}
 \end{align*}
-\begin{align} \tag{1.3-10}
+\begin{align}\label{eq:matrix-yaw-pitch-roll} %\tag{1.3-10}
     C_{f\!r\!d\!/\!n\!e\!d} &=
     \begin{bmatrix}
         c\theta c\psi   & c\theta s\psi & -s\theta    \\
@@ -107,25 +107,25 @@ Um vetor pode apontar em qualquer direção por meio de uma simples rotação ao
 \end{figure}
 
 Na figura acima, o vetor \(\mathbf{u}\) foi rotacionado para formar o vetor \(\mathbf{v}\) ao definirmos um eixo de rotação ao longo do vetor \(\mathbf{n}\) e realizarmos uma rotação pelo ângulo \(\mu\) ao redor de \(\mathbf{n}\). Estes dois vetores se somam a \(\mathbf{u}\) para obtermos \(\mathbf{v}\), e onde temos que:
-    \begin{align*}
-     \mathbf{v} &= \mathbf{u} + \left(1 - {\cos{\mu}}\right) \left(\mathbf{n}\!\times\!\left(\mathbf{n}\!\times\!\mathbf{u}\right)\right) - \left(\mathbf{n}\!\times\!\mathbf{u}\right){\sin{\mu}} \tag{1.2-5a}
-    \end{align*}
-    \begin{align*}
-     \mathbf{v} = \left(1 - {\cos{\mu}}\right) \mathbf{n}\!\left(\mathbf{n}\cdot\mathbf{u}\right) + \mathbf{u}{\cos{\mu}} - \left(\mathbf{n}\!\times\!\mathbf{u}\right){\sin{\mu}} \tag{1.2-5b}
-    \end{align*}
+    \begin{align}
+        \mathbf{v} &= \mathbf{u} + \left(1 - {\cos{\mu}}\right) \left(\mathbf{n}\!\times\!\left(\mathbf{n}\!\times\!\mathbf{u}\right)\right) - \left(\mathbf{n}\!\times\!\mathbf{u}\right){\sin{\mu}}\label{eq:rotation-formula-a} %\tag{1.2-5a}
+    \end{align}
+    \begin{align}
+        \mathbf{v} = \left(1 - {\cos{\mu}}\right) \mathbf{n}\!\left(\mathbf{n}\cdot\mathbf{u}\right) + \mathbf{u}{\cos{\mu}} - \left(\mathbf{n}\!\times\!\mathbf{u}\right){\sin{\mu}} \label{eq:rotation-formula-b}  % \tag{1.2-5b}
+    \end{align}
 
-    As equações acima (1.2-5), às vezes chamadas de \textit{fórmula de rotação}, nos mostram que definindo \(\mathbf{n}\) e \(\mu\) podemos operar sobre \(\mathbf{u}\) com produtos escalares e vetoriais para obter a rotação desejada, independente de sistemas de coordenadas ou magnitude do ângulo.
+    As equações acima (\ref{eq:rotation-formula-a} e~\ref{eq:rotation-formula-b}), às vezes chamadas de \textit{fórmula de rotação}, nos mostram que definindo \(\mathbf{n}\) e \(\mu\) podemos operar sobre \(\mathbf{u}\) com produtos escalares e vetoriais para obter a rotação desejada, independente de sistemas de coordenadas ou magnitude do ângulo.
 
-    Partindo da figura acima, fazemos uma rotação muito pequena \(\delta\mu \ll 1 \text{rad}\), definindo \(\mathbf{v} = \mathbf{u} + \delta \mathbf{u}\), e, aplicando a equação (1.2-5\(a\)) obtemos:
+    Partindo da figura acima, fazemos uma rotação muito pequena \(\delta\mu \ll 1 \text{rad}\), definindo \(\mathbf{v} = \mathbf{u} + \delta \mathbf{u}\), e, aplicando a equação (\ref{eq:rotation-formula-a}) obtemos:
 \begin{equation*}
     \delta \mathbf{u} \approx -\!\sin(-\delta\mu)\mathbf{n}\!\times\!\mathbf{u} \approx (\mathbf{n}\!\times\!\mathbf{u})\delta\mu
 \end{equation*}
 
 Dividindo por \(\delta t\), no limite onde \(\delta t \rightarrow 0\), definindo \(\mathbf{\omega} \equiv \dot{\mu}\mathbf{n}\), obtemos:
 
-\begin{equation*}
-    \dot{\mathbf{u}} = \mathbf{\omega}\!\times\!\mathbf{u}\tag{1.4-1}
-\end{equation*}
+\begin{equation}
+    \dot{\mathbf{u}} = \mathbf{\omega}\!\times\!\mathbf{u}\label{eq:vector-derivative} %\tag{1.4-1}
+\end{equation}
 
 Esta equação relaciona a velocidade translacional da ponta do vetor \(\mathbf{u}\) ao vetor \(\mathbf{\omega}\). Este vetor \(\mathbf{\omega}\), que denominados \textit{vetor velocidade angular}, constitui-se de um vetor unitário  que define o eixo de rotação, multiplicado pela taxa de rotação. Este é um vetor livre, pode ser transladado paralelo a si mesmo, e axial, que mudaria de direção caso houvéssemos escolhido uma convenção de sentido horário para a rotação.
 
@@ -153,9 +153,9 @@ As transformações de coordenadas são~\cite{Stevens2016}:
     \end{pmatrix}
 \end{align*}
 
-\ldots sendo \(C_{\phi}\) e \(C_{\theta}\)  as rotações (anti-horárias) dos planos por cada ângulo de Euler em particular, conforme equação (1.3-10). Multiplicando as matrizes, teremos:
+\ldots sendo \(C_{\phi}\) e \(C_{\theta}\)  as rotações (anti-horárias) dos planos por cada ângulo de Euler em particular, conforme equação (\ref{eq:matrix-yaw-pitch-roll}). Multiplicando as matrizes, teremos:
 
-\begin{align} \tag{1.4-3}
+\begin{align}\label{eq:1.4-3}% \tag{1.4-3}
     \mathbf{\omega}^{frd}_{b/r} \equiv \begin{bmatrix} P \\ Q \\ R \end{bmatrix}
     = \begin{bmatrix}
         1 & 0 & -\sin{\theta} \\
@@ -171,7 +171,7 @@ As transformações de coordenadas são~\cite{Stevens2016}:
 
 \ldots sendo \(P\), \(Q\), \(R\), os componentes do vetor velocidade angular do corpo expressos no sistema \(frd\), respectivamente, rolagem (\emph{``roll''}), arfada (\emph{``pitch''}) e guinada (\emph{``yaw''}). A transformação inversa é dada por:
 
-\begin{align} \tag{1.4-4}
+\begin{align}\label{eq:1.4-4}% \tag{1.4-4}
     \begin{bmatrix}
         \dot\phi \\
         \dot\theta \\
@@ -188,13 +188,13 @@ As transformações de coordenadas são~\cite{Stevens2016}:
     \end{bmatrix}
 \end{align}
 
-Para simplificar, definimos \(\mathbf{\Phi} \equiv \left[\phi \theta \psi \right]^T \) e reescrevemos  (1.4-4) assim:
+Para simplificar, definimos \(\mathbf{\Phi} \equiv \left[\phi \theta \psi \right]^T \) e reescrevemos  (\ref{eq:1.4-4}) assim:
 
-\begin{equation} \tag{1.4-5}
+\begin{equation}\label{eq:1.4-5}% \tag{1.4-5}
     \dot{\mathbf{\Phi}} = H \left( \mathbf{\Phi} \right) \mathbf{\omega}^{frd}_{b/r}
 \end{equation}
 
-As equações (1.4-3) e (1.4-4) serão referidas como as equações cinemáticas de Euler, como faz~\cite{Stevens2016}. Note que as matrizes de coeficientes \emph{não são} matrizes ortogonais representando rotações ordinárias de coordenadas. Note ainda que as Equações (1.4-4) e (1.4-5) possuem uma singularidade quando  \(\theta = \pm \frac{\pi}{2}\). Ainda, se essas equações forem utilizadas em uma simulação, as taxas de ângulos de Euler podem integrar para ângulos fora do intervalos de ângulos de Euler, e portanto, seria necessário incluir uma lógica para lidar com essa situação no programa simulador. Não obstante, as equações cinemáticas de Euler são bastante empregadas em simulações.
+As equações (\ref{eq:1.4-3}) e (\ref{eq:1.4-4}) serão referidas como as equações cinemáticas de Euler, como faz~\cite{Stevens2016}. Note que as matrizes de coeficientes \emph{não são} matrizes ortogonais representando rotações ordinárias de coordenadas. Note ainda que as Equações (\ref{eq:1.4-4}) e (\ref{eq:1.4-5}) possuem uma singularidade quando  \(\theta = \pm \frac{\pi}{2}\). Ainda, se essas equações forem utilizadas em uma simulação, as taxas de ângulos de Euler podem integrar para ângulos fora do intervalos de ângulos de Euler, e portanto, seria necessário incluir uma lógica para lidar com essa situação no programa simulador. Não obstante, as equações cinemáticas de Euler são bastante empregadas em simulações.
 
 \section{Derivada de um vetor em sistemas móveis}
 
@@ -212,9 +212,9 @@ Os sistemas \(F_{b}\) e \(F_{a}\) têm velocidade angular relativa \(\mathbf{\om
 \end{equation*}
 
 Dividindo por \(\delta t\) no limite em que \(\delta t \rightarrow 0\) resulta na equação\footnotemark{}:
-\begin{equation*} \tag{1.4-2}
+\begin{equation} \label{eq:1.4-2}
     {^{a}\dot{\mathbf{p}}} = {^{b}\dot{\mathbf{p}}} + {\mathbf{\omega}_{b/a} \! \times \!\mathbf{p}}
-\end{equation*}
+\end{equation}
 
 \footnotetext{``Equação de Coriolis''~\cite{Stevens2016},~\cite{Blakelock1991}.}
 
@@ -234,7 +234,7 @@ Ainda, derivada de um vetor em um quadro pode ser encontrada a partir das deriva
 
 \section{Velocidade e Aceleração em quadros móveis}
 
-Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\), que se move em relação a \(F_{a}\) e \(F_{b}\), onde fixamos \(O\) and \(Q\), respectivamente, os quais também se movem em relação um ao outro. Na figura abaixo, relacionamos os vetores posição, tomamos suas derivadas no quadro de referência\footnotemark{} \(F_{a}\),  determinando a velocidade. Usando \(\mathbf{v}\) para um vetor velocidade, aplicamos a equação de Coriolis obtendo~\cite{Stevens2016}:
+Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\), que se move em relação a \(F_{a}\) e \(F_{b}\), onde fixamos~\(O\)~e~\(Q\), respectivamente, os quais também se movem em relação um ao outro. Na figura abaixo, relacionamos os vetores posição, tomamos suas derivadas no quadro de referência\footnotemark{} \(F_{a}\),  determinando a velocidade. Usando \(\mathbf{v}\) para um vetor velocidade, aplicamos a equação de Coriolis obtendo~\cite{Stevens2016}:
 \footnotetext{A escolha do quadro \(F_{a}\) como referência é arbitrária.}
 \begin{figure}[H]
     \centering
@@ -244,9 +244,9 @@ Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\
     \fonte{\cite{Stevens2016}}
 \end{figure}
 \begin{align}
-    \mathbf{p}_{P/O}             &= \mathbf{p}_{Q/O} + \mathbf{p}_{P/Q} \tag{1.5-1} \\
-    {^{a}\dot{\mathbf{p}}_{P/O}} &= {^{a}\dot{\mathbf{p}}_{Q/O}} + {^{a}\dot{\mathbf{p}}_{P/Q}} \tag{1.5-2} \\
-    \mathbf{v}_{P/a}             &= \mathbf{v}_{Q/a} + \left( \mathbf{v}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right) \tag{1.5-3}
+    \mathbf{p}_{P/O}             &= \mathbf{p}_{Q/O} + \mathbf{p}_{P/Q} \label{eq:1.5-1} \\
+    {^{a}\dot{\mathbf{p}}_{P/O}} &= {^{a}\dot{\mathbf{p}}_{Q/O}} + {^{a}\dot{\mathbf{p}}_{P/Q}} \label{eq:1.5-2} \\
+    \mathbf{v}_{P/a}             &= \mathbf{v}_{Q/a} + \left( \mathbf{v}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right) \label{eq:1.5-3}
 \end{align}
 
 Rearranjando para destacar os temos em parênteses\footnotemark{}:
@@ -255,39 +255,39 @@ Rearranjando para destacar os temos em parênteses\footnotemark{}:
 \end{equation*}
 \footnotetext{O termo em parênteses corresponde à chamada \textit{velocidade de transporte de \(P\) no quadro \(F_{a}\)} (a velocidade em \(F_{a}\) de um ponto fixo em \(F_{b}\) coincidente com \(P\)).}
 
-Para a aceleração derivamos (1.5-3) em \(F_{a}\). Velocidades em \(F_{a}\) se tornam acelerações em \(F_{a}\); A velocidade em \(F_{b}\) é derivada pela Equação de Coriolis; A produto vetorial é derivado pela ``regra do produto vetorial''; A derivada da velocidade angular é um vetor aceleração angular designado \(\mathbf{\alpha}\). Seja \(\mathbf{a}\) a aceleração translacional em (1.5-3), obtemos:
+Para a aceleração derivamos (\ref{eq:1.5-3}) em \(F_{a}\). Velocidades em \(F_{a}\) se tornam acelerações em \(F_{a}\); A velocidade em \(F_{b}\) é derivada pela Equação de Coriolis; A produto vetorial é derivado pela ``regra do produto vetorial''; A derivada da velocidade angular é um vetor aceleração angular designado \(\mathbf{\alpha}\). Seja \(\mathbf{a}\) a aceleração translacional em (\ref{eq:1.5-3}), obtemos:
 \begin{equation*}
     \mathbf{a}_{P/a} = \mathbf{a}_{Q/a} + \left(\mathbf{a}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}\right) + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + {\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{v}_{P/b}} + {{\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}}\right)}
 \end{equation*}
 
 Reorganizando, destacamos aceleração ``\emph{de transporte}'', ``\emph{centrípeta}'' e ``\emph{de Coriolis}'':
-\begin{equation*}
-    \mathbf{a}_{P/a} = \mathbf{a}_{P/b} + \overbrace{\mathbf{a}_{Q/a} + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + \underbrace{{{\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)}}}_{\text{aceleração centrípeta}}}^{\text{aceleração de transporte}} + \underbrace{{2\mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}}}_{\text{aceleração de Coriolis}} \tag{1.5-4}
-\end{equation*}
+\begin{equation}
+    \mathbf{a}_{P/a} = \mathbf{a}_{P/b} + \overbrace{\mathbf{a}_{Q/a} + {{\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}} + \underbrace{{{\mathbf{\omega}_{b/a}}\!\times\!{\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)}}}_{\text{aceleração centrípeta}}}^{\text{aceleração de transporte}} + \underbrace{{2\mathbf{\omega}_{b/a}\!\times\!\mathbf{v}_{P/b}}}_{\text{aceleração de Coriolis}} \label{eq:1.5-4}
+\end{equation}
 
 
 Os termos \({^{a}\mathbf{a}}\) e \({^{b}\mathbf{a}}\), denominados \emph{aceleração total} e \emph{aceleração relativa}, são expressos nos quadros de referência e secundário, respectivamente. Notamos o surgimento do termo \textit{aceleração de Coriolis}, a ser examinado mais adiante. Se fixamos \(P\) no quadro \(F_{b}\), nos resta apenas \textit{aceleração de  transporte}, definida como a aceleração expressa em \(F_{a}\) de um ponto fixo em \(F_{b}\) instantaneamente coincidente com \(P\). A aceleração de transporte expressa os efeitos do movimento de \(F_{b}\), em termos de aceleração do ponto \(Q\), da velocidade angular e da aceleração angular do quadro~\cite{Stevens2016}.
 
 
-Por exemplo, um acelerômetro fixo num robô móvel, de corpo rígido, não se move em relação ao quadro do corpo do robô, restando apenas os termos relativos à velocidade e aceleração de transporte nas equações 1.5-3 e 1.5-4, respectivamente. A aceleração para o sensor no ponto \(P\), de posição \(\mathbf{p}_{P/Q}\) em relação a ponto \(Q\) fixo no quadro do robô, denotando \(a\) and \(b\) os quadros de referência e do robô, respectivamente, é dada por \cite{Stevens2016}:
+Por exemplo, um acelerômetro fixo num robô móvel, de corpo rígido, não se move em relação ao quadro do corpo do robô, restando apenas os termos relativos à velocidade e aceleração de transporte nas equações~(\ref{eq:1.5-3}) e~(\ref{eq:1.5-4}), respectivamente. A aceleração para o sensor no ponto \(P\), de posição \(\mathbf{p}_{P/Q}\) em relação a ponto \(Q\) fixo no quadro do robô, denotando~\(a\)~e~\(b\) os quadros de referência e do robô, respectivamente, é dada por \cite{Stevens2016}:
 \begin{equation*}
     {\mathbf{a}_{P/a}} = {\mathbf{a}_{Q/a}} + {\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}} + {\mathbf{\omega}_{b/a}}\!\times\!\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)
 \end{equation*}
 
 Aplicando para um corpo sobre a Terra, sejam \(F_{i}\)  e  \(F_{e}\) quadros de referencia inercial e fixo na Terra, respectivamente, e pontos \(Q\) e \(O\) coincidentes no centro de massa da Terra (sem aceleração translacional), o \(\mathbf{p}_{P/Q}\) é um vetor posição geocêntrico, e \(\mathbf{a}_{Q/a}=0\). Considerando que a Terra gira a uma velocidade angular constante, a derivada de \(\mathbf{\omega}_{b/a}\) também desaparece. Restam a aceleração relativa, a centrípeta e a de Coriolis na equação que relaciona a aceleração verdadeira (inercial) à aceleração relativa, para aplicar as leis de Newton no movimento de um ponto \(P\) sobre a Terra~\cite{Stevens2016}:
-\begin{equation*} \tag{1.5-5}
+\begin{equation} \label{eq:1.5-5}
     {\mathbf{a}_{P/i}} = {\mathbf{a}_{P/e}} + {\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}_{P/O}}\right) + 2\mathbf{\omega}_{e/i}\!\times\!\mathbf{v}_{P/e}
-\end{equation*}
+\end{equation}
 
-Neste sentido, para uma partícula de massa \(m\) situada em \(P\), a aceleração relativa \(\mathbf{a}_{P/e}\) corresponde a uma ``força aparente'' sobre a partícula que produz a trajetória vista por um observador estacionário na Terra. A aceleração verdadeira \(\mathbf{a}_{P/i}\) corresponde às `` forças verdadeiras'' (como gravitação e arraste).  Escrevendo (1.5-5) em termos de forças, onde destacamos a \textit{força centrífuga} normal ao vetor velocidade angular, e a \textit{força de Coriolis}\footnotemark{} que fará uma trajetória balística sobre a Terra curvar-se à esquerda ou à direita~\cite{Stevens2016}:
+Neste sentido, para uma partícula de massa \(m\) situada em \(P\), a aceleração relativa \(\mathbf{a}_{P/e}\) corresponde a uma ``força aparente'' sobre a partícula que produz a trajetória vista por um observador estacionário na Terra. A aceleração verdadeira \(\mathbf{a}_{P/i}\) corresponde às `` forças verdadeiras'' (como gravitação e arraste).  Escrevendo~(\ref{eq:1.5-5}) em termos de forças, onde destacamos a \textit{força centrífuga} normal ao vetor velocidade angular, e a \textit{força de Coriolis}\footnotemark{} que fará uma trajetória balística sobre a Terra curvar-se à esquerda ou à direita~\cite{Stevens2016}:
 \begin{equation*}
     \text{Força aparente} = \text{força verdadeira} - \underbrace{m \left[{\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}_{P/O}}\right)\right]}_{\text{força centrífuga}} - \underbrace{m \left( 2{\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{v}_{P/e}}\right)}_{\text{força de Coriolis}}
 \end{equation*}
 
-Força verdadeira (\(F\)) é a soma das \textit{forças de contato}. A força do  \textit{campo gravitacional da Terra} corresponde a \(m\mathbf{G}\). O vetor gravidade da Terra (\(g\)) é dado por {\(\mathbf{g}~=~\mathbf{G}~-~\text{aceleração centrípeta}\)}. Desse modo, reescrevendo a equação (1.5-5) para um corpo rígido de massa \(m\), obtemos~\cite{Stevens2016}:
-\begin{equation*} \tag{1.5-6}
+Força verdadeira (\(F\)) é a soma das \textit{forças de contato}. A força do  \textit{campo gravitacional da Terra} corresponde a \(m\mathbf{G}\). O vetor gravidade da Terra (\(g\)) é dado por {\(\mathbf{g}~=~\mathbf{G}~-~\text{aceleração centrípeta}\)}. Desse modo, reescrevendo a equação~(\ref{eq:1.5-5}) para um corpo rígido de massa \(m\), obtemos~\cite{Stevens2016}:
+\begin{equation} \label{eq:1.5-6}
     \mathbf{a}_{P/e} = \frac{F}{m} + g - {2 \mathbf{\omega}_{e/i}}\!\times\!{\mathbf{v}_{P/e}}
-\end{equation*}
+\end{equation}
 
 \footnotetext{A aceleração de Coriolis será significativa para deslocamento em altas velocidades. Para ilustrar, para que a aceleração de Coriolis tenha a mesma magnitude da aceleração centrípeta, a \(45^{\circ}\) de latitude, um veículo deve deve mover-se a 2365.2 km/h. Nessa velocidade, embora a aceleração de Coriolis ainda seja pequena comparada a \(\mathbf{g}\), causa uma diferença de posição que cresce com o tempo~\cite{Stevens2016}.
 \begin{align*}
@@ -306,15 +306,15 @@ Um acelerômetro mede, indiretamente\footnotemark{}, a força \(\mathbf{F}\) que
 \footnotetext{Para detalhes sobre acelerômetros,~\cite{Weston2004},~\cite{Wang2021} e~\cite{Haoran2019}.}
 
 Com a calibração determinamos o \textit{fator de escala}, entre a quantidade de saída do sinal à força específica\cite{Stevens2016}:
-\begin{equation*} \tag{1.6-28}
+\begin{equation} \label{eq:1.6-28}
     \text{Sinal de saída do acelerômetro} = s \mathbf{f} = s \left(\mathbf{a} - \mathbf{G} \right)
-\end{equation*}
+\end{equation}
 
 Quando um acelerômetro, com vetor de posição geocêntrico\footnotemark{} \(\mathbf{p}\), está estacionário em relação à Terra, a leitura de aceleração corresponde a~\cite{Stevens2016}:
-\begin{align*}
+\begin{align}
     \mathbf{a} &= {\mathbf{\omega}_{e/i}}\!\times\!\left({\mathbf{\omega}_{e/i}}\!\times\!{\mathbf{p}}\right) \\
-    \mathbf{f} &= \mathbf{a} - \mathbf{G} = -\!{\mathbf{g}} \tag{1.6-29}
-\end{align*}
+    \mathbf{f} &= \mathbf{a} - \mathbf{G} = -\!{\mathbf{g}} \label{eq:1.6-29}
+\end{align}
 \footnotetext{A navegação inercial exige um modelo para \(\mathbf{G}\) em função da posição. Numa posição diferente, o acelerômetro deve ser corrigido para a gravidade local e pela aceleração centrípeta. Para um acelerômetro fixado em um veículo que se move em relação à Terra, devemos ainda calcular a aceleração de transporte para relacionar a leitura do acelerômetro com a aceleração do veículo~\cite{Stevens2016}.}
 
 Para um acelerômetro com três eixos ortogonais \(x\), \(y\) e \(z\), situado num ponto \({P}\) fixado no quadro \({F}_{frd}\) do corpo de um robô, com vetor de posição geocêntrico \(\mathbf{p}\), designamos \(\mathbf{G}_{p}\) o vetor projeção da força nos elementos sensores, \(\mathbf{g}\) o vetor aceleração da gravidade expresso em múltiplos da \emph{gravidade padrão}, \(\mathbf{a}\) a aceleração do corpo tomada no quadro de referência da Terra, e \({C}_{frd/ned}\) a matriz de rotação do quado \(frd\) em relação ao \(ned\), obtendo a equação:
@@ -392,68 +392,68 @@ Definimos os seguintes escalares e vetores:
 \end{align*}
 
 Então as equações de estado são~\cite{Stevens2016}:
-\begin{align*}\tag{1.7-12}
+\begin{align}\label{eq:1.7-12}
    {^{e}{\dot{\mathbf{p}}}_{cm/O}} = \mathbf{v}_{cm/e} \\
    {^{e}{\dot{\mathbf{v}}}_{cm/e}} = \mathbf{a}_{cm/e} \\
-\end{align*}
+\end{align}
 
-Aplicando a segunda lei de Newton, partimos da Equação (1.5-5), substituímos \(\left( \textstyle{\frac{1}{m}}\mathbf{F} + \mathbf{G}\right)\) pela aceleração inercial, e isolamos a aceleração relativa (ou seja, a derivada do estado velocidade em \(F_{e}\))~\cite{Stevens2016}:
+Aplicando a segunda lei de Newton, partimos da Equação (\ref{eq:1.5-5}), substituímos \(\left( \textstyle{\frac{1}{m}}\mathbf{F} + \mathbf{G}\right)\) pela aceleração inercial, e isolamos a aceleração relativa (ou seja, a derivada do estado velocidade em \(F_{e}\))~\cite{Stevens2016}:
 
-\begin{equation*}\tag{1.7-13}
+\begin{equation}\label{eq:1.7-13}
    {^{e}{\dot{\mathbf{v}}_{cm/e}}} = \textstyle{\frac{1}{m}} \mathbf{F} + \mathbf{G} - \mathbf{\omega}_{e/i} \times \left( \mathbf{\omega}_{e/i} \times \mathbf{p}_{cm/O} \right) - 2 \mathbf{\omega}_{e/i} \times \mathbf{v}_{cm/e}
-\end{equation*}
+\end{equation}
 
 Esta equação de estado da velocidade combinada à equação de estado da posição são adequadas para a Terra oblata e girante. Latitude, longitude e \(\mathbf{G}\) podem ser calculadas a partir do vetor de posição geocêntrico. Já a força de Coriolis normalmente é desprezada para velocidades inferiores a 609m/s (2000 pés/s)~\cite{Stevens2016}.
 
 \section{Equações de Estado para o Plano Tangente}
 
-Equações de plano tangente não determinam com precisão a posição sobre a Terra, mas são amplamente utilizadas. Nelas pressupomos que a Terra é um referencial inercial, a posição é obtida no sistema do plano tangente \(tp\), o vetor gravidade, \(\mathbf{g}\), é normal ao plano tangente e constante em magnitude, e a atitude do veículo no plano tangente é uma boa aproximação à verdadeira atitude geográfica na posição do veículo. Simplificando (1.7-12) e (1.7-13), com o vetor \(\mathbf{g}\) constante, e o vetor posição a partir de \(Q\) na superfície, na origem de um plano tangente, obtemos~\cite{Stevens2016}:
+Equações de plano tangente não determinam com precisão a posição sobre a Terra, mas são amplamente utilizadas. Nelas pressupomos que a Terra é um referencial inercial, a posição é obtida no sistema do plano tangente \(tp\), o vetor gravidade, \(\mathbf{g}\), é normal ao plano tangente e constante em magnitude, e a atitude do veículo no plano tangente é uma boa aproximação à verdadeira atitude geográfica na posição do veículo. Simplificando (\ref{eq:1.7-12}) e (\ref{eq:1.7-13}), com o vetor \(\mathbf{g}\) constante, e o vetor posição a partir de \(Q\) na superfície, na origem de um plano tangente, obtemos~\cite{Stevens2016}:
 
-\begin{equation*}\tag{1.7-15}
+\begin{equation}\label{eq:1.7-15}
    {^{e}{\dot{\mathbf{p}}_{cm/Q}}} = \mathbf{v}_{cm/e}
-\end{equation*}
+\end{equation}
 
-A velocidade também pode ser obtida de um sistema fixo no corpo. Mudando as derivadas na equação (1.7--13), com \(\mathbf{G} \equiv \mathbf{g}\), temos~\cite{Stevens2016}:
+A velocidade também pode ser obtida de um sistema fixo no corpo. Mudando as derivadas na equação~(\ref{eq:1.7-13}), com \(\mathbf{G} \equiv \mathbf{g}\), temos~\cite{Stevens2016}:
 
-\begin{align*}\tag{1.7-16a}
+\begin{align}\label{eq:1.7-16a}
    {^{b}{\dot{\mathbf{v}}}_{cm/e}} + \mathbf{\omega}_{b/e} \times \mathbf{v}_{cm/e} &= {^{e}{\dot{\mathbf{v}}_{cm/e}}} = \textstyle{\frac{1}{m}}\mathbf{F} + \mathbf{g} - 2 \mathbf{\omega}_{e/i} \times \mathbf{v}_{cm/e} \\
    {^{b}{\dot{\mathbf{v}}_{cm/e}}} &= \textstyle{\frac{1}{m}} \mathbf{F} + \mathbf{g} - \left( \mathbf{\omega}_{b/e} + 2 {\mathbf{\omega}_{e/i}} \right) \times \mathbf{v}_{cm/e}
-\end{align*}
+\end{align}
 
 que, pela a propriedade aditiva dos vetores velocidade angular, resulta em
 
-\begin{align*}\tag{1.7-16b}
+\begin{align}\label{eq:1.7-16b}
     {^{b}{\dot{\mathbf{v}}_{cm/e}}} &= \textstyle{\frac{1}{m}} \mathbf{F} + \mathbf{g} - {\left( \mathbf{\omega}_{b/i} + \mathbf{\omega}_{e/i} \right)} \times \mathbf{v}_{cm/e}
-\end{align*}
+\end{align}
 
 e, tomando a Terra por referencial inercial (\(\mathbf{\omega}_{e/i} \equiv 0 , \mathbf{\omega}_{b/i} \equiv \mathbf{\omega}_{b/e}\)):
 
-\begin{align*}\tag{1.7-16c}
+\begin{align}\label{eq:1.7-16c}
    {^{b}{\dot{\mathbf{v}}_{cm/e}}} &= \textstyle{\frac{1}{m}} \mathbf{F} + \mathbf{g} - \mathbf{\omega}_{b/e} \times \mathbf{v}_{cm/e}
-\end{align*}
+\end{align}
 
 Para completar, o vetor \(\mathbf{g}\) em coordenadas do plano tangente será\footnotemark{}
 
-\begin{equation*}
+\begin{equation}
 \mathbf{g}^{tp} = {\begin{bmatrix} 0 & 0& g_{D} \end{bmatrix}}^{T}
-\end{equation*}
+\end{equation}
 \footnotetext{O componente  \(\mathbf{g}_{D}\) corresponde à gravidade padrão (\(9.80665 \textrm{m/s}^{2}\)) ou seu valor local.}
 
-Agora devemos escolher sistemas de coordenadas para as variáveis, usando a matriz de rotação para converter de um sistema para outro. O sistema \(frd\), fixo em \(F_{b}\), convém para o vetor velocidade em \(F_{b}\) e para o vetor velocidade angular do veículo (que utiliza os eixos do componentes em eixos do corpo nas equações de movimento angular), mas o vetor \(\mathbf{g}\)  deve ser rotacionado para o sistema do corpo, usando uma matriz rotacional que é obtida a partir das equações de estado. Para a mudança de atitude do veículo empregamos as equações cinemáticas de Euler (1.4-4), relacionando o sistema \(frd\) fixo no corpo ao sistema \(ned\) (o qual  corresponde ao plano tangente \(tp\)). Com os ângulos de Euler obtemos \(C_{frd/ned}\), para então calcular as equações de posição e velocidade~\cite{Stevens2016}.
+Agora devemos escolher sistemas de coordenadas para as variáveis, usando a matriz de rotação para converter de um sistema para outro. O sistema \(frd\), fixo em \(F_{b}\), convém para o vetor velocidade em \(F_{b}\) e para o vetor velocidade angular do veículo (que utiliza os eixos do componentes em eixos do corpo nas equações de movimento angular), mas o vetor \(\mathbf{g}\)  deve ser rotacionado para o sistema do corpo, usando uma matriz rotacional que é obtida a partir das equações de estado. Para a mudança de atitude do veículo empregamos as equações cinemáticas de Euler (\ref{eq:1.4-4}), relacionando o sistema \(frd\) fixo no corpo ao sistema \(ned\) (o qual  corresponde ao plano tangente \(tp\)). Com os ângulos de Euler obtemos \(C_{frd/ned}\), para então calcular as equações de posição e velocidade~\cite{Stevens2016}.
 
 Para os nossos propósitos, o nosso vetor de estado fica assimm:
-\begin{align*}\tag{1.7-17}
+\begin{align}\label{eq:1.7-17}
     {X}^{T} = \begin{bmatrix} {\left( \mathbf{p}^{tp}_{cm/O} \right)}^{T} & \mathbf{\Phi}^{T} {\left(\mathbf{v}^{frd}_{cm/e}\right)}^{T} \end{bmatrix}
-\end{align*}
+\end{align}
 
 Derivando as variáveis de estado\footnotemark{}, temos~\cite{Stevens2016}:
 \footnotetext{A matriz de rotação é calculada antes da equações de estado da posição e velocidade como referido acima.}
-\begin{align*}\tag{1.7-18}
+\begin{align}\label{eq:1.7-18}
     C_{frd/tp} &= fn \left( \Phi \right) \\
     \dot{\Phi} &=  H \left( \Phi \right) {\mathbf{\omega}^{frd}_{b/e}} \\
     {^{e}{\dot{\mathbf{p}}^{tp}_{cm/Q}}} &= {C_{tp/frd}}{\mathbf{v}^{frd}_{cm/e}} \\
     {^{b}{\dot{\mathbf{v}}^{frd}_{cm/e}}} &= \textstyle{\frac{1}{m}} {\mathbf{F}^{frd}} + {C_{frd/tp}}{\mathbf{g}^{tp}} - {\tilde{\mathbf{\omega}}^{frd}_{b/e}} {\mathbf{v}^{frd}_{cm/e}}
-\end{align*}
+\end{align}
 
 \section{Modelo cinemático}
 
@@ -482,16 +482,15 @@ Por falta de um nome melhor, definimos o vetor \(\mathbf{u}\)
     \mathbf{u}^{T} = \begin{bmatrix} \dot{U} & \dot{V} & \dot{W} & P & Q & R \end{bmatrix}^{T}
 \end{equation*}
 
-Partindo de (1.7--18), obtemos as equações~\cite{Stevens2016}:
-
-\begin{align*}\tag{Table 2.5-1}
+Partindo de~(\ref{eq:1.7-18}), obtemos as equações~\cite{Stevens2016}:
+\begin{align}\label{Tab:2.5-1}
     &\dot{\phi}   =  P + \tan{\theta} \left( Q \sin{\phi} + R \cos{\phi} \right) \\
     &\dot{\theta} =  Q \cos{\phi} - R \sin{\phi} \\
     &\dot{\psi}   =  \left( Q \sin{\phi} + R \cos{\phi} \right) / \cos{\theta} \\
     &\dot{p_{N}}  =  U c \theta c \psi  + V ( -c \phi s \psi + s \phi s \theta c \psi ) + W ( s \phi s \psi + c \phi s \theta c \psi) \\
     &\dot{p_{E}}  =  U c \theta s \psi  + V (  c \phi s \psi + s \phi s \theta s \psi ) + W (-s \phi c \psi + c \phi s \theta c \psi) \\
-    &\dot{h}      =  U s \theta - V s \phi c \theta - W c \phi c \theta \\
-\end{align*}
+    &\dot{h}      =  U s \theta - V s \phi c \theta - W c \phi c \theta
+\end{align}
 
 No nosso caso, um sensor com acelerômetros e giroscópios de três eixos \(xyz\) em \(frd\), fixo no centro de massa do robô, o giroscópio apresenta diretamente uma leitura de \( P, Q, R\), o acelerômetro permite uma leitura indireta de \( \dot{U}, \dot{V}, \dot{W}\). Esses valores compõem o vetor \(\mathbf{u}\).
 
@@ -500,10 +499,10 @@ Desse modo chegamos e equações não lineares, dependentes, e com parâmetros q
 \section{Solução Numérica}
 
 A solução numérica da trajetória do estado exige que, dada uma condição inicial \(X\left(t_{0}\right)\) e o termo de entrada \(\mathbf{u}(t)\), calculamos o estado em intervalos de tempo constante \(T\) pequenos o bastante para considerar o termo \(\mathbf{u}\) constante entre \(kT\) e \(\left(k+1\right)T\) sem modificar significativamente os resultados, na forma a seguir~\cite{Stevens2016}:
-\begin{align*}
-    &X \left( t_{0} + kT \right), \quad k = 1,2 \ldots\tag{3.4-1a} \\
-    &\dot{X} \left( t \right) = f \big(X\left(t\right), \mathbf{u}\left(t\right)\big)\tag{3.4-1b}
-\end{align*}
+\begin{align}
+    &X \left( t_{0} + kT \right), \quad k = 1,2 \ldots\label{3.4-1a} \\
+    &\dot{X} \left( t \right) = f \big(X\left(t\right), \mathbf{u}\left(t\right)\big)\label{eq:3.4-1b}
+\end{align}
 
 %\begin{align*}
 %    &\mathbf{p}^{tp}_{cm/Q} \equiv \begin{bmatrix} p_{N} & p_{E} & p_{D} \end{bmatrix}^{T},&
@@ -513,30 +512,27 @@ A solução numérica da trajetória do estado exige que, dada uma condição in
 %\end{align*}
 
 A questão acima, conhecida como \emph{problema do valor inicial}, será enfrentada aqui pelos métodos \emph{Runge-Kutta} (RK). Considere o problema do valor inicial na sua forma mais simples: uma equação diferencial autônoma de primeira ordem com uma condição de limite específica~\cite{Stevens2016}
-\begin{equation*}\tag{3.4-2}
+\begin{equation}\label{eq:3.4-2}
     {\frac{\textrm{d}x}{\textrm{d}t}} = f \left( x, t \right), \quad
     x \left( t_{0} \right) = x_{0}
-\end{equation*}
+\end{equation}
 
-Podemos estabelecer uma relação entre o problema de encontrar valores determinados para (3.4-4) e a série de Taylor~\cite{Stevens2016}:
-
-\begin{equation*}\tag{3.4-3}
+Podemos estabelecer uma relação entre o problema de encontrar valores determinados para~(\ref{eq:3.4-4}) e a série de Taylor~\cite{Stevens2016}:
+\begin{equation}\label{eq:3.4-3}
     x \left(t_{0} + T \right) = x \left(t_{0}\right) + T \dot{x}\left(t_{0}\right) + \frac{T^{2}}{2!} \ddot{x}\left(t_{0}\right) + \ldots
-\end{equation*}
+\end{equation}
 
 O método mais simples, pouco preciso e que exige um período \(T\) muito pequeno, consiste em truncar a série após a primeira derivada, conhecido por método de Euler ou de \emph{primeira ordem},  pode ser expresso na forma~\cite{Stevens2016}:
-
-\begin{equation*}\tag{3.4-4}
+\begin{equation}\label{eq:3.4-4}
     x_{E}\left(t_{0} + T \right) \approx x \left( t_{0} \right) + T f\left(x\left(t_{0}\right), t_{0}\right)
-\end{equation*}
+\end{equation}
 
 O \emph{método trapezoidal}, por exemplo, ou de \emph{segunda ordem}, é um pouco mais preciso, e consiste em primeiro estimar a integral pelo método de Euler, então usar a média das derivadas no início e no fim do período para uma estivativa mais precisa. Podem ser expresso, empregando índices \(E\) e \(T\) para os passos obtidos pelos métodos de \emph{Euler} e \emph{trapezoidal}, repsectivamente,  com~\cite{Stevens2016}
-
-\begin{align*}\tag{3.4-5}
+\begin{align}\label{eq:3.4-5}
     x_{E}\left(t + T\right) &= x\left(t\right) + T f\left(x\left(t\right),t\right) \\
     \dot{x}_{E}\left(t + T\right) &= {f{\left( x_{E} {\left( t + T \right)}, t+T \right)}} \\
     x_{T}\left(t + T\right) &= x\left(t\right) + \frac{T}{2} \left[ \dot{x}\left(t\right) + \dot{x}_{E}\left(t + T\right) \right],
-\end{align*}
+\end{align}
 
 Os métodos Runge-Kutta\footnotemark{} resolvem o problema do valor inicial diretamente, o que atende à formulação em espaço de estados onde um vetor de estado contém descreve completamente um sistema num determinado instante. Essa característica é ainda mais importante quando passamos de sistemas em tempo contínuo para sistemas em tempo discreto, o que é muito comum na prática~\cite{Stevens2016}.
 
