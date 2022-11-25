@@ -1,17 +1,15 @@
 \chapter*{CONCLUSÃO}\label{chap:conclusao}
 \addcontentsline{toc}{chapter}{CONCLUSÃO}
 
-Nossas métodos resultados foram incapazes de obter uma estimativa adequada para a posição, com uma divergência bastante grande entre os resultados esperados e os obtidos.
 
-Os resultados obtidos demonstram a instabilidade numérica do método de integração dos giroscópios para obtenção de atitude e, por consequência uma divergência na estimativa de posição.
+Os resultados obtidos demonstram a insuficiência dos métodos empregados para estimar com precisão a posição a partir dos dados do sensor empregado. Nossa estimativa de posição para a direção acima obteve uma divergência de mais de cem metros em menos de cinco minutos de testes, revelando problemas nos métodos e materiais empregados.
 
-Nossa análise empregou o método trapezoidal de integração, que nos pareceu mais acessível. Não obstante, esse método não foi suficientemente preciso para mitigar a instabilidade da integração.
+Em parte podemos atribuir as divergências à instabilidade numérica do método de integração utilizado. Nossa análise empregou o método trapezoidal de integração, que nos pareceu mais acessível. Não obstante, esse método não foi suficientemente preciso para garantir a estabilidade numérica da integração.
 
-A literatura mais especializada~\cite{SAVAGE_2008} indica que a nossa frequência de amostragem pode ser muito baixa para o emprego do método trapezoidal de integração na estimativa de posição.
-Nesse particular é sugerido o emprego de métodos Runge-Kutta de quarta ou quinta ordem, bem como taxas de amostragem superiores a 6 kHz.
+Neste sentido, a literatura mais especializada~\cite{SAVAGE_2008} indica que a nossa frequência de amostragem pode ser muito baixa para o emprego do método trapezoidal de integração na estimativa de posição. Nesse particular é sugerido o emprego de métodos Runge-Kutta de quarta ou quinta ordem, bem como taxas de amostragem superiores a 6 kHz.
 
-Por outro lado, dentre os instrumentos do sensor MPU6050, observamos que os giroscópios apresentam um ruído que não possui média zero, e cuja média oscila no tempo. Este fenômeno é conhecido na literatura como ``\emph{bias instability}'' e sua quantificação oferece uma métrica de performance dos giroscópios.
+Olhando pelo aspecto da instrumentação, dentre os instrumentos do sensor MPU6050, observamos que os giroscópios apresentam um ruído com média que oscila no tempo. Este fenômeno é conhecido na literatura como ``\emph{bias instability}'' e sua quantificação oferece uma métrica de performance dos giroscópios. A consequência prática é instabilidade numérica da integração dos dados de giroscópio, ainda que o método empregado seja estável.
 
-Dessa forma, compreendemos que nossos métodos não foram suficientemente satisfatórios para empregar o sensor MPU6050 em navegação inercial. A principal limitação dos nossos métodos ocorre quanto ao erro sistemático do ângulo de guinada que é obtido exclusivamente através da integração dos giroscópio, uma vez que os acelerômetros não podem oferecer essa informação para utilização de um filtro complementar que fosse capaz de estabilizar a integração.
+Os resultados apontam para a exploração de sensores melhores e métodos matemáticos e estatísticos mais sofisticados~\cite{SAVAGE_2008_2}, por exemplo, o emprego de física na formulação de Hamilton para superar as limitações de validade quanto aos ângulos, integração por métodos de Runge-Kutta de quarta e quinta ordem para melhor estabilidade e precisão da integração numérica, fusão de dados com sensores magnéticos e de posição absoluta por filtro de Kalman, uso de inteligência artificial e aprendizado de máquina para correção dos dados, entre outros.
 
-Evidente que é possível a exploração de outros métodos matemáticos e estatísticos mais sofisticados~\cite{SAVAGE_2008_2}, por exemplo, o emprego de física na formulação de Hamilton para superar as limitações de validade quanto aos ângulos, integração por métodos de Runge-Kutta de quarta e quinta ordem para melhor estabilidade e precisão da integração numérica, fusão de dados com sensores magnéticos e de posição absoluta por filtro de Kalman, uso de inteligência artificial e aprendizado de máquina para correção dos dados, entre outros. Entretanto tal exploração seria melhor explorada em trabalhos mais profundos sobre o tema em razão da complexidade envolvida.
+Acreditamos que os problemas aqui discutidos seriam melhor explorados em trabalhos mais profundos sobre o tema em razão da complexidade envolvida.
