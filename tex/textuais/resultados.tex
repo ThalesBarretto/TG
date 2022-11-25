@@ -1,12 +1,29 @@
 \chapter{RESULTADOS}\label{chap:resuldatos}
 
-A seguir são apresentados os resultados obtidos \ldots
+A seguir são apresentados os resultados obtidos a partir dos testes de bancada realizados. Os resultados serão apresentados contrapondo os dados obtidos contra os dados esperados.
 
-Os resultados serão apresentados contrapondo os dados obtidos contra os dados esperados.
+\section{Resultado do teste estacionário}
 
-Na figura~\ref{fig:mpu6050-proto-top}, mostramos o instrumento de coleta de dados montado e pronto para operação.
+Inicialmente realizamos o teste mais simples possível: deixamos o sensor estacionário em uma bancada nivelada e estável, sem vibrações significativas ou perturbações. O teste foi realizado três vezes consecutivas, partindo da inicialização do sensor, calibração, e capturas com duração de cinco minutos cada. O resultado esperado, portanto, é uma indicação de zero para todos os valores de atitude e posição ao final do teste. As condições do teste são ilustradas na figura~\ref{fig:mpu6050-proto-top}.
 
+Nestas condições configuramos o sensor para capturar a \(250\) amostras por segundo, integrando em \(200\) passos, configurando um fator de escala para a aceleração da gravidade no valor padrão de \(9.8\textrm{m}/{s}^{2}\), ajustando a sensibilidade dos sensores para \(\pm 4\textrm{m}/{s}^{2}\) e \(\pm 500\textrm{dps}\), sem filtro digital.
 
-\section{Resultado teste corpo estático}
-\section{Resultado teste movimento linear}
-\section{Resultado teste movimento angular}
+Ao final obtivemos estimativas de atitude \((\phi,\theta,\psi)\) e posição~\((p_{n},p_{e},p_{u})\) a seguir:
+
+\begin{table}[ht]
+    \caption{Resultados do teste estacionário}
+    \centering
+    \begin{tabular}{r r r r r r r}
+        teste & \(\phi (^{o})\) & \(\theta(^{o})\) & \(\psi(^{o})\) & \(p_{n}(\textrm{m})\) & \(p_{e}(\textrm{m})\) & \(p_{u}(\textrm{m})\)  \\
+        \toprule
+        1 & +0.09 & +0.05 & +0.05 & -0.308 & -1.174 & +127.510  \\
+        2 & +0.09 & -0.01 & -0.01 & +0.396 & -1.458 & +100.242  \\
+        3 & +0.06 & -0.02 & -0.02 & -0.647 & -0.636 & +105.201  \\
+        \bottomrule
+    \end{tabular}
+    \label{Tab:tabela1}
+\end{table}
+
+Como podemos observar, nos três testes nossa estimativa de posição \(p_{u}\) ficou mais de cem metros distante do ponto inicial, embora as demais estimativas estivessem razoavelmente próximas dos resultados esperados.
+
+Em razão da significativa divergência entre os resultados obtidos e os esperados, decidimos não realizar os testes cinemáticos, por considerá-los dispensáveis neste particular.
