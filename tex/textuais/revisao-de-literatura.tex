@@ -6,7 +6,7 @@ No particular, empregaremos em grande parte as convenções e equações utiliza
 
 \section{Notação e convenções}
 
-Neste trabalho utilizamos um modelo de mundo tridimensional e mecânica clássica.  Nosso espaço é estruturado por três eixos ortogonais \(x\), \(y\), \(z\) (\(1, 2, 3\)) onde uma posição é dada por um vetor tridimensional. Descreveremos a atitude e o movimento de um corpo rígido sobre a superfície oblata e girante da Terra. Não obstante, serão empregadas aproximações sobre uma pequena área para um plano tangente à Terra estacionária e constante, que basta\footnotemark{} para os nossos propósitos. Para simbologia, acompanhamos \cite{Stevens2016}:
+Neste trabalho utilizamos um modelo de mundo tridimensional e mecânica clássica.  Nosso espaço é estruturado por três eixos ortogonais \(x\), \(y\), \(z\) (\(1, 2, 3\)) onde uma posição é dada por um vetor tridimensional. Descreveremos a atitude e o movimento de um corpo rígido sobre a superfície oblata e girante da Terra. Não obstante, serão empregadas aproximações sobre uma pequena área para um plano tangente à Terra estacionária e constante, que basta\footnotemark{} para os nossos propósitos. Para simbologia, acompanhamos~\cite{Stevens2016}:
 
 \begin{align*}
     \mathbf{p}_{A/B} &\equiv
@@ -539,9 +539,9 @@ Os métodos Runge-Kutta\footnotemark{} resolvem o problema do valor inicial dire
 Geralmente processamos eventos em tempo discreto a partir de sinais definidos a cada amostra, supondo que esses sinais permanecem constantes entre uma amostra e outra. Desse modo as integrações numéricas impõem essa suposição que chamamos de ``zero-order-data-hold'' (ZOH) em relação aos sinais amostrados~\cite{Stevens2016}, conforme ilustrado na figura:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth, keepaspectratio]{figuras/figure7.2-2.png}\label{fig7.2-2}
     \caption{Reconstrução de um sinal usando ZOH}\label{fig:ZOH}
-    \fonte{\citeonline{Stevens2016}}
+    \includegraphics[width=0.5\textwidth, keepaspectratio]{figuras/figure7.2-2.png}\label{fig7.2-2}
+    \fonte{\cite{Stevens2016}}
 \end{figure}
 
 Evidentemente, as técnicas numéricas introduzem problemas de tratamento bastante complexos, como a questão da estabilidade do método numérico empregado, a estimativa dos erros, bem como os erros introduzidos pela amostragem, quantificação dos sinais, imperfeições dos sensores, ruídos, entre outras. Não obstante, para nosso propósito utilizamos o modelo mais simples possível, ignorando esses problemas até a discussão sobre os resultados, ao final.
