@@ -74,7 +74,7 @@ Podemos escrever as matrizes de rotação abreviando co-seno por \(c\) e seno po
     \end{bmatrix}
 \end{align}
 
-O intervalo de validade para o qual os ângulos de rotação são bem definido\footnotemark{} é:
+O intervalo de validade para o qual os ângulos de rotação são bem definidos\footnotemark{} é:
 \begin{align*}
     -\pi  < \phi \leq \pi \\
     -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2} \\
@@ -106,7 +106,7 @@ Um vetor pode apontar em qualquer direção por meio de uma simples rotação ao
     \caption{Rotação de um vetor}\label{fig:rotacao-de-um-vetor}
 \end{figure}
 
-Na figura acima, o vetor \(\mathbf{u}\) foi rotacionado para formar o vetor \(\mathbf{v}\) ao definirmos um eixo de rotação ao longo do vetor \(\mathbf{n}\) e realizarmos uma rotação pelo ângulo \(\mu\) ao redor de \(\mathbf{n}\). Estes dois vetores se somam a \(\mathbf{u}\) para obtermos \(\mathbf{v}\), e onde temos que:
+Na figura acima, o vetor \(\mathbf{u}\) foi rotacionado para formar o vetor \(\mathbf{v}\) ao definirmos um eixo de rotação ao longo do vetor \(\mathbf{n}\) e realizarmos uma rotação pelo ângulo \(\mu\) ao redor de \(\mathbf{n}\). Estes dois vetores se somam a \(\mathbf{u}\) para obtermos \(\mathbf{v}\), e obtemos:
     \begin{align}
         \mathbf{v} &= \mathbf{u} + \left(1 - {\cos{\mu}}\right) \left(\mathbf{n}\!\times\!\left(\mathbf{n}\!\times\!\mathbf{u}\right)\right) - \left(\mathbf{n}\!\times\!\mathbf{u}\right){\sin{\mu}}\label{eq:rotation-formula-a} %\tag{1.2-5a}
     \end{align}
@@ -129,15 +129,15 @@ Dividindo por \(\delta t\), no limite onde \(\delta t \rightarrow 0\), definindo
 
 Esta equação relaciona a velocidade translacional da ponta do vetor \(\mathbf{u}\) ao vetor \(\mathbf{\omega}\). Este vetor \(\mathbf{\omega}\), que denominados \textit{vetor velocidade angular}, constitui-se de um vetor unitário  que define o eixo de rotação, multiplicado pela taxa de rotação. Este é um vetor livre, pode ser transladado paralelo a si mesmo, e axial, que mudaria de direção caso houvéssemos escolhido uma convenção de sentido horário para a rotação.
 
-Dessa forma podemos associar \(\mathbf{\omega}\) ao sistema de coordenadas fixado no corpo, atribuindo índices que indicam que ele representa a velocidade angular do corpo em relação a outro determinado sistema.
+Dessa forma podemos associar \(\mathbf{\omega}\) ao sistema de coordenadas fixado no corpo, atribuindo índices, para representar a velocidade angular do corpo em relação a outro determinado sistema.
 
-Como vimos, a atitude de um corpo rígido pode ser descrita por uma matriz rotacional variante no tempo, e, pelo teorema de Euler\footnotemark{}, esse o corpo possui um único \emph{eixo instantâneo de rotação} ao qual o vetor velocidade angular é paralelo, e também único.
+Como vimos, a atitude de um corpo rígido pode ser descrita por uma matriz rotacional variante no tempo, e, pelo teorema de Euler\footnotemark{}, esse corpo possui um único \emph{eixo instantâneo de rotação} ao qual o vetor velocidade angular é paralelo, também único.
 
 \footnotetext{\emph{``Euler's Theorem: The general displacement of a rigid body with one point fixed is a rotation about some axis.''} Para uma explicação a respeito, vide~\cite{Goldstein1980}, Capítulo 4.}
 
 \section{Cinemática e Ângulos de Euler}
 
-Um corpo em movimento pode mudar sua atitude, descrita em ângulos de Euler, ao longo do tempo, e neste sentido podemos falar de uma taxa de mudança de cada um desses ângulos de Euler ao longo do tempo. Essas taxas são coisa distintas, é preciso dizer, do vetor velocidade angular do corpo.
+Um corpo em movimento pode mudar sua atitude, descrita em ângulos de Euler, ao longo do tempo, e, neste sentido, podemos falar de uma taxa de mudança de cada um desses ângulos de Euler ao longo do tempo. Essas taxas são coisa distintas, é preciso dizer, do vetor velocidade angular do corpo.
 
 Para vincular as taxas de ângulos de Euler, que descrevem a mudança de atitude de um corpo, à sua velocidade angular, procedemos do seguinte modo. Definimos um quadro de referência \(F_{r}\) e um quadro do corpo \(F_{b}\) com vetor velocidade angular relativa \(\omega_{b/r}\) e uma sequencia de ângulos de Euler que define a atitude do corpo, ou seja, a orientação do sistema de coordenadas preso ao corpo em relação ao sistema de referência. Cada taxa de ângulos de Euler informa a direção e magnitude para um determinado vetor velocidade angular sobre um eixo de coordenadas em particular. Esses três vetores somados formam o vetor velocidade angular resultante do veículo cujas taxas de ângulos de Euler estamos tratando. Desse modo podemos encontrar os componentes do vetor velocidade angular resultante \cite{Stevens2016}.
 
@@ -216,16 +216,16 @@ Dividindo por \(\delta t\) no limite em que \(\delta t \rightarrow 0\) resulta n
     {^{a}\dot{\mathbf{p}}} = {^{b}\dot{\mathbf{p}}} + {\mathbf{\omega}_{b/a} \! \times \!\mathbf{p}}
 \end{equation}
 
-\footnotetext{``Equação de Coriolis''~\cite{Stevens2016},~\cite{Blakelock1991}.}
+\footnotetext{Conhecida por ``Equação de Coriolis''~\cite{Stevens2016},~\cite{Blakelock1991}.}
 
 Dentre as propriedades do vetor velocidade angular destacamos\footnotemark{}:
 \begin{enumerate}[label=\alph*)]
 \item É único e relaciona as derivadas de um vetor tomadas em dois sistemas.
 \item Satisfaz a condição de movimento relativo \(\mathbf{\omega}_{b/a} = - \mathbf{\omega}_{a/b}\).
 \item É aditivo entre sistemas, ou seja, \(\mathbf{\omega}_{c/a} = \!\mathbf{\omega}_{c/b} + \mathbf{\omega}_{b/a}\) (não vale para aceleração angular).
-\item Sua derivada é ambos os sistemas , \({^{a}\dot{\mathbf{\omega}}_{b/a}} = {^{b}\dot{\mathbf{\omega}}_{a/b}} \) .
+\item A derivada é equivalente em ambos os sistemas: \({^{a}\dot{\mathbf{\omega}}_{b/a}} = {^{b}\dot{\mathbf{\omega}}_{a/b}} \).
 \end{enumerate}
-\footnotetext{Seguindo \cite{Stevens2016}}.
+\footnotetext{Seguindo~\cite{Stevens2016}}.
 
 Ainda, derivada de um vetor em um quadro pode ser encontrada a partir das derivadas dos seus componentes expressas em um sistema fixo no mesmo quadro, por exemplo:
 \begin{equation*}
@@ -238,8 +238,7 @@ Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\
 \footnotetext{A escolha do quadro \(F_{a}\) como referência é arbitrária.}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.25\textwidth, keepaspectratio]{figuras/figure1.5-1.png}
-    \label{fig1.5-1}
+    \includegraphics[width=0.25\textwidth, keepaspectratio]{figuras/figure1.5-1.png}\label{fig1.5-1}
     \caption{Velocidade e aceleração em quadros móveis}
     \fonte{\cite{Stevens2016}}
 \end{figure}
@@ -269,7 +268,7 @@ Reorganizando, destacamos aceleração ``\emph{de transporte}'', ``\emph{centrí
 Os termos \({^{a}\mathbf{a}}\) e \({^{b}\mathbf{a}}\), denominados \emph{aceleração total} e \emph{aceleração relativa}, são expressos nos quadros de referência e secundário, respectivamente. Notamos o surgimento do termo \textit{aceleração de Coriolis}, a ser examinado mais adiante. Se fixamos \(P\) no quadro \(F_{b}\), nos resta apenas \textit{aceleração de  transporte}, definida como a aceleração expressa em \(F_{a}\) de um ponto fixo em \(F_{b}\) instantaneamente coincidente com \(P\). A aceleração de transporte expressa os efeitos do movimento de \(F_{b}\), em termos de aceleração do ponto \(Q\), da velocidade angular e da aceleração angular do quadro~\cite{Stevens2016}.
 
 
-Por exemplo, um acelerômetro fixo num robô móvel, de corpo rígido, não se move em relação ao quadro do corpo do robô, restando apenas os termos relativos à velocidade e aceleração de transporte nas equações~(\ref{eq:1.5-3}) e~(\ref{eq:1.5-4}), respectivamente. A aceleração para o sensor no ponto \(P\), de posição \(\mathbf{p}_{P/Q}\) em relação a ponto \(Q\) fixo no quadro do robô, denotando~\(a\)~e~\(b\) os quadros de referência e do robô, respectivamente, é dada por \cite{Stevens2016}:
+Por exemplo, um acelerômetro fixo num robô móvel, de corpo rígido, não se move em relação ao quadro do corpo do robô, restando apenas os termos relativos à velocidade e aceleração de transporte nas equações~(\ref{eq:1.5-3}) e~(\ref{eq:1.5-4}), respectivamente. A aceleração para o sensor no ponto \(P\), de posição \(\mathbf{p}_{P/Q}\) em relação ao ponto \(Q\) fixo no quadro do robô, denotando~\(a\)~e~\(b\) os quadros de referência e do robô, respectivamente, é dada por \cite{Stevens2016}:
 \begin{equation*}
     {\mathbf{a}_{P/a}} = {\mathbf{a}_{Q/a}} + {\mathbf{\alpha}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}} + {\mathbf{\omega}_{b/a}}\!\times\!\left({\mathbf{\omega}_{b/a}}\!\times\!{\mathbf{p}_{P/Q}}\right)
 \end{equation*}
@@ -305,7 +304,7 @@ Um acelerômetro mede, indiretamente\footnotemark{}, a força \(\mathbf{F}\) que
 \end{equation*}
 \footnotetext{Para detalhes sobre acelerômetros,~\cite{Weston2004},~\cite{Wang2021} e~\cite{Haoran2019}.}
 
-Com a calibração determinamos o \textit{fator de escala}, entre a quantidade de saída do sinal à força específica\cite{Stevens2016}:
+Com a calibração determinamos o \textit{fator de escala}, entre quantidade de saída do sinal e força específica\cite{Stevens2016}:
 \begin{equation} \label{eq:1.6-28}
     \text{Sinal de saída do acelerômetro} = s \mathbf{f} = s \left(\mathbf{a} - \mathbf{G} \right)
 \end{equation}
@@ -374,7 +373,7 @@ Empregando funções trigonométricas inversas, obtemos \(\theta\) e \(\phi\):
 
 Considere um corpo rígido (sistema \(F_{b}\)), seu centro de masssa como ponto de referência para separar a dinâmica rotacional da translacional, e um sistema de coordenadas, \(bf\), que corresponde ao sistema \(frd\), fixo no corpo e com origem no centro de massa. A aceleração do centro de massa do corpo resulta da soma vetorial das forças, cujas linhas de ação não precisam passar pelo centro de massa (separamos o efeito de qualquer torsão para as equações do momento, das quais que não trataremos). As equações são expressas em termos de movimento relativo à Terra~\cite{Stevens2016}.
 
-O vetor posição pode partir de um ponto fixo na Tera, \(F_{e}\). Se a variação da gravidade for significativa ao longo da trajetória, o vetor posição deve ser tomado a partir do centro de massa da Terra, mas para um curto alcance podemos partir de um ponto na superfície da Terra~\cite{Stevens2016}.
+O vetor posição pode partir de um ponto fixo na Terra, \(F_{e}\). Se a variação da gravidade for significativa ao longo da trajetória, o vetor posição deve ser tomado a partir do centro de massa da Terra, mas para um curto alcance podemos partir de um ponto na superfície da Terra~\cite{Stevens2016}.
 
 O vetor velocidade será obtido usando a velocidade do centro de massa do veículo em \(F_{e}\) e o vetor posição a partir do centro de massa da Terra. Como o centro de massa da Terra é um ponto fixo comum nos quadros inercial, \(F_{i}\),  e da Terra, \(F_{e}\), então a derivada de um vetor posição a partir do centro de massa fornece a velocidade inercial ou a velocidade terrestre, conforme o quadro em que derivamos. Derivadas em \(F_{i}\) e \(F_{e}\) são relacionadas ao vetor velocidade angular da Terra, \(\mathbf{\omega}_{e/i}\), de acordo com a equação de Coriolis. Também precisamos do quadro do corpo rígido, \(F_{b}\)~\cite{Stevens2016}.
 
@@ -517,7 +516,7 @@ A questão acima, conhecida como \emph{problema do valor inicial}, será enfrent
     x \left( t_{0} \right) = x_{0}
 \end{equation}
 
-Podemos estabelecer uma relação entre o problema de encontrar valores determinados para~(\ref{eq:3.4-4}) e a série de Taylor~\cite{Stevens2016}:
+Podemos estabelecer uma relação entre o problema de encontrar valores determinados para~(\ref{eq:3.4-2}) e a série de Taylor~\cite{Stevens2016}:
 \begin{equation}\label{eq:3.4-3}
     x \left(t_{0} + T \right) = x \left(t_{0}\right) + T \dot{x}\left(t_{0}\right) + \frac{T^{2}}{2!} \ddot{x}\left(t_{0}\right) + \ldots
 \end{equation}
@@ -527,14 +526,14 @@ O método mais simples, pouco preciso e que exige um período \(T\) muito pequen
     x_{E}\left(t_{0} + T \right) \approx x \left( t_{0} \right) + T f\left(x\left(t_{0}\right), t_{0}\right)
 \end{equation}
 
-O \emph{método trapezoidal}, por exemplo, ou de \emph{segunda ordem}, é um pouco mais preciso, e consiste em primeiro estimar a integral pelo método de Euler, então usar a média das derivadas no início e no fim do período para uma estivativa mais precisa. Podem ser expresso, empregando índices \(E\) e \(T\) para os passos obtidos pelos métodos de \emph{Euler} e \emph{trapezoidal}, repsectivamente,  com~\cite{Stevens2016}
+O \emph{método trapezoidal}, por exemplo, ou de \emph{segunda ordem}, é um pouco mais preciso, e consiste em primeiro estimar a integral pelo método de Euler, então usar a média das derivadas no início e no fim do período para uma estivativa mais precisa. Pode ser expresso empregando índices \(E\) e \(T\) para os passos obtidos pelos métodos de \emph{Euler} e \emph{trapezoidal}, repsectivamente,  com~\cite{Stevens2016}
 \begin{align}\label{eq:3.4-5}
     x_{E}\left(t + T\right) &= x\left(t\right) + T f\left(x\left(t\right),t\right) \\
     \dot{x}_{E}\left(t + T\right) &= {f{\left( x_{E} {\left( t + T \right)}, t+T \right)}} \\
     x_{T}\left(t + T\right) &= x\left(t\right) + \frac{T}{2} \left[ \dot{x}\left(t\right) + \dot{x}_{E}\left(t + T\right) \right],
 \end{align}
 
-Os métodos Runge-Kutta\footnotemark{} resolvem o problema do valor inicial diretamente, o que atende à formulação em espaço de estados onde um vetor de estado contém descreve completamente um sistema num determinado instante. Essa característica é ainda mais importante quando passamos de sistemas em tempo contínuo para sistemas em tempo discreto, o que é muito comum na prática~\cite{Stevens2016}.
+Os métodos Runge-Kutta\footnotemark{} resolvem o problema do valor inicial diretamente, o que atende à formulação em espaço de estados onde um vetor de estado descreve completamente um sistema num determinado instante. Essa característica é ainda mais importante quando passamos de sistemas em tempo contínuo para sistemas em tempo discreto, o que é muito comum na prática~\cite{Stevens2016}.
 
 Geralmente processamos eventos em tempo discreto a partir de sinais definidos a cada amostra, supondo que esses sinais permanecem constantes entre uma amostra e outra. Desse modo as integrações numéricas impõem essa suposição que chamamos de ``zero-order-data-hold'' (ZOH) em relação aos sinais amostrados~\cite{Stevens2016}, conforme ilustrado na figura:
 \begin{figure}[H]
