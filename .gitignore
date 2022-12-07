@@ -21,6 +21,8 @@ main.pdf
 *.synctex.gz
 *.toc
 *.xdv
+*.nav
+*.snm
 
 # Prerequisites
 *.d
