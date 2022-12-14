@@ -104,6 +104,7 @@ Um vetor pode apontar em qualquer direção por meio de uma simples rotação ao
     \centering
     \includegraphics[width=0.5\textwidth, keepaspectratio]{figuras/figure1.2-1.png}\label{fig1.2-1}
     \caption{Rotação de um vetor}\label{fig:rotacao-de-um-vetor}
+    \fonte{\cite{Goldstein1980}}
 \end{figure}
 
 Na figura acima, o vetor \(\mathbf{u}\) foi rotacionado para formar o vetor \(\mathbf{v}\) ao definirmos um eixo de rotação ao longo do vetor \(\mathbf{n}\) e realizarmos uma rotação pelo ângulo \(\mu\) ao redor de \(\mathbf{n}\). Estes dois vetores se somam a \(\mathbf{u}\) para obtermos \(\mathbf{v}\), e obtemos:
@@ -248,7 +249,7 @@ Encontraremos velocidade e aceleração do ponto \(P\), situado em \(\mathbf{p}\
     \mathbf{v}_{P/a}             &= \mathbf{v}_{Q/a} + \left( \mathbf{v}_{P/b} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right) \label{eq:1.5-3}
 \end{align}
 
-Rearranjando para destacar os temos em parênteses\footnotemark{}:
+Rearranjando para destacar os termos em parênteses\footnotemark{}:
 \begin{equation*}
     \mathbf{v}_{P/a} = \mathbf{v}_{P/b} + \left( \mathbf{v}_{Q/a} + \mathbf{\omega}_{b/a}\!\times\!\mathbf{p}_{P/Q} \right),
 \end{equation*}
@@ -322,7 +323,7 @@ Para um acelerômetro com três eixos ortogonais \(x\), \(y\) e \(z\), situado n
 \end{equation*}
 
 Assumindo que o robô não acelera (\(\mathbf{a}\approxeq0\)) e que na orientação inicial os eixos ``abaixo'' no sistemas \(frd\) e \(ned\) estão alinhados, com o vetor \(\mathbf{g}\) projetando apenas no eixo \(z\) do acelerômetro, então a equação acima se transforma em~\cite{freescaleAN3461}:
-\begin{align*}
+\begin{align}
     {\mathbf{G}}_p &= \begin{bmatrix}
         c\theta c\psi   & c\theta s\psi & -s\theta    \\
         \left(-c\phi s\psi + s\phi s\theta c\psi \right)
@@ -332,24 +333,26 @@ Assumindo que o robô não acelera (\(\mathbf{a}\approxeq0\)) e que na orientaç
         &  \left( -s\phi c\psi + c\phi s\theta s\psi \right)
         & c\phi c\theta
     \end{bmatrix} \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} -\sin{\theta} \\ \cos{\theta}\sin{\phi} \\ \cos{\theta}\cos{\phi} \end{bmatrix}
-\end{align*}
+\end{align}
 
 A equação acima depende apenas de \(\theta\) e \(\phi\), pois na primeira rotação por \(\psi\) sobre o eixo \emph{abaixo} o vetor \(\mathbf{g}\) permanece alinhado ao eixo \(z\) do sensor. Um acelerômetro, portanto, é insensível a essa rotação por \(\psi\), e não serve para determinar o ângulo de guinada\footnotemark{}. Normalizando as leituras, isolamos \(\theta\) e \(\phi\) por identidades trigonométricas sobre a projeção da gravidade (\(\mathbf{g}\)) nos eixos do sensor~\cite{freescaleAN3461}:
-\begin{equation*}
+\begin{equation}
     \frac{{\mathbf{G}}_{p}}{\lVert{{\mathbf{G}}_{p}}\rVert} =
     \frac{1}{\sqrt{{{{G}_{px}}^{2}} + {{{G}_{py}}^{2}} + {{G}_{pz}}^{2}}} \begin{bmatrix} {G}_{px} \\ {G}_{py} \\ {G}_{pz} \end{bmatrix}
     = \begin{bmatrix} -\sin{\theta} \\ \cos{\theta}\sin{\phi} \\ \cos{\theta}\cos{\phi} \end{bmatrix} \\
-\end{equation*}
-\begin{align*}
+\end{equation}
+\begin{align}
     \tan{\phi}_{xyz} &= \frac{G_{py}}{G_{pz}} \\
+\end{align}
+\begin{align}
     \tan{\theta}_{xyz} &= \frac{-G_{px}}{{G_{py}\sin{\phi}}+{{{G}_{pz}}\cos{\phi}}} = \frac{-G_{px}}{\sqrt{{{G_{py}}^{2}}+{{{G}_{pz}}^2}}}
-\end{align*}
+\end{align}
 
 Empregando funções trigonométricas inversas, obtemos \(\theta\) e \(\phi\):
-\begin{align*}
+\begin{align}
 {\phi}_{xyz} &= \tan^{-1}\left(\frac{G_{py}}{G_{pz}}\right) \\
 {\theta}_{xyz} &= \tan^{-1}\left(\frac{-G_{px}}{\sqrt{{{G_{py}}^{2}}+{{{G}_{pz}}^2}}}\right) \\
-\end{align*}
+\end{align}
 \footnotetext{Para \(\psi\) poderíamos empregar um magnetômetro~\cite{freescaleAN4248}.}
 
 \ldots e definimos o intervalo de validade\footnotemark{} como fizemos para a matriz rotacional:
